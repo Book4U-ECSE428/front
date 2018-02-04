@@ -16,7 +16,7 @@
     $("#show_all_books").click(get_all_books);
 
     function get_all_books() {
-        $.getJSON('http://127.0.0.1:8000/api/getAllBooks/', function (data) {
+        $.getJSON('http://127.0.0.1/api/getAllBooks/', function (data) {
             console.log(data);
             generateTable(data.books)
         });

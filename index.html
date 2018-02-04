@@ -1,0 +1,47 @@
+<html>
+<head>
+    <title>Books4u</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+<button id="show_all_books">Show all books</button>
+<div class="all_books">
+
+</div>
+</body>
+
+<script>
+    $("#show_all_books").click(get_all_books);
+
+    function get_all_books() {
+        $.getJSON('http://127.0.0.1:8000/api/getAllBooks/', function (data) {
+            console.log(data);
+            generateTable(data.books)
+        });
+    }
+
+    function generateTable(book_list) {
+        var books_div = $(".all_books");
+        books_div.empty();
+        var headertr = $("" +
+            "<tr><th>Book Name </th>" +
+            "<th>Author</th>" +
+            "<th>Publish Date</th>");
+        books_div.append(headertr);
+        for (var i = 0; i < book_list.length; i++) {
+            books_div.append(createRow(book_list[i]));
+        }
+    }
+
+    function createRow(book) {
+        var trElement = "<tr>";
+        trElement += "<td>" + book.name + "</td>";
+        trElement += "<td>" + book.author + "</td>";
+        trElement += "<td>" + book.publish_date + "</td>";
+        return trElement;
+    }
+
+</script>
+</html>

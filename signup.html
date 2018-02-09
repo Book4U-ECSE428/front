@@ -55,8 +55,18 @@
                                 <div>
                                     <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
                                 </div>
+                                <div class="strengthDiv">
+                                    <div class="col-sm-2 col-md-2" style="color: darkgray; text-align: center">Weak</div>
+                                    <div class="col-sm-8 col-md-8 pwd_strength">
+                                        <div class="strength">
+                                            <div class="bar"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-md-2" style="color: darkgray; text-align: center">Strong</div>
+                                </div>
                                 <div class="error_msg" id="signup_err3">Password too short.</div>
                             </div>
+
                             <!--confirm pwd-->
                             <div class="content_sec">
                                 <label for="password-confirm" class="control-label">Confirm Password</label>
@@ -86,4 +96,24 @@
         </div>
     </div>
 </body>
+<script>
+    $('#password').on('keyup', function() {
+        var password = $(this).val();
+        var count = $(this).val().length;
+        if (count == 0) {
+            $('.bar').css('width', '0%');
+        }
+        else {
+            if (count < 8) {
+                $('.bar').css('width', '33%');
+            }
+            if (count >= 8 && ((password != password.toLowerCase())||password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/))) {
+                $('.bar').css('width', '66%');
+            }
+            if (count >= 8 && (password != password.toLowerCase())&& password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) {
+                $('.bar').css('width', '100%');
+            }
+        }
+    });
+</script>
 </html>

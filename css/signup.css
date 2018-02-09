@@ -13,7 +13,7 @@ body {
     transform: translateY(-50%);
 }
 .error_msg{
-    color: red;
+    color: rgb(193, 66, 66);
     display: none;
 }
 .content_sec{
@@ -36,4 +36,33 @@ body {
 }
 .content_sec div textarea{
     color: white;
+}
+.pwd_strength{
+    padding: 5px 20px 0px 20px;
+}
+.strength {
+    position: relative;
+    width: 100%;
+    height: 10px;
+    background: rgba(0, 0, 0, .2);
+    border-radius: 100px;
+}
+.bar {
+    position: absolute;
+    left: 0;
+    background: #fff;
+    border-radius: 100px;
+    width: 0;
+    height: 100%;
+    -webkit-transition: 0.5s ease;
+    -moz-transition: 0.5s ease;
+    -o-transition: 0.5s ease;
+    transition: 0.5s ease;
+}
+.tooltip {
+    width: 100%;
+    color: white;
+}
+.strengthDiv{
+    padding: 5px 0px 5px 0px;
 }

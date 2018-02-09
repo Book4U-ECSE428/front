@@ -16,88 +16,95 @@
     <link rel="stylesheet" type="text/css" href="css/signup.css"/>
 </head>
 <body>
-    <div class="container signup-container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="color: #092756"><b>Register</b></div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" method="POST">
-                            <!--name-->
-                            <div class="content_sec">
-                                <label for="name" class="control-label">Name</label>
-                                <div>
-                                    <input id="name" type="text" class="form-control" name="name" style="background: transparent" autofocus required>
-                                </div>
-                                <div class="error_msg" id="signup_err1">Name already been registered by other user.</div>
-                            </div>
-                            <!--email-->
-                            <div class="content_sec">
-                                <label for="email" class="control-label">E-Mail Address</label>
-                                <div>
-                                    <input id="email" type="email" class="form-control" name="email" style="background: transparent" required>
-                                </div>
-                                <div class="error_msg" id="signup_err2">Email already been registered by other user.</div>
-                            </div>
-                            <!--gender-->
-                            <div class="content_sec">
-                                <label for="position" class="control-label">Gender</label>
-                                <div>
-                                    <select id="position" type="text" class="form-control" name="position" style="background: transparent" required>
-                                        <option>Male</option>
-                                        <option>Female</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!--pwd-->
-                            <div class="content_sec">
-                                <label for="password" class="control-label">Password</label>
-                                <div>
-                                    <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
-                                </div>
-                                <div class="strengthDiv">
-                                    <div class="col-sm-2 col-md-2" style="color: darkgray; text-align: center">Weak</div>
-                                    <div class="col-sm-8 col-md-8 pwd_strength">
-                                        <div class="strength">
-                                            <div class="bar"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-2 col-md-2" style="color: darkgray; text-align: center">Strong</div>
-                                </div>
-                                <div class="error_msg" id="signup_err3">Password too short.</div>
-                            </div>
-
-                            <!--confirm pwd-->
-                            <div class="content_sec">
-                                <label for="password-confirm" class="control-label">Confirm Password</label>
-                                <div>
-                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" style="background: transparent" required>
-                                </div>
-                                <div class="error_msg" id="signup_err4">Password does not match.</div>
-                            </div>
-                            <!--intro-->
-                            <div class="content_sec">
-                                <label class="control-label">Personal Introduction</label>
-                                <div>
-                                    <textarea id="intro" rows="4" type="text" class="form-control" name="intro" style="background: transparent;"></textarea>
-                                </div>
-                            </div>
+<div class="container signup-container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color: #092756"><b>Register</b></div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="POST">
+                        <!--name-->
+                        <div class="content_sec">
+                            <label for="name" class="control-label">Name</label>
                             <div>
-                                <div style="text-align:center; padding-top: 10px">
-                                    <button type="submit" class="btn btn-primary" style="background: white; color: #092756">
-                                        <b>Register</b>
-                                    </button>
-                                </div>
+                                <input id="name" type="text" class="form-control" name="name"
+                                       style="background: transparent" autofocus required>
                             </div>
-                        </form>
+                            <div class="error_msg" id="signup_err1">Name already been registered by other user.</div>
+                        </div>
+                        <!--email-->
+                        <div class="content_sec">
+                            <label for="email" class="control-label">E-Mail Address</label>
+                            <div>
+                                <input id="email" type="email" class="form-control" name="email"
+                                       style="background: transparent" required>
+                            </div>
+                            <div class="error_msg" id="signup_err2">Email already been registered by other user.</div>
+                        </div>
+                        <!--gender-->
+                        <div class="content_sec">
+                            <label for="position" class="control-label">Gender</label>
+                            <div>
+                                <select id="position" type="text" class="form-control" name="position"
+                                        style="background: transparent" required>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--pwd-->
+                        <div class="content_sec">
+                            <label for="password" class="control-label">Password</label>
+                            <div>
+                                <input id="password" type="password" class="form-control" name="password"
+                                       style="background: transparent" required>
+                            </div>
+                            <div class="strengthDiv">
+                                <div class="col-sm-2 col-md-2" style="color: darkgray; text-align: center">Weak</div>
+                                <div class="col-sm-8 col-md-8 pwd_strength">
+                                    <div class="strength">
+                                        <div class="bar"></div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 col-md-2" style="color: darkgray; text-align: center">Strong</div>
+                            </div>
+                            <div class="error_msg" id="signup_err3">Password too short.</div>
+                        </div>
+
+                        <!--confirm pwd-->
+                        <div class="content_sec">
+                            <label for="password-confirm" class="control-label">Confirm Password</label>
+                            <div>
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirmation" style="background: transparent" required>
+                            </div>
+                            <div class="error_msg" id="signup_err4">Password does not match.</div>
+                        </div>
+                        <!--intro-->
+                        <div class="content_sec">
+                            <label class="control-label">Personal Introduction</label>
+                            <div>
+                                <textarea id="intro" rows="4" type="text" class="form-control" name="intro"
+                                          style="background: transparent;"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <div style="text-align:center; padding-top: 10px">
+                            <button id="register" class="btn btn-primary" style="background: white; color: #092756">
+                                <b>Register</b>
+                            </button>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 <script>
-    $('#password').on('keyup', function() {
+    $('#password').on('keyup', function () {
         var password = $(this).val();
         var count = $(this).val().length;
         if (count == 0) {
@@ -107,13 +114,49 @@
             if (count < 8) {
                 $('.bar').css('width', '33%');
             }
-            if (count >= 8 && ((password != password.toLowerCase())||password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/))) {
+            if (count >= 8 && ((password != password.toLowerCase()) || password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/))) {
                 $('.bar').css('width', '66%');
             }
-            if (count >= 8 && (password != password.toLowerCase())&& password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) {
+            if (count >= 8 && (password != password.toLowerCase()) && password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) {
                 $('.bar').css('width', '100%');
             }
         }
     });
+    $("#register").click(register);
+
+    function register() {
+        console.log("register");
+        // check if two password are the same
+        if ($("input#password").val() != $("input#password-confirm").val()) {
+            $("#signup_err4").show();
+        } else {
+            $("#signup_err4").hide();
+            $.post('http://127.0.0.1:8000/api/createAccount/',
+                {
+                    'e_mail': $("input#email").val(),
+                    'password': $("input#password").val(),
+                    'name': $("input#name").val(),
+                    'personal_intro': $("textarea#intro").val(),
+                    'gender': $("select#position").val()
+                }, regiserCallBack);
+        }
+
+
+    }
+
+    function regiserCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            window.location = 'login.html';
+        } else {
+            $("input#email").val('');
+            $("input#password").val('');
+            $("input#name").val('');
+            $("select#intro").val('');
+            $("textarea#position").val('');
+        }
+    }
+
+
 </script>
 </html>

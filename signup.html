@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Page title-->
+    <title>Signup</title>
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="css/signup.css"/>
+</head>
+<body>
+    <div class="container signup-container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="color: #092756"><b>Register</b></div>
+                    <div class="panel-body">
+                        <form class="form-horizontal" method="POST">
+                            <!--name-->
+                            <div class="content_sec">
+                                <label for="name" class="control-label">Name</label>
+                                <div>
+                                    <input id="name" type="text" class="form-control" name="name" style="background: transparent" autofocus required>
+                                </div>
+                                <div class="error_msg" id="signup_err1">Name already been registered by other user.</div>
+                            </div>
+                            <!--email-->
+                            <div class="content_sec">
+                                <label for="email" class="control-label">E-Mail Address</label>
+                                <div>
+                                    <input id="email" type="email" class="form-control" name="email" style="background: transparent" required>
+                                </div>
+                                <div class="error_msg" id="signup_err2">Email already been registered by other user.</div>
+                            </div>
+                            <!--gender-->
+                            <div class="content_sec">
+                                <label for="position" class="control-label">Gender</label>
+                                <div>
+                                    <select id="position" type="text" class="form-control" name="position" style="background: transparent" required>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <!--pwd-->
+                            <div class="content_sec">
+                                <label for="password" class="control-label">Password</label>
+                                <div>
+                                    <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
+                                </div>
+                                <div class="error_msg" id="signup_err3">Password too short.</div>
+                            </div>
+                            <!--confirm pwd-->
+                            <div class="content_sec">
+                                <label for="password-confirm" class="control-label">Confirm Password</label>
+                                <div>
+                                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" style="background: transparent" required>
+                                </div>
+                                <div class="error_msg" id="signup_err4">Password does not match.</div>
+                            </div>
+                            <!--intro-->
+                            <div class="content_sec">
+                                <label class="control-label">Personal Introduction</label>
+                                <div>
+                                    <textarea id="intro" rows="4" type="text" class="form-control" name="intro" style="background: transparent;"></textarea>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="text-align:center; padding-top: 10px">
+                                    <button type="submit" class="btn btn-primary" style="background: white; color: #092756">
+                                        <b>Register</b>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

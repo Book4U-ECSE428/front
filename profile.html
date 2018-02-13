@@ -59,5 +59,35 @@
             </div>
         </nav>
     </div>
+    <div class="infobox">
+        <div class="col-lg-12 pic">
+            <div class="col-lg-3 col-md-3"><img src="img/anonymous.png" style="width:180px;"/></div>
+            <div class="col-lg-9 col-md-9" style="padding-top: 100px">
+                <div class="infoDiv">Name: <div class="info" id="info-name"></div>Elsie4ever</div>
+                <div class="infoDiv">Gender: <div class="info" id="info-gender">Female</div></div>
+            </div>
+            <div class="col-lg-12 col-md-12 infoDiv box">Personal Introduction:
+                <span class="edit">edit</span>
+                <span class="save">save</span>
+                <div class="info text" id="info-intro">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+<script>
+    $('.edit').click(function(){
+        $(this).hide();
+        $('.box').addClass('editable');
+        $('.text').attr('contenteditable', 'true');
+        $('.save').show();
+    });
+
+    $('.save').click(function(){
+        $(this).hide();
+        $('.box').removeClass('editable');
+        $('.text').removeAttr('contenteditable');
+        $('.edit').show();
+    });
+</script>
 </html>

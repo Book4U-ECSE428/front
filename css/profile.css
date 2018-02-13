@@ -66,11 +66,79 @@ body {
     color: black;
 }
 .loggedout-div{
-    display: block;
+    display: none;
 }
 .loggedin-div{
-    display: none;
+    display: block;
 }
 .nav{
     padding-right: 5%;
+}
+.infobox{
+    margin: 5% 10%;
+    background: rgba(220, 225, 234, 0.5);
+    height: 80%;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+}
+.pic{
+    padding: 30px;
+}
+.infoDiv{
+    font-size: 20px;
+    padding: 10px;
+}
+.info{
+    display: inline-block;
+}
+.box {
+    width: 100%;
+    position: relative;
+    margin: 20px;
+    min-height: 150px;
+    border: 1px solid grey;
+    border-radius: 3px;
+    background: #fff;
+}
+
+.editable {
+    border-color: #bd0f18;
+    box-shadow: inset 0 0 10px #555;
+    background: #f2f2f2;
+}
+
+.text {
+    outline: none;
+    width: inherit;
+    overflow: scroll;
+}
+
+.edit, .save {
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 4px 10px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: -1px 1px 4px rgba(0,0,0,0.5);
+}
+
+.edit {
+    background: #557a11;
+    color: #f0f0f0;
+    opacity: 0;
+    transition: opacity .2s ease-in-out;
+}
+
+.save {
+    display: none;
+    background: #092756;
+    color: #f0f0f0;
+}
+
+.box:hover .edit {
+    opacity: 1;
 }

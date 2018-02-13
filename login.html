@@ -95,7 +95,7 @@
                             </label>
                         </div>
                     </div>
-                    <p style="font-size: 10px;">Don't have an account? Please <a>sign up</a> here.</p>
+                    <p style="font-size: 10px;">Don't have an account? Please <a href="signup.html">sign up</a> here.</p>
                     <div>
                         <button class="btn btn-primary signin">
                             Login
@@ -129,7 +129,7 @@
         if (data.status === "success") {
             console.log(data.session_key);
             setCookie("session_key", data.session_key, 1800);
-            window.location = 'index.html';
+            window.location = 'main.html';
         } else {
             $('.error_msg').show();
             $("#email").val('');

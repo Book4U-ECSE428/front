@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Add book information</title>
+<link rel="stylesheet" type="text/css" href="css/General.css"/>
+<script type="text/javascript">
+function checkValid()
+{
+	var bookname=document.getElementById("bookname").value;
+	var author=document.getElementById("author").value;
+	var description=document.getElementById("description").value;
+	
+	if(bookname=="")
+    {
+		alert("bookname must be filled");
+  	}
+	else if(author=="")
+	{
+		alert("author name must be filled");
+	}
+	else if(description=="")
+	{
+		alert("description must be filled");
+	}
+	else
+	{
+		$.post('http://127.0.0.1:8000/api/rate/', 
+				{
+					'bookname': bookname,
+					'author name': author,
+					'description': description  
+				}, bookinfoCallBack);	
+	}		
+}
+
+function bookinfoCallBack(data) {
+    console.log(data);
+    if (data.status =="success") {
+        window.location = 'index.html';
+    } else {
+    	$("text#bookname").val('');
+    	$("text#author").val('');
+        $("textarea#description").val('');
+    }
+}
+</script>
+</head>
+<body>
+<h1 style="color:white;">New Book</h1>
+<div class="addbook_panel" style="text-align: center">
+<form>
+Please enter the book name:<input type="text" id="bookname"></input><br>
+Please enter the Author name:<input type="text" id="author"></input><br>
+<h4>Please enter a short description of the book:</h4>
+<textarea name="description" id="description" rows="4" cols="50" style="font-family:sans-serif;"></textarea>
+<div>
+<button type="button" id="book_submit" style="width:200px;height:100px;" onclick="checkValid()">Submit</button>
+</div>
+</form>
+</div>
+</body>
+</html>

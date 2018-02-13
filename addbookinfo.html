@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+
+<!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -7,6 +9,7 @@
 <script type="text/javascript">
 function checkValid()
 {
+
 	var name=document.getElementById("name").value;
 	var author=document.getElementById("author").value;
 	var description = document.getElementById("description").value;
@@ -23,6 +26,7 @@ function checkValid()
 	{
 	    alert("ISBN must be filled");
 	}
+
 	else if(author=="")
 	{
 		alert("author name must be filled");
@@ -33,6 +37,8 @@ function checkValid()
 	}
 	else
 	{
+
+
 		$.post('http://127.0.0.1:8000/api/addbook/', 
 				{
 					'name': name,
@@ -41,6 +47,7 @@ function checkValid()
 					'publish_date': publish_date,
 					'edition': edition,
                     'category':category,
+
 					'description': description  
 				}, bookinfoCallBack);	
 	}		
@@ -62,12 +69,14 @@ function bookinfoCallBack(data) {
 <h1 style="color:white;">New Book</h1>
 <div class="addbook_panel" style="text-align: center">
 <form>
+
 Please enter the ISBN:<input type="text" id="ISBN"></input><br>
 Please enter the book name:<input type="text" id="name"></input><br>
 Please enter the publish date:<input type="date" id="publish_date"></input><br>
 Please enter the Author name:<input type="text" id="author"></input><br>
 Please enter the edition:<input type="text" id="edition"></input><br>
 Please enter the category:<input type="text" id="category"></input><br>
+
 <h4>Please enter a short description of the book:</h4>
 <textarea name="description" id="description" rows="4" cols="50" style="font-family:sans-serif;"></textarea>
 <div>

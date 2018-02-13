@@ -83,9 +83,16 @@
     $.post('http://127.0.0.1:8000/api/getAllBooks/',
         {
             'session_key': getCookie('session_key')
-        }
-        , b_cb);
-
+        }).done(b_cb).fail(function (a) {
+        alert("error occured");
+        window.location = 'login.html';
+    });
+    // .done: b_cb);
+    // $.post('status.ajax.php', {deviceId: id})
+    //     .done( function(msg) { ... } )
+    //     .fail( function(xhr, textStatus, errorThrown) {
+    //         alert(xhr.responseText);
+    //     });
     function b_cb(data) {
         console.log(data);
         if (data.status === "success") {
@@ -120,7 +127,7 @@
     ];
 
     function createCard(book) {
-        var card = '<div class="card"><img class="bookcover"';
+        var card = '<div class="card" onclick="card_on_click(this)" id="' + book.id + '"><img class="bookcover"';
         card += 'src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
         card += '<div class="card-container">';
         card += '<h4><b>' + book.name + '</b></h4>';
@@ -130,6 +137,11 @@
         card += '<p>' + 'Published by ' + book.publish_firm + ' on ' + book.publish_date + '</p>';
         card += ' </div> </div>';
         return card;
+    }
+
+    function card_on_click(obj) {
+        console.log(obj);
+        alert(obj.id);
     }
 
 </script>

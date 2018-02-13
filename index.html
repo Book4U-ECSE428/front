@@ -1,30 +1,77 @@
 <html>
 <head>
     <title>Books4u</title>
+    <link rel="stylesheet" type="text/css" href="css/General.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
-
-<button id="show_all_books">Show all books</button>
-<div class="all_books">
-
-</div>
+    <button id="show_all_books">Show all books</button>
+    <button id="Clear">Clear</button>
+    <font size="3" color="white">
+        <div id="welcome" £¬ align="center"></div>
+        <div class="all_books" £¬ align="center">
+        </div>
+    </font>
 </body>
 
 <script>
+
+    $("#Clear").click(function (e) {
+
+        console.log("Clear");
+
+        $("#welcome").empty();
+        $(".all_books").empty();
+
+    });
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+
     $("#show_all_books").click(get_all_books);
 
     function get_all_books() {
-        $.getJSON('http://127.0.0.1/api/getAllBooks/', function (data) {
-            console.log(data);
-            generateTable(data.books)
-        });
+
+        $.post('http://127.0.0.1:8000/api/getAllBooks/',
+            {
+                'session_key': getCookie('session_key')
+            }
+            , b_cb);
+
+    }
+
+    function b_cb(data) {
+        console.log(data);
+        if (data.status === "success") {
+            generateTable(data.books);
+            $("#welcome").empty().append("<h1>Welcome " + data.user + "</h1>");
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'login.html';
+            }
+        }
+
     }
 
     function generateTable(book_list) {
         var books_div = $(".all_books");
         books_div.empty();
+
         var headertr = $("" +
             "<tr><th>Book Name </th>" +
             "<th>Author</th>" +

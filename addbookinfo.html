@@ -1,4 +1,6 @@
+
 <!DOCTYPE html>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -7,14 +9,24 @@
 <script type="text/javascript">
 function checkValid()
 {
-	var bookname=document.getElementById("bookname").value;
+
+	var name=document.getElementById("name").value;
 	var author=document.getElementById("author").value;
-	var description=document.getElementById("description").value;
+	var description = document.getElementById("description").value;
+	var ISBN = document.getElementById("ISBN").value;
+	var publish_date = document.getElementById("publish_date").value;
+	var edition = document.getElementById("edition").value;
+	var category = document.getElementById("category").value;
 	
-	if(bookname=="")
+	if(name=="")
     {
 		alert("bookname must be filled");
-  	}
+	}
+	else if (ISBN == "")
+	{
+	    alert("ISBN must be filled");
+	}
+
 	else if(author=="")
 	{
 		alert("author name must be filled");
@@ -25,10 +37,17 @@ function checkValid()
 	}
 	else
 	{
-		$.post('http://127.0.0.1:8000/api/rate/', 
+
+
+		$.post('http://127.0.0.1:8000/api/addbook/', 
 				{
-					'bookname': bookname,
-					'author name': author,
+					'name': name,
+					'author': author,
+					'ISBN': ISBN,
+					'publish_date': publish_date,
+					'edition': edition,
+                    'category':category,
+
 					'description': description  
 				}, bookinfoCallBack);	
 	}		
@@ -50,8 +69,14 @@ function bookinfoCallBack(data) {
 <h1 style="color:white;">New Book</h1>
 <div class="addbook_panel" style="text-align: center">
 <form>
-Please enter the book name:<input type="text" id="bookname"></input><br>
+
+Please enter the ISBN:<input type="text" id="ISBN"></input><br>
+Please enter the book name:<input type="text" id="name"></input><br>
+Please enter the publish date:<input type="date" id="publish_date"></input><br>
 Please enter the Author name:<input type="text" id="author"></input><br>
+Please enter the edition:<input type="text" id="edition"></input><br>
+Please enter the category:<input type="text" id="category"></input><br>
+
 <h4>Please enter a short description of the book:</h4>
 <textarea name="description" id="description" rows="4" cols="50" style="font-family:sans-serif;"></textarea>
 <div>

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Comment</title>
+<link rel="stylesheet" type="text/css" href="css/General.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+function remove()
+{
+	var context=document.getElementById('comment');
+	alert(context.value);
+}
+
+function post()
+{
+	console.log(comment);
+	var comment=document.getElementById('comment');
+	if ( comment != '')
+		{
+			$.post('http://127.0.0.1:8000/api/comment/', 
+			{ 'comment': comment.value }
+			, commentCallBack);
+		}else{
+			alert("There is no comment");
+		}
+}
+
+function commentCallBack(data) 
+{
+        console.log(data);
+        if (data.status =="success") {
+            window.location = 'index.html';
+        } else {
+            $("textarea#comment").val('');
+        }
+}
+</script>
+</head>
+<body>
+<h1 style="color:white;">Comment</h1>
+<div class="comment_panel" style="text-align: center">
+<form method="post">
+<h3>Your comment on review:</h3>
+<textarea name="comment" id="comment" rows="6" cols="40" maxlength="320" style="font-family:sans-serif;"></textarea>
+<br>
+</br>
+</br>
+<button type="submit" style="width:180px;height:90px;" onclick="post()"> Post</button> &nbsp&nbsp&nbsp&nbsp&nbsp <input type="button" style="width:180px;height:90px;" value="Clear" onclick="remove()">
+</form>
+</div>
+</body>
+</html>

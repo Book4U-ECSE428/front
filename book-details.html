@@ -6,12 +6,14 @@
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Page title-->
-    <title>Books4U Main</title>
+    <title>Book Detail</title>
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="css/details.css"/>
 </head>
 <body>
 <div id="app">
@@ -38,11 +40,11 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
                     <!-- Authentication Links -->
-                    <!--&lt;!&ndash; if user is not logged in &ndash;&gt;-->
-                    <!--<div class="loggedout-div">-->
-                    <!--<li data-toggle="collapse"><a>Login</a></li>-->
-                    <!--<li data-toggle="collapse"><a>Register</a></li>-->
-                    <!--</div>-->
+                    <!-- if user is not logged in -->
+                    <div class="loggedout-div">
+                        <li data-toggle="collapse"><a>Login</a></li>
+                        <li data-toggle="collapse"><a>Register</a></li>
+                    </div>
                     <!-- else -->
                     <div class="loggedin-div">
                         <li><a href="" class="user-dropdown">Hi!
@@ -59,11 +61,26 @@
             </div>
         </div>
     </nav>
-    <div class="book-cards">
+    <div class="book">
+        <!--<p>adsfadfadsfasfsa</p>-->
+
+        <img src="http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg">
+        <h2>BOOK NAME</h2>
+        <p>Rating</p>
+
+
+        <h2>Reviews</h2>
+        <h2>Add Your Review</h2>
+
     </div>
 </div>
 </body>
 <script>
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    console.log(id);
+
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -80,65 +97,6 @@
         return "";
     }
 
-    $.post('http://127.0.0.1:8000/api/getAllBooks/',
-        {
-            'session_key': getCookie('session_key')
-        }).done(b_cb).fail(function (a) {
-        alert("error occured");
-        window.location = 'login.html';
-    });
-
-    function b_cb(data) {
-        console.log(data);
-        if (data.status === "success") {
-            $(".loggedin-div").show();
-            console.log(data.user);
-            $("#username").html(data.user);
-            generateAllCard(data.books);
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'login.html';
-            }
-        }
-
-    }
-
-    function generateAllCard(book_list) {
-        var books_div = $(".book-cards");
-        books_div.empty();
-        for (var i = 0; i < book_list.length; i++) {
-            books_div.append(createCard(book_list[i]));
-        }
-    }
-
-    var book_pic_list = [
-        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/creative_bookcover.png',
-        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/children_bookcover.png',
-        'https://marketplace.canva.com/MAB___U-clw/1/0/thumbnail_large/canva-yellow-lemon-children-book-cover-MAB___U-clw.jpg',
-        'https://spark.adobe.com/images/landing/examples/how-to-book-cover.jpg',
-        'https://marketplace.canva.com/MACSXEOzaeQ/1/0/thumbnail_large/canva-orange-and-dark-purple-triangular-modern-architecture-book-cover-MACSXEOzaeQ.jpg',
-        'http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg'
-    ];
-
-    function createCard(book) {
-        var card = '<div class="card" onclick="card_on_click(this)" id="' + book.id + '"><img class="bookcover"';
-        card += 'src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
-        card += '<div class="card-container">';
-        card += '<h4><b>' + book.name + '</b></h4>';
-        card += '<p>' + 'By ' + book.author + '</p>';
-        card += '<p>' + book.rating + '</p>';
-        card += '<p>' + 'Edition: ' + book.edition + '</p>';
-        card += '<p>' + 'Published by ' + book.publish_firm + ' on ' + book.publish_date + '</p>';
-        card += ' </div> </div>';
-        return card;
-    }
-
-    function card_on_click(obj) {
-        console.log(obj);
-        // alert(obj.id);
-        window.location = 'book-details.html?id=' + obj.id;
-    }
 
 </script>
 </html>

@@ -183,7 +183,7 @@
             'id': id
         }).done(ReviewCallBack).fail(function (a) {
         alert("error occured");
-        window.location = 'login.html';
+        window.location = 'index.html';
     });
 
     function ReviewCallBack(data) {
@@ -196,7 +196,7 @@
         } else {
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");
-                window.location = 'login.html';
+                window.location = 'index.html';
             }
         }
 

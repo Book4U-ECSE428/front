@@ -1,8 +1,19 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Books4u</title>
-    <link rel="stylesheet" type="text/css" href="css/General.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Page title-->
+    <title>Login</title>
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
 </head>
 
 <body>
@@ -17,78 +28,7 @@
 
 <script>
     window.location = 'login.html';
-    // $("#Clear").click(function (e) {
-    //
-    //     console.log("Clear");
-    //
-    //     $("#welcome").empty();
-    //     $(".all_books").empty();
-    //
-    // });
-    //
-    // function getCookie(cname) {
-    //     var name = cname + "=";
-    //     var ca = document.cookie.split(';');
-    //     for (var i = 0; i < ca.length; i++) {
-    //         var c = ca[i];
-    //         while (c.charAt(0) == ' ') {
-    //             c = c.substring(1);
-    //         }
-    //         if (c.indexOf(name) == 0) {
-    //             return c.substring(name.length, c.length);
-    //         }
-    //     }
-    //     return "";
-    // }
-    //
-    //
-    // $("#show_all_books").click(get_all_books);
-    //
-    // function get_all_books() {
-    //
-    //     $.post('http://127.0.0.1:8000/api/getAllBooks/',
-    //         {
-    //             'session_key': getCookie('session_key')
-    //         }
-    //         , b_cb);
-    //
-    // }
-    //
-    // function b_cb(data) {
-    //     console.log(data);
-    //     if (data.status === "success") {
-    //         generateTable(data.books);
-    //         $("#welcome").empty().append("<h1>Welcome " + data.user + "</h1>");
-    //     } else {
-    //         if (data.reason === "session expired") {
-    //             alert("login session timeout, need to login again");
-    //             window.location = 'login.html';
-    //         }
-    //     }
-    //
-    // }
-    //
-    // function generateTable(book_list) {
-    //     var books_div = $(".all_books");
-    //     books_div.empty();
-    //
-    //     var headertr = $("" +
-    //         "<tr><th>Book Name </th>" +
-    //         "<th>Author</th>" +
-    //         "<th>Publish Date</th>");
-    //     books_div.append(headertr);
-    //     for (var i = 0; i < book_list.length; i++) {
-    //         books_div.append(createRow(book_list[i]));
-    //     }
-    // }
-    //
-    // function createRow(book) {
-    //     var trElement = "<tr>";
-    //     trElement += "<td>" + book.name + "</td>";
-    //     trElement += "<td>" + book.author + "</td>";
-    //     trElement += "<td>" + book.publish_date + "</td>";
-    //     return trElement;
-    // }
-
 </script>
+</body>
+
 </html>

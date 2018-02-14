@@ -15,6 +15,7 @@
     <title>Review</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/review-details.css"/>
+    <link rel="stylesheet" type="text/css" href="css/Rating.css"/>
 </head>
 <body>
 <div id="app">
@@ -23,7 +24,8 @@
             <div class="navbar-header">
 
                 <!-- Collapsed -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -47,7 +49,9 @@
                     </div>
                     <!-- else -->
                     <div class="loggedin-div">
-                        <li><a href="" class="user-dropdown">Hi! <div id="username" style="display: inline-block">Username</div><span class="caret"></span></a>
+                        <li><a href="" class="user-dropdown">Hi!
+                            <div id="username" style="display: inline-block">Username</div>
+                            <span class="caret"></span></a>
                             <ul>
                                 <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
                                 <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
@@ -63,7 +67,10 @@
 <div class="infobox">
     <div class="col-lg-12 reviewDiv" style="padding-top: 70px">
         <div class="col-lg-9 col-md-9">
-            <div class="infoDiv">Book Name: <div class="info" id="info-bookname"></div>Enchantment</div>
+            <div class="infoDiv">Book Name:
+                <div class="info" id="info-bookname"></div>
+
+            </div>
             <div class="infoDiv">
                 <div class="stars">
                     <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
@@ -80,49 +87,68 @@
             </div>
             <div class="info" id="info-user" style="padding:10px;">Elsie4ever</div>
         </div>
-        <div class="col-lg-12 col-md-12 infoDiv" style="padding-left: 25px">Content: </div>
+        <div class="col-lg-12 col-md-12 infoDiv" style="padding-left: 25px">Content:</div>
         <!-- if the review is written by current user-->
-        <div class="col-lg-12 col-md-12 box review-by-user" style="margin-top: 20px">
-            <span class="edit">edit</span>
-            <span class="save">save</span>
-            <div class="info text" id="info-review1">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
-            </div>
-        </div>
+        <!--<div class="col-lg-12 col-md-12 box review-by-user" style="margin-top: 20px">-->
+        <!--<span class="edit">edit</span>-->
+        <!--<span class="save">save</span>-->
+        <!--<div class="info text" id="info-review1">I enjoy meeting new people and finding ways to help them have an-->
+        <!--uplifting experience. I have had a variety of customer service opportunities, through which I was able-->
+        <!--to have fewer returned products and increased repeat customers, when compared with co-workers. I am-->
+        <!--dedicated, outgoing, and a team player. Who could I speak with in your customer service department about-->
+        <!--your organization’s customer service needs?-->
+        <!--</div>-->
+        <!--</div>-->
         <!-- else -->
         <div class="col-lg-12 col-md-12 box review-not-by-user" style="margin-top: 20px">
-            <div class="info text" id="info-review2">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+            <div class="info text" id="info-review2">I enjoy meeting new people and finding ways to help them have an
+                uplifting experience. I have had a variety of customer service opportunities, through which I was able
+                to have fewer returned products and increased repeat customers, when compared with co-workers. I am
+                dedicated, outgoing, and a team player. Who could I speak with in your customer service department about
+                your organization’s customer service needs?
             </div>
         </div>
         <!-- endif -->
-        <div class="infoDiv col-lg-12 col-md-12">Comment: </div>
-        <div class="review col-lg-12 col-md-12">
-            This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking and the last scenes were ajdfksadlfsd.
-        </div>
-        <div class="review col-lg-12 col-md-12">
-            This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking and the last scenes were ajdfksadlfsd.
-        </div>
-        <div class="review col-lg-12 col-md-12">
-            This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking and the last scenes were ajdfksadlfsd.
-        </div>
-        <div class="infoDiv col-lg-12 col-md-12">Add Comment: </div>
+        <div class="infoDiv col-lg-12 col-md-12">Comment:</div>
+        <div class="comment-list"></div>
+        <!--<div class="review col-lg-12 col-md-12">-->
+        <!--This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking-->
+        <!--about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a-->
+        <!--ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking-->
+        <!--and the last scenes were ajdfksadlfsd.-->
+        <!--</div>-->
+        <!--<div class="review col-lg-12 col-md-12">-->
+        <!--This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking-->
+        <!--about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a-->
+        <!--ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking-->
+        <!--and the last scenes were ajdfksadlfsd.-->
+        <!--</div>-->
+        <!--<div class="review col-lg-12 col-md-12">-->
+        <!--This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking-->
+        <!--about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a-->
+        <!--ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking-->
+        <!--and the last scenes were ajdfksadlfsd.-->
+        <!--</div>-->
+        <div class="infoDiv col-lg-12 col-md-12">Add Comment:</div>
         <div>
             <textarea name="comment" id="comment" rows="2" cols="120" style="font-family:sans-serif;"></textarea>
         </div>
         <div class="col-lg-12 col-md-12">
-            <button type="submit" class="btn" onclick="post()"> Post</button> &nbsp&nbsp&nbsp&nbsp&nbsp
+            <button type="submit" class="btn" onclick="post()"> Post</button>
+            &nbsp&nbsp&nbsp&nbsp&nbsp
             <input type="button" class="btn" value="Clear" onclick="remove()">
         </div>
     </div>
 </div>
 </body>
 <script>
-    $('.edit').click(function(){
+    $('.edit').click(function () {
         $(this).hide();
         $('.box').addClass('editable');
         $('.text').attr('contenteditable', 'true');
         $('.save').show();
     });
-    $('.save').click(function(){
+    $('.save').click(function () {
         $(this).hide();
         $('.box').removeClass('editable');
         $('.text').removeAttr('contenteditable');
@@ -130,30 +156,85 @@
     });
 </script>
 <script type="text/javascript">
-    function remove()
-    {
-        var context=document.getElementById('comment');
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    console.log(id);
+
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    $.post('http://127.0.0.1:8000/api/getReviewByID/',
+        {
+            'session_key': getCookie('session_key'),
+            'id': id
+        }).done(ReviewCallBack).fail(function (a) {
+        alert("error occured");
+        window.location = 'login.html';
+    });
+
+    function ReviewCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            $(".loggedin-div").show();
+            console.log(data.user);
+            $("#username").html(data.request_user);
+            displayReview(data);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'login.html';
+            }
+        }
+
+    }
+
+    function displayReview(review) {
+        $("#info-bookname").html(review.book_name);
+        $("#info-user").html('Review writen by user: ' + review.review_user);
+        $("#info-review2").html(review.review_content);
+        for (var i = 0; i < review.comments.length; i++) {
+            $(".comment-list").append(
+                '<div class="review col-lg-12 col-md-12">' + review.comments[i].content + '</div>'
+            )
+        }
+        document.getElementsByClassName("star-"+review.review_rating)[0].checked = true;
+
+    }
+
+    function remove() {
+        var context = document.getElementById('comment');
         alert(context.value);
     }
 
-    function post()
-    {
+    function post() {
         console.log(comment);
-        var comment=document.getElementById('comment');
-        if ( comment != '')
-        {
+        var comment = document.getElementById('comment');
+        if (comment != '') {
             $.post('http://127.0.0.1:8000/api/comment/',
-                { 'comment': comment.value }
+                {'comment': comment.value}
                 , commentCallBack);
-        }else{
+        } else {
             alert("There is no comment");
         }
     }
 
-    function commentCallBack(data)
-    {
+    function commentCallBack(data) {
         console.log(data);
-        if (data.status =="success") {
+        if (data.status == "success") {
             window.location = 'index.html';
         } else {
             $("textarea#comment").val('');

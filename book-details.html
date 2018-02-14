@@ -59,51 +59,8 @@
     </nav>
     <div class="book">
         <div class="details">
-            <img src="http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg">
-            <!--<h2 class="book-content">BOOK NAME</h2>-->
-            <!--<p class="book-content">ISBN</p>-->
-            <!--<p class="book-content">Rating</p>-->
-            <!--<p class="book-content">Author</p>-->
-            <!--<p class="book-content">Published by whom on date</p>-->
-            <!--<p class="book-content">edition</p>-->
-            <!--<p class="book-content">category</p>-->
-            <!--<h2 class="book-content">Reviews</h2>-->
-            <!--<div>-->
-            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
-            <!--<a class="review-link" href="review-details.html">This is a long review long review long review long review long review long review long review long review long review long review long review long review long review long review long review long review </a>-->
-            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
-            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
-            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
-            <!--</div>-->
-            <!--<h2 class="book-content">Add Your Review</h2>-->
-            <!--<textarea class="" id="booktextarea"></textarea>-->
-            <!--<div class="stars">-->
-            <!--<input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>-->
-            <!--<label class="star star-5" for="star-5" title="Amazing"></label>-->
-            <!--<input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>-->
-            <!--<label class="star star-4" for="star-4" title="Good"></label>-->
-            <!--<input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>-->
-            <!--<label class="star star-3" for="star-3" title="Ok"></label>-->
-            <!--<input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>-->
-            <!--<label class="star star-2" for="star-2" title="Not recommend"></label>-->
-            <!--<input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>-->
-            <!--<label class="star star-1" for="star-1" title="Really bad"></label>-->
-            <!--</div>-->
+
         </div>
-        <!--<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 detail-top">-->
-            <!--<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">-->
-                <!--<img class="bookPic" src="http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg">-->
-            <!--</div>-->
-        <!--</div>-->
-
-
-        <!--<h2>BOOK NAME</h2>-->
-        <!--<p>Rating</p>-->
-
-
-        <!--<h2>Reviews</h2>-->
-        <!--<h2>Add Your Review</h2>-->
-
     </div>
 </div>
 </body>
@@ -143,7 +100,7 @@
         if (data.status === "success") {
             $(".loggedin-div").show();
             console.log(data.user);
-            $("#username").html(data.user);
+            $("#username").html(data.request_user);
             displayBook(data);
         } else {
             if (data.reason === "session expired") {
@@ -164,11 +121,9 @@
     ];
 
     function displayBook(book) {
-        console.log("adada");
         var books_div = $(".details");
-        // books_div.empty();
-
-        var card = '<h2 class="book-content">';
+        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
+        card += '<h2 class="book-content">';
         card += book.book_name + '</h2>';
         card += '<p class="book-content">ISBN:' + book.book_ISBN + '</p>';
         card += '<p class="book-content">Author:' + book.book_author + '</p>';
@@ -177,7 +132,7 @@
         card += '<p class="book-content">Edition:' + book.book_category + '</p>';
         card += '<h2 class="book-content">Reviews</h2>';
         for (var i = 0; i < book.reviews.length; i++) {
-            card += '<a class="review-link" id="' + book.reviews[i].id + '"href="review-details.html">' + book.reviews[i].content + '</a>'
+            card += '<a class="review-link" id="' + book.reviews[i].id + '"onclick="reviewAOnClick(this)">' + book.reviews[i].content + '</a>'
         }
         card += '<h2 class="book-content">Add Your Review</h2>';
         card += '<textarea class="" id="booktextarea"></textarea>';
@@ -193,7 +148,7 @@
             '                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>\n' +
             '                <label class="star star-1" for="star-1" title="Really bad"></label>\n' +
             '            </div>';
-        card += '<button class="btn">Submit</button>';
+        card += '<div style="width: 50%;margin: auto;"><button class="btn">Submit</button></div>';
         books_div.append(card);
     }
 
@@ -201,9 +156,10 @@
 </script>
 <script type="text/javascript">
     function getvalue() {
-        for (i = 0; i < document.getElementsByName("star").length; i++) {
-            if (document.getElementsByName("star")[i].checked == true) {
-                var rate = document.getElementsByName("star")[i].value;
+        for (i = 0; i < document.getElementsByClassName("star").length; i++) {
+            if (document.getElementsByClassName("star")[i].checked == true) {
+                var rate = document.getElementsByClassName("star")[i].value;
+                console.log(rate);
                 break;
             }
         }
@@ -216,7 +172,7 @@
             $.post('http://127.0.0.1:8000/api/rate/',
                 {
                     'rate': rate,
-                    'review': $("textarea#review").val(),
+                    'review': $("textarea#review").val()
                 }, rateCallBack);
         } else {
             alert("You must rate the book");
@@ -230,6 +186,11 @@
         } else {
             $("textarea#review").val('');
         }
+    }
+
+    function reviewAOnClick(obj) {
+        alert(obj.id);
+        window.location='review-details.html?id='+obj.id;
     }
 
 </script>

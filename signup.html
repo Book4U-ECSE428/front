@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -149,6 +149,7 @@
         if (data.status === "success") {
             window.location = 'index.html';
         } else {
+            alert("Register failed. The password should contain at least 1 capital letter and numbers.");
             $("input#email").val('');
             $("input#password").val('');
             $("input#name").val('');

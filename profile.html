@@ -16,65 +16,65 @@
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
 </head>
 <body>
-<div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div>
-            <div class="navbar-header">
+    <div id="app">
+        <nav class="navbar navbar-default navbar-static-top">
+            <div>
+                <div class="navbar-header">
 
-                <!-- Collapsed -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
-            </div>
+                    <!-- Collapsed -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
+                </div>
 
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right navigation">
-                    <!-- Authentication Links -->
-                    <!-- if user is not logged in -->
-                    <div class="loggedout-div">
-                        <li data-toggle="collapse"><a>Login</a></li>
-                        <li data-toggle="collapse"><a>Register</a></li>
-                    </div>
-                    <!-- else -->
-                    <div class="loggedin-div">
-                        <li><a href="" class="user-dropdown">Hi! <div id="username" style="display: inline-block">Username</div><span class="caret"></span></a>
-                            <ul>
-                                <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
-                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
-                            </ul>
-                        </li>
-                    </div>
-                    <!-- endif -->
-                </ul>
+                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="nav navbar-nav">
+                        &nbsp;
+                    </ul>
+                    <!-- Right Side Of Navbar -->
+                    <ul class="nav navbar-nav navbar-right navigation">
+                        <!-- Authentication Links -->
+                        <!-- if user is not logged in -->
+                        <div class="loggedout-div">
+                            <li data-toggle="collapse"><a>Login</a></li>
+                            <li data-toggle="collapse"><a>Register</a></li>
+                        </div>
+                        <!-- else -->
+                        <div class="loggedin-div">
+                            <li><a href="" class="user-dropdown">Hi! <div id="username" style="display: inline-block">Username</div><span class="caret"></span></a>
+                                <ul>
+                                    <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
+                                    <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </div>
+                        <!-- endif -->
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-</div>
-<div class="infobox">
-    <div class="col-lg-12 pic" style="padding-top: 70px">
-        <div class="col-lg-3 col-md-3"><img class="profile_pic" src="img/anonymous.png"/></div>
-        <div class="col-lg-9 col-md-9" style="padding-top: 100px">
-            <div class="infoDiv">Name: <div class="info" id="info-name"></div>Elsie4ever</div>
-            <div class="infoDiv">Gender: <div class="info" id="info-gender">Female</div></div>
-        </div>
-        <div class="col-lg-12 col-md-12 infoDiv" style="padding-top: 50px">Personal Introduction:</div>
-        <div class="col-lg-12 col-md-12 box" style="margin-top: 20px">
-            <span class="edit">edit</span>
-            <span class="save">save</span>
-            <div class="info text" id="info-intro">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+        </nav>
+    </div>
+    <div class="infobox">
+        <div class="col-lg-12 pic" style="padding-top: 70px">
+            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
+            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
+                <div class="infoDiv">Name: <div class="info" id="info-name"></div>Elsie4ever</div>
+                <div class="infoDiv">Gender: <div class="info" id="info-gender">Female</div></div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
+                <span class="edit">edit</span>
+                <span class="save">save</span>
+                <div class="info text" id="info-intro">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+                </div>
             </div>
         </div>
     </div>
-</div>
 </body>
 <script>
     $('.edit').click(function(){
@@ -83,6 +83,7 @@
         $('.text').attr('contenteditable', 'true');
         $('.save').show();
     });
+
     $('.save').click(function(){
         $(this).hide();
         $('.box').removeClass('editable');

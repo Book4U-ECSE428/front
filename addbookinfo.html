@@ -1,4 +1,4 @@
-
+﻿
 <!DOCTYPE html>
 
 <html>
@@ -93,23 +93,24 @@ function bookinfoCallBack(data) {
 <body>
 <h1 style="color:white;">New Book</h1>
 <div class="addbook_panel" style="text-align: center">
-<form>
+    <form>
+        <p align="center">
+            Please enter the ISBN:&nbsp<input type="text" style="border:1px solid black" id="ISBN"></input><br><br></br>
+            Please enter the book name:&nbsp<input type="text" style="border:1px solid black" id="name"></input><br><br></br>
+            Please enter the publish date:&nbsp<input type="date" style="border:1px solid black" id="publish_date"></input><br><br></br>
+            Please enter the author name:&nbsp<input type="text" style="border:1px solid black" id="author"></input><br><br></br>
+            Please enter the edition:&nbsp<input type="text" style="border:1px solid black" id="edition"></input><br><br></br>
+            Please enter the category:&nbsp<input type="text" style="border:1px solid black" id="category"></input><br><br></br>
+            Please enter the publish firm:&nbsp<input type="text" style="border:1px solid black" id="publish_firm"></input><br><br></br>
 
-Please enter the ISBN:<input type="text" id="ISBN"></input><br>
-Please enter the book name:<input type="text" id="name"></input><br>
-Please enter the publish date:<input type="date" id="publish_date"></input><br>
-Please enter the Author name:<input type="text" id="author"></input><br>
-Please enter the edition:<input type="text" id="edition"></input><br>
-Please enter the category:<input type="text" id="category"></input><br>
-Please enter the publish firm:<input type="text" id="publish_firm"></input><br>
 
-
-<h4>Please enter a short description of the book:</h4>
-<textarea name="description" id="description" rows="4" cols="50" style="font-family:sans-serif;"></textarea>
-<div>
-<button type="button" id="book_submit" style="width:200px;height:100px;" onclick="checkValid()">Submit</button>
-</div>
-</form>
+            <h4>Please enter a short description of the book:</h4>
+            <textarea name="description" id="description" rows="4" cols="50" style="font-family:sans-serif;border:1px solid black;"></textarea><br></br>
+            <div>
+                <button type="button" id="book_submit" style="width:100px;height:50px;" onclick="checkValid()">Submit</button>
+            </div>
+        </p>
+    </form>
 </div>
 </body>
 </html>

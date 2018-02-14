@@ -51,7 +51,7 @@
                             <span class="caret"></span></a>
                             <ul>
                                 <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
-                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
+                                <li data-toggle="collapse"><a href="" class="logout" onclick="logout()">Logout</a></li>
                             </ul>
                         </li>
                     </div>
@@ -65,7 +65,20 @@
 </div>
 </body>
 <script>
-
+    function logout()
+    {
+    	setCookie("","", 5);
+    	window.location="login.html";
+    }
+    
+    function setCookie(cname, cvalue, sec) {
+        var d = new Date();
+        d.setTime(d.getTime() + (sec * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        console.log("cookie", document.cookie)
+    }
+    
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');

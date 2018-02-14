@@ -40,12 +40,6 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
                     <!-- Authentication Links -->
-                    <!-- if user is not logged in -->
-                    <div class="loggedout-div">
-                        <li data-toggle="collapse"><a>Login</a></li>
-                        <li data-toggle="collapse"><a>Register</a></li>
-                    </div>
-                    <!-- else -->
                     <div class="loggedin-div">
                         <li><a href="" class="user-dropdown">Hi!
                             <div id="username" style="display: inline-block">Username</div>
@@ -64,23 +58,23 @@
     <div class="book">
         <div class="details">
             <img src="http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg">
-            <h2 class="book-content">BOOK NAME</h2>
-            <p class="book-content">ISBN</p>
-            <p class="book-content">Rating</p>
-            <p class="book-content">Author</p>
-            <p class="book-content">Published by whom on date</p>
-            <p class="book-content">edition</p>
-            <p class="book-content">category</p>
-            <h2 class="book-content">Reviews</h2>
-            <div>
-                <a class="review-link" href="review-details.html">This is a review</a>
-                <a class="review-link" href="review-details.html">This is a long review long review long review long review long review long review long review long review long review long review long review long review long review long review long review long review </a>
-                <a class="review-link" href="review-details.html">This is a review</a>
-                <a class="review-link" href="review-details.html">This is a review</a>
-                <a class="review-link" href="review-details.html">This is a review</a>
-            </div>
-            <h2 class="book-content">Add Your Review</h2>
-            <textarea class="" id="booktextarea"></textarea>
+            <!--<h2 class="book-content">BOOK NAME</h2>-->
+            <!--<p class="book-content">ISBN</p>-->
+            <!--<p class="book-content">Rating</p>-->
+            <!--<p class="book-content">Author</p>-->
+            <!--<p class="book-content">Published by whom on date</p>-->
+            <!--<p class="book-content">edition</p>-->
+            <!--<p class="book-content">category</p>-->
+            <!--<h2 class="book-content">Reviews</h2>-->
+            <!--<div>-->
+            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
+            <!--<a class="review-link" href="review-details.html">This is a long review long review long review long review long review long review long review long review long review long review long review long review long review long review long review long review </a>-->
+            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
+            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
+            <!--<a class="review-link" href="review-details.html">This is a review</a>-->
+            <!--</div>-->
+            <!--<h2 class="book-content">Add Your Review</h2>-->
+            <!--<textarea class="" id="booktextarea"></textarea>-->
         </div>
     </div>
 </div>
@@ -107,6 +101,67 @@
         return "";
     }
 
+    $.post('http://127.0.0.1:8000/api/getBookByID/',
+        {
+            'session_key': getCookie('session_key'),
+            'id': id
+        }).done(bookCallBack).fail(function (a) {
+        alert("error occured");
+        window.location = 'login.html';
+    });
+
+    function bookCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            $(".loggedin-div").show();
+            console.log(data.user);
+            $("#username").html(data.user);
+            displayBook(data);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'login.html';
+            }
+        }
+
+    }
+
+    var book_pic_list = [
+        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/creative_bookcover.png',
+        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/children_bookcover.png',
+        'https://marketplace.canva.com/MAB___U-clw/1/0/thumbnail_large/canva-yellow-lemon-children-book-cover-MAB___U-clw.jpg',
+        'https://spark.adobe.com/images/landing/examples/how-to-book-cover.jpg',
+        'https://marketplace.canva.com/MACSXEOzaeQ/1/0/thumbnail_large/canva-orange-and-dark-purple-triangular-modern-architecture-book-cover-MACSXEOzaeQ.jpg',
+        'http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg'
+    ];
+
+    function displayBook(book) {
+        console.log("adada");
+        var books_div = $(".details");
+        // books_div.empty();
+
+        var card = '<h2 class="book-content">';
+        card += book.book_name + '</h2>';
+        card += '<p class="book-content">ISBN:' + book.book_ISBN + '</p>';
+        card += '<p class="book-content">Author:' + book.book_author + '</p>';
+        card += '<p class="book-content">Published by:' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
+        card += '<p class="book-content">Edition:' + book.book_edition + '</p>';
+        card += '<p class="book-content">Edition:' + book.book_category + '</p>';
+        card += '<h2 class="book-content">Reviews</h2>';
+        for (var i = 0; i < book.reviews.length; i++) {
+            card += '<a class="review-link" id="' + book.reviews[i].id + '"href="review-details.html">' + book.reviews[i].content + '</a>'
+        }
+        card += '<h2 class="book-content">Add Your Review</h2>';
+        card += '<textarea class="" id="booktextarea"></textarea>';
+        books_div.append(card);
+    }
+
+
+    function card_on_click(obj) {
+        console.log(obj);
+        // alert(obj.id);
+        window.location = 'book-details.html?id=' + obj.id + '&user=' + $("#username").val();
+    }
 
 </script>
 </html>

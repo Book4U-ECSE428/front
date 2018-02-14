@@ -14,6 +14,8 @@
     <title>Book Detail</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/details.css"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/Rating.css"/>
 </head>
 <body>
 <div id="app">
@@ -75,7 +77,20 @@
             <!--</div>-->
             <!--<h2 class="book-content">Add Your Review</h2>-->
             <!--<textarea class="" id="booktextarea"></textarea>-->
+            <!--<div class="stars">-->
+            <!--<input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>-->
+            <!--<label class="star star-5" for="star-5" title="Amazing"></label>-->
+            <!--<input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>-->
+            <!--<label class="star star-4" for="star-4" title="Good"></label>-->
+            <!--<input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>-->
+            <!--<label class="star star-3" for="star-3" title="Ok"></label>-->
+            <!--<input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>-->
+            <!--<label class="star star-2" for="star-2" title="Not recommend"></label>-->
+            <!--<input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>-->
+            <!--<label class="star star-1" for="star-1" title="Really bad"></label>-->
+            <!--</div>-->
         </div>
+
     </div>
 </div>
 </body>
@@ -153,14 +168,55 @@
         }
         card += '<h2 class="book-content">Add Your Review</h2>';
         card += '<textarea class="" id="booktextarea"></textarea>';
+        card += '            <div class="stars">\n' +
+            '                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>\n' +
+            '                <label class="star star-5" for="star-5" title="Amazing"></label>\n' +
+            '                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>\n' +
+            '                <label class="star star-4" for="star-4" title="Good"></label>\n' +
+            '                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>\n' +
+            '                <label class="star star-3" for="star-3" title="Ok"></label>\n' +
+            '                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>\n' +
+            '                <label class="star star-2" for="star-2" title="Not recommend"></label>\n' +
+            '                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>\n' +
+            '                <label class="star star-1" for="star-1" title="Really bad"></label>\n' +
+            '            </div>';
+        card += '<button class="btn">Submit</button>';
         books_div.append(card);
     }
 
 
-    function card_on_click(obj) {
-        console.log(obj);
-        // alert(obj.id);
-        window.location = 'book-details.html?id=' + obj.id + '&user=' + $("#username").val();
+</script>
+<script type="text/javascript">
+    function getvalue() {
+        for (i = 0; i < document.getElementsByName("star").length; i++) {
+            if (document.getElementsByName("star")[i].checked == true) {
+                var rate = document.getElementsByName("star")[i].value;
+                break;
+            }
+        }
+    }
+
+
+    function ratesubmit() {
+        console.log(rate);
+        if (rate != 0) {
+            $.post('http://127.0.0.1:8000/api/rate/',
+                {
+                    'rate': rate,
+                    'review': $("textarea#review").val(),
+                }, rateCallBack);
+        } else {
+            alert("You must rate the book");
+        }
+    }
+
+    function rateCallBack(data) {
+        console.log(data);
+        if (data.status == "success") {
+            window.location = 'index.html';
+        } else {
+            $("textarea#review").val('');
+        }
     }
 
 </script>

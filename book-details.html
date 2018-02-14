@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Page title-->
+    <title>Book Detail</title>
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="css/details.css"/>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/Rating.css"/>
+</head>
+<body>
+<div id="app">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div>
+            <div class="navbar-header">
+
+                <!-- Collapsed -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right navigation">
+                    <!-- Authentication Links -->
+                    <div class="loggedin-div">
+                        <li><a href="" class="user-dropdown">Hi!
+                            <div id="username" style="display: inline-block">Username</div>
+                            <span class="caret"></span></a>
+                            <ul>
+                                <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
+                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <!-- endif -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="book">
+        <div class="details">
+
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    console.log(id);
+
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    $.post('http://127.0.0.1:8000/api/getBookByID/',
+        {
+            'session_key': getCookie('session_key'),
+            'id': id
+        }).done(bookCallBack).fail(function (a) {
+        alert("error occured");
+        window.location = 'login.html';
+    });
+
+    function bookCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            $(".loggedin-div").show();
+            console.log(data.user);
+            $("#username").html(data.request_user);
+            displayBook(data);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'login.html';
+            }
+        }
+
+    }
+
+    var book_pic_list = [
+        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/creative_bookcover.png',
+        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/children_bookcover.png',
+        'https://marketplace.canva.com/MAB___U-clw/1/0/thumbnail_large/canva-yellow-lemon-children-book-cover-MAB___U-clw.jpg',
+        'https://spark.adobe.com/images/landing/examples/how-to-book-cover.jpg',
+        'https://marketplace.canva.com/MACSXEOzaeQ/1/0/thumbnail_large/canva-orange-and-dark-purple-triangular-modern-architecture-book-cover-MACSXEOzaeQ.jpg',
+        'http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg'
+    ];
+
+    function displayBook(book) {
+        var books_div = $(".details");
+        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
+        card += '<h2 class="book-content">';
+        card += book.book_name + '</h2>';
+        card += '<p class="book-content">ISBN:' + book.book_ISBN + '</p>';
+        card += '<p class="book-content">Author:' + book.book_author + '</p>';
+        card += '<p class="book-content">Published by:' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
+        card += '<p class="book-content">Edition:' + book.book_edition + '</p>';
+        card += '<p class="book-content">Edition:' + book.book_category + '</p>';
+        card += '<h2 class="book-content">Reviews</h2>';
+        for (var i = 0; i < book.reviews.length; i++) {
+            card += '<a class="review-link" id="' + book.reviews[i].id + '"onclick="reviewAOnClick(this)">' + book.reviews[i].content + '</a>'
+        }
+        card += '<h2 class="book-content">Add Your Review</h2>';
+        card += '<textarea class="" id="booktextarea"></textarea>';
+        card += '            <div class="stars">\n' +
+            '                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>\n' +
+            '                <label class="star star-5" for="star-5" title="Amazing"></label>\n' +
+            '                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>\n' +
+            '                <label class="star star-4" for="star-4" title="Good"></label>\n' +
+            '                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>\n' +
+            '                <label class="star star-3" for="star-3" title="Ok"></label>\n' +
+            '                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>\n' +
+            '                <label class="star star-2" for="star-2" title="Not recommend"></label>\n' +
+            '                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>\n' +
+            '                <label class="star star-1" for="star-1" title="Really bad"></label>\n' +
+            '            </div>';
+        card += '<div style="width: 50%;margin: auto;"><button class="btn">Submit</button></div>';
+        books_div.append(card);
+        $(".btn").click(submitReview);
+    }
+
+
+    function submitReview() {
+        if(getvalue()>=1){
+             $.post('http://127.0.0.1:8000/api/addReview/',
+            {
+                'session_key': getCookie('session_key'),
+                'BookID': id,
+                'content': $("#booktextarea").val(),
+                'rating': getvalue()
+            }).done(submitReviewCallBack).fail(function (a) {
+            console.log("submit review error");
+        });
+        }else{
+            alert("You must at least rate this book!");
+        }
+
+    }
+
+    function submitReviewCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            location.reload();
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    function getvalue() {
+        for (i = 0; i < document.getElementsByClassName("star").length; i++) {
+            if (document.getElementsByClassName("star")[i].checked == true) {
+                var rate = document.getElementsByClassName("star")[i].value;
+                console.log(rate);
+                return rate;
+            }
+        }
+    }
+
+    function reviewAOnClick(obj) {
+        window.location = 'review-details.html?id=' + obj.id;
+    }
+
+</script>
+</html>

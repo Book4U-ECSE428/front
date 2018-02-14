@@ -93,11 +93,13 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
     width: 80vw;
-    /*height: 90vh;*/
-    background: #f7f7f7;
-    border-radius: 5px;
+    margin: 5% 10%;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 8px;
     overflow: hidden;
-    margin: auto;
+    background: rgba(209, 199, 205, 0.2);
+    color: white;
 }
 
 .card:hover {
@@ -120,15 +122,12 @@ h2 {
 
 img {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 40%;
+    width: 20%;
+    margin: 30px;
+    border-radius: 8px;
+    border: 1px solid white;
 }
 
-.details {
-    width: 70%;
-    margin: auto;
-}
 
 @media screen and (max-width: 767px ) {
     .card {
@@ -137,25 +136,41 @@ img {
 }
 
 .book-content {
-    width: fit-content;
+    width: 70%;
     margin: auto;
-    /*text-align: center;*/
 }
 
 #booktextarea {
     display: block;
     width: 85%;
     height: 30vh;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 20px;
+    border-radius: 8px;
     resize: none;
 }
 
 .review-link {
     display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
+    margin: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid white;
     word-wrap: break-word;
-
+    color: white;
 }
+
+.book-top{
+	padding-top:200px;
+	width:70%;
+}
+
+@media screen and (max-width: 1200px ) {
+    .book-content {
+		width: 100%;
+		margin: auto;
+    }
+	.book-top{
+	padding-top:0px;
+	width:100%;
+}
+}
+	

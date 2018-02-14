@@ -5,7 +5,7 @@ body {
     background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
     background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
     background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
-    height:100vh;
+    height:110%;
 }
 .navbar{
     background: rgba(209, 199, 205, 0.5);
@@ -78,11 +78,11 @@ body {
     margin: 5% 10%;
     background: rgba(209, 199, 205, 0.2);
     border:1px solid white;
-    height: 80%;
+    height: 1000px;
     -webkit-border-radius: 8px;
     border-radius: 8px;
 }
-.pic{
+.reviewDiv{
     padding: 30px;
 }
 .profile_pic{
@@ -107,6 +107,7 @@ body {
     border-radius: 8px;
     background: transparent;
     color: white;
+    padding-left: 25px;
     font-size: 20px;
 }
 
@@ -176,4 +177,38 @@ body {
     color-stop(0.44, rgb(122,153,217)),
     color-stop(0.72, rgb(73,125,189)),
     color-stop(0.86, rgb(28,58,148)));
+}
+div.stars {
+    display: inline-block;
+}
+input.star { display: none; }
+label.star {
+    float: right;
+    padding: 0px 10px;
+    font-size: 25px;
+    color: #444;
+    transition: all .2s;
+}
+label.star:before {
+    content: '\f006';
+    font-family: FontAwesome;
+}
+.review-by-user{
+    display: none;
+}
+.review-not-by-user{
+    display: block;
+}
+.review{
+    border-bottom: 1px solid white;
+    padding: 10px;
+    color: white;
+}
+@media screen and (max-width: 1160px ) {
+    #comment {
+        width: 100%;
+    }
+    .infobox{
+        height: 1500px;
+    }
 }

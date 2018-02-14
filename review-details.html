@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
+    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Page title-->
+    <title>Review</title>
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="css/review-details.css"/>
+</head>
+<body>
+<div id="app">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div>
+            <div class="navbar-header">
+
+                <!-- Collapsed -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right navigation">
+                    <!-- Authentication Links -->
+                    <!-- if user is not logged in -->
+                    <div class="loggedout-div">
+                        <li data-toggle="collapse"><a>Login</a></li>
+                        <li data-toggle="collapse"><a>Register</a></li>
+                    </div>
+                    <!-- else -->
+                    <div class="loggedin-div">
+                        <li><a href="" class="user-dropdown">Hi! <div id="username" style="display: inline-block">Username</div><span class="caret"></span></a>
+                            <ul>
+                                <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
+                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </div>
+                    <!-- endif -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<div class="infobox">
+    <div class="col-lg-12 reviewDiv" style="padding-top: 70px">
+        <div class="col-lg-9 col-md-9">
+            <div class="infoDiv">Book Name: <div class="info" id="info-bookname"></div>Enchantment</div>
+            <div class="infoDiv">
+                <div class="stars">
+                    <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
+                    <label class="star star-5" for="star-5" title="Amazing"></label>
+                    <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
+                    <label class="star star-4" for="star-4" title="Good"></label>
+                    <input class="star star-3" id="star-3" type="radio" name="star" value="3"/>
+                    <label class="star star-3" for="star-3" title="Ok"></label>
+                    <input class="star star-2" id="star-2" type="radio" name="star" value="2"/>
+                    <label class="star star-2" for="star-2" title="Not recommend"></label>
+                    <input class="star star-1" id="star-1" type="radio" name="star" value="1"/>
+                    <label class="star star-1" for="star-1" title="Really bad"></label>
+                </div>
+            </div>
+            <div class="info" id="info-user" style="padding:10px;">Elsie4ever</div>
+        </div>
+        <div class="col-lg-12 col-md-12 infoDiv" style="padding-left: 25px">Content: </div>
+        <!-- if the review is written by current user-->
+        <div class="col-lg-12 col-md-12 box review-by-user" style="margin-top: 20px">
+            <span class="edit">edit</span>
+            <span class="save">save</span>
+            <div class="info text" id="info-review1">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+            </div>
+        </div>
+        <!-- else -->
+        <div class="col-lg-12 col-md-12 box review-not-by-user" style="margin-top: 20px">
+            <div class="info text" id="info-review2">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+            </div>
+        </div>
+        <!-- endif -->
+        <div class="infoDiv col-lg-12 col-md-12">Comment: </div>
+        <div class="review col-lg-12 col-md-12">
+            This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking and the last scenes were ajdfksadlfsd.
+        </div>
+        <div class="review col-lg-12 col-md-12">
+            This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking and the last scenes were ajdfksadlfsd.
+        </div>
+        <div class="review col-lg-12 col-md-12">
+            This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking and the last scenes were ajdfksadlfsd.
+        </div>
+        <div class="infoDiv col-lg-12 col-md-12">Add Comment: </div>
+        <div>
+            <textarea name="comment" id="comment" rows="2" cols="120" style="font-family:sans-serif;"></textarea>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <button type="submit" class="btn" onclick="post()"> Post</button> &nbsp&nbsp&nbsp&nbsp&nbsp
+            <input type="button" class="btn" value="Clear" onclick="remove()">
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $('.edit').click(function(){
+        $(this).hide();
+        $('.box').addClass('editable');
+        $('.text').attr('contenteditable', 'true');
+        $('.save').show();
+    });
+    $('.save').click(function(){
+        $(this).hide();
+        $('.box').removeClass('editable');
+        $('.text').removeAttr('contenteditable');
+        $('.edit').show();
+    });
+</script>
+<script type="text/javascript">
+    function remove()
+    {
+        var context=document.getElementById('comment');
+        alert(context.value);
+    }
+
+    function post()
+    {
+        console.log(comment);
+        var comment=document.getElementById('comment');
+        if ( comment != '')
+        {
+            $.post('http://127.0.0.1:8000/api/comment/',
+                { 'comment': comment.value }
+                , commentCallBack);
+        }else{
+            alert("There is no comment");
+        }
+    }
+
+    function commentCallBack(data)
+    {
+        console.log(data);
+        if (data.status =="success") {
+            window.location = 'index.html';
+        } else {
+            $("textarea#comment").val('');
+        }
+    }
+</script>
+</html>
+
+</body>
+</html>

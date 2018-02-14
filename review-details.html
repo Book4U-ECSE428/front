@@ -224,7 +224,6 @@
     function post() {
         console.log(comment);
         var comment = document.getElementById('comment');
-        console.log(comment.value.length);
         if (comment.value.length > 400){ // If longer than 400 unicode char.
             alert("Keep your comments shorter than 400 characters");
             return;

@@ -123,11 +123,11 @@
         var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
         card += '<h2 class="col-lg-10 book-top">';
         card += book.book_name + '</h2>';
-        card += '<p class="col-lg-10 book-content">ISBN:' + book.book_ISBN + '</p>';
-        card += '<p class="col-lg-10 book-content">Author:' + book.book_author + '</p>';
-        card += '<p class="col-lg-10 book-content">Published by:' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
-        card += '<p class="col-lg-10 book-content">Edition:' + book.book_edition + '</p>';
-        card += '<p class="col-lg-10 book-content">Edition:' + book.book_category + '</p>';
+        card += '<p class="col-lg-10 book-content">ISBN: ' + book.book_ISBN + '</p>';
+        card += '<p class="col-lg-10 book-content">Author: ' + book.book_author + '</p>';
+        card += '<p class="col-lg-10 book-content">Published by: ' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
+        card += '<p class="col-lg-10 book-content">Edition: ' + book.book_edition + '</p>';
+        card += '<p class="col-lg-10 book-content">Genre: ' + book.book_category + '</p>';
         card += '<h2 class="col-lg-12" style="padding-left:25px;">Reviews</h2>';
         for (var i = 0; i < book.reviews.length; i++) {
             card += '<a class="col-lg-12 review-link" id="' + book.reviews[i].id + '"onclick="reviewAOnClick(this)">' + book.reviews[i].content + '</a>'

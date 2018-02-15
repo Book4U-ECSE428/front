@@ -209,7 +209,9 @@
         $("#info-review2").html(review.review_content);
         for (var i = 0; i < review.comments.length; i++) {
             $(".comment-list").append(
-                '<div class="review col-lg-12 col-md-12">' + review.comments[i].user + ': ' + review.comments[i].content + '</div>'
+                '<div class="review col-lg-12 col-md-12" id="'+review.comments[i].id 
+                + '" onclick="editComment(this)">' + review.comments[i].user + ': ' 
+                + review.comments[i].content + '</div>'
             )
         }
         document.getElementsByClassName("star-" + review.review_rating)[0].checked = true;
@@ -247,6 +249,47 @@
             location.reload();
         } else {
             $("textarea#comment").val('');
+        }
+    }
+
+    // Click on comment to edit
+    function editComment(comment){
+        var cid = "#"+comment.id;
+        $(cid).before(
+            '<div><textarea id="edit" rows="1" cols="120" style="font-family:sans-serif;"></textarea></div>'
+        )
+        $(cid).fadeOut(75);
+
+        // Click anywhere outside comment list to save comment
+        $(window).click(function(){
+            var newC = document.getElementById('edit');
+            if (newC.value.length > 400){ // If longer than 400 unicode char.
+                alert("Keep your comments shorter than 400 characters");
+                return;
+            }
+            
+            $.post('http://127.0.0.1:8000/api/edit_comment/',
+                {
+                    'content': newC.value,
+                    'session_key': getCookie('session_key'),
+                    'id': comment.id
+                }
+                , editCommentCallback);
+
+        })
+
+        $(".comment-list").click(function(e){
+            e.stopPropagation();
+        })
+
+    }
+
+    function editCommentCallback(data){
+        if (data.status == "success") {
+            location.reload();
+        } else {
+            alert("Comment fail to update");
+            window.setTimeout(location.reload(),800);
         }
     }
 

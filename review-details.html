@@ -137,6 +137,7 @@
             <button type="submit" class="btn" onclick="post()"> Post</button>
             &nbsp&nbsp&nbsp&nbsp&nbsp
             <input type="button" class="btn" value="Clear" onclick="remove()">
+            <div style="float:right;right:1em;color:silver;margin:0.4em; font-size:120%" id="charCounter">Limit: 400 characters</div>
         </div>
     </div>
 </div>
@@ -223,7 +224,10 @@
     function post() {
         console.log(comment);
         var comment = document.getElementById('comment');
-
+        if (comment.value.length > 400){ // If longer than 400 unicode char.
+            alert("Keep your comments shorter than 400 characters");
+            return;
+        }
         if (comment.value !== '') {
             $.post('http://127.0.0.1:8000/api/addComment/',
                 {
@@ -245,6 +249,11 @@
             $("textarea#comment").val('');
         }
     }
+
+    $("#comment").keyup(function(){
+        var char_cnt = 400 - this.value.length;
+        $("#charCounter").html(char_cnt + " remaining");
+    })
 </script>
 </html>
 

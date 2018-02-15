@@ -39,7 +39,7 @@ function checkValid()
 	var category = document.getElementById("category").value;
 	var publish_firm = document.getElementById("publish_firm").value;
 
-	
+
 	if(name=="")
     {
 		alert("bookname must be filled");
@@ -62,7 +62,7 @@ function checkValid()
 
 
 
-		$.post('http://127.0.0.1:8000/api/add_book/', 
+		$.post('http://127.0.0.1:8000/api/add_book/',
 				{
 				    'session_key': getCookie('session_key'),
 					  'name': name,
@@ -74,8 +74,8 @@ function checkValid()
             'description': description,
             'publish_firm':publish_firm
 
-				}, bookinfoCallBack);	
-	}		
+				}, bookinfoCallBack);
+	}
 }
 
 function bookinfoCallBack(data) {
@@ -86,6 +86,7 @@ function bookinfoCallBack(data) {
     	$("text#bookname").val('');
     	$("text#author").val('');
         $("textarea#description").val('');
+        alert(data.reason);
     }
 }
 </script>

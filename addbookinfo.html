@@ -32,13 +32,16 @@ function checkValid()
 
 	var name=document.getElementById("name").value;
 	var author=document.getElementById("author").value;
-	var description = document.getElementById("description").value;
 	var ISBN = document.getElementById("ISBN").value;
 	var publish_date = document.getElementById("publish_date").value;
 	var edition = document.getElementById("edition").value;
 	var category = document.getElementById("category").value;
 	var publish_firm = document.getElementById("publish_firm").value;
+	var cover_image = document.getElementById("cover_image").value;
 
+	if (cover_image == "") {
+	    cover_image = 'https://vignette.wikia.nocookie.net/arthur/images/a/a7/No_Image.jpg/revision/latest?cb=20130610195200';
+	}
 
 	if(name=="")
     {
@@ -52,10 +55,6 @@ function checkValid()
 	else if(author=="")
 	{
 		alert("author name must be filled");
-	}
-	else if(description=="")
-	{
-		alert("description must be filled");
 	}
 	else
 	{
@@ -71,8 +70,9 @@ function checkValid()
 					  'publish_date': publish_date,
 					  'edition': edition,
             'category':category,
-            'description': description,
-            'publish_firm':publish_firm
+            'publish_firm': publish_firm,
+                    'cover_image':cover_image
+
 
 				}, bookinfoCallBack);
 	}
@@ -85,7 +85,6 @@ function bookinfoCallBack(data) {
     } else {
     	$("text#bookname").val('');
     	$("text#author").val('');
-        $("textarea#description").val('');
         alert(data.reason);
     }
 }
@@ -105,8 +104,8 @@ function bookinfoCallBack(data) {
             Please enter the publish firm:&nbsp<input type="text" style="border:1px solid black" id="publish_firm"></input><br><br></br>
 
 
-            <h4>Please enter a short description of the book:</h4>
-            <textarea name="description" id="description" rows="4" cols="50" style="font-family:sans-serif;border:1px solid black;"></textarea><br></br>
+            <h4>Please enter the url of the book image:</h4>
+            <textarea name="cover_image" id="cover_image" rows="4" cols="50" style="font-family:sans-serif;border:1px solid black;"></textarea><br></br>
             <div>
                 <button type="button" id="book_submit" style="width:100px;height:50px;" onclick="checkValid()">Submit</button>
             </div>

@@ -120,7 +120,8 @@
 
     function displayBook(book) {
         var books_div = $(".details");
-        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
+		var card = '<img src="' + book.cover_image + '" alt="Book Avatar " class="col-lg-2">';
+        //var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
         card += '<h2 class="col-lg-10 book-top">';
         card += book.book_name + '</h2>';
         card += '<p class="col-lg-10 book-content">ISBN: ' + book.book_ISBN + '</p>';

@@ -123,8 +123,9 @@
     ];
 
     function createCard(book) {
-        var card = '<div class="card" onclick="card_on_click(this)" id="' + book.id + '"><img class="bookcover"';
-        card += 'src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
+        var card = '<div class="card" onclick="card_on_click(this)" id="' + book.id + '"><img class="bookcover" height="550" width="150"';
+        //card += 'src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
+        card += 'src="' + book.cover_image + '" alt="No image">';
         card += '<div class="card-container">';
         card += '<h4><b>' + book.name + '</b></h4>';
         card += '<p>' + 'By ' + book.author + '</p>';

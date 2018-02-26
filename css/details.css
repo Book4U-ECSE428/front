@@ -136,7 +136,6 @@ img {
 }
 
 .book-content {
-    width: 70%;
     margin: auto;
 }
 
@@ -159,18 +158,19 @@ img {
 }
 
 .book-top{
-	padding-top:200px;
 	width:70%;
+    padding-top:20px;
 }
 
 @media screen and (max-width: 1200px ) {
     .book-content {
-		width: 100%;
 		margin: auto;
+        padding-left: 30px;
     }
 	.book-top{
-	padding-top:0px;
-	width:100%;
+	    padding-top:0px;
+        padding-left: 25px;
+	    width:100%;
 }
 }
 	

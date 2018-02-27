@@ -62,19 +62,22 @@
         </div>
     </nav>
     <div class="book-cards" id="card-list">
-        <div v-for="book in books">
-                <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
-
-                        <img class="bookcover" height="550" width="150" b-bind:src="book.cover_image" alt="No image">
-                        <div class="card-container">
-                                <h4><b>{{book.name}}</b></h4>
-                                <p>{{book.author}}</p>
-                                <p>Rate: {{book.rating}}</p>
-                                <p>Edition: {{book.edition}}</p>
-                                <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
-                        </div>    
-                </div>   
-        </div>        
+        <div v-if="books.length>0">
+                <div v-for="book in books">
+                        <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
+        
+                                <img class="bookcover" height="550" width="150" b-bind:src="book.cover_image" alt="No image">
+                                <div class="card-container">
+                                        <h4><b>{{book.name}}</b></h4>
+                                        <p>{{book.author}}</p>
+                                        <p>Rate: {{book.rating}}</p>
+                                        <p>Edition: {{book.edition}}</p>
+                                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
+                                </div>    
+                        </div>   
+                </div>
+        </div>
+        
     </div>
 </div>
 </body>
@@ -120,8 +123,8 @@
     }
 
     function generateAllCard(book_list) {
-        // var books_div = $(".book-cards");
-        // books_div.empty();
+        var books_div = $(".book-cards");
+        books_div.empty();
         var cardList= new Vue({
             el: "#card-list",
             data: {

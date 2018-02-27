@@ -8,6 +8,8 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--vue.js-->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <!--Page title-->
     <title>Book Detail</title>
     <!-- Styles -->
@@ -31,7 +33,6 @@
                 </button>
                 <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
             </div>
-
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
@@ -56,8 +57,34 @@
         </div>
     </nav>
     <div class="book">
-        <div class="details">
-
+        <div class="details" id="details" >
+            <img  id="cover_img" v-bind:src="cover_image" alt="Book Avatar " class="col-lg-2 col-md-2 col-sm-2">
+            <h2 class="col-lg-8 col-md-8 col-sm-8 book-top">{{name}}</h2>
+            <p class="col-lg-8 col-md-8 col-sm-8 book-content">ISBN: {{ISBN}}</p>
+            <p class="col-lg-8 col-md-8 col-sm-8 book-content">Author: {{Author}}</p>
+            <p class="col-lg-8 col-md-8 col-sm-8 book-content">Published By: {{Publish_firm}} on {{Publish_date}}</p>
+            <p class="col-lg-8 col-md-8 col-sm-8 book-content">Edition: {{Edition}}</p>
+            <div class="col-lg-8 col-md-8 col-sm-8 book-content">Genre:
+                <div v-if="Genre==null" style="display: inline">null</div>
+                <div v-else style="display: inline">{{Genre}}</div>
+            </div>
+            <h2 class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">Reviews</h2>
+            <a v-for="(review, index) in Reviews" v-bind:id="review.id" class="col-lg-12 col-md-12 col-sm-12 review-link" onclick="reviewAOnClick(this)">{{review.content}}</a>
+            <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
+            <div class="col-lg-6 col-md-6 col-sm-6 stars">
+                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>
+                <label class="star star-5" for="star-5" title="Amazing"></label>
+                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>
+                <label class="star star-4" for="star-4" title="Good"></label>
+                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>
+                <label class="star star-3" for="star-3" title="Ok"></label>
+                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>
+                <label class="star star-2" for="star-2" title="Not recommend"></label>
+                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>
+                <label class="star star-1" for="star-1" title="Really bad"></label>
+            </div>
+            <textarea class="col-lg-12" id="booktextarea" style="background-color:transparent;"></textarea>
+            <div class="col-lg-12" style="padding-bottom: 20px"><button class="btn" style="background-color:grey;" onclick="submitReview()">Submit</button></div>
         </div>
     </div>
 </div>
@@ -119,36 +146,52 @@
     ];
 
     function displayBook(book) {
-        var books_div = $(".details");
-        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
-        card += '<h2 class="col-lg-10 book-top">';
-        card += book.book_name + '</h2>';
-        card += '<p class="col-lg-10 book-content">ISBN: ' + book.book_ISBN + '</p>';
-        card += '<p class="col-lg-10 book-content">Author: ' + book.book_author + '</p>';
-        card += '<p class="col-lg-10 book-content">Published by: ' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
-        card += '<p class="col-lg-10 book-content">Edition: ' + book.book_edition + '</p>';
-        card += '<p class="col-lg-10 book-content">Genre: ' + book.book_category + '</p>';
-        card += '<h2 class="col-lg-12" style="padding-left:25px;">Reviews</h2>';
-        for (var i = 0; i < book.reviews.length; i++) {
-            card += '<a class="col-lg-12 review-link" id="' + book.reviews[i].id + '"onclick="reviewAOnClick(this)">' + book.reviews[i].content + '</a>'
-        }
-        card += '<h2 class="col-lg-6" style="padding-left:25px;">Add Your Review</h2>';
-        card += '            <div class="col-lg-6 stars">\n' +
-            '                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>\n' +
-            '                <label class="star star-5" for="star-5" title="Amazing"></label>\n' +
-            '                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>\n' +
-            '                <label class="star star-4" for="star-4" title="Good"></label>\n' +
-            '                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>\n' +
-            '                <label class="star star-3" for="star-3" title="Ok"></label>\n' +
-            '                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>\n' +
-            '                <label class="star star-2" for="star-2" title="Not recommend"></label>\n' +
-            '                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>\n' +
-            '                <label class="star star-1" for="star-1" title="Really bad"></label>\n' +
-            '            </div>';
-        card += '<textarea class="col-lg-12" id="booktextarea" style="background-color:transparent;"></textarea>';
-        card += '<div class="col-lg-12"><button class="btn" style="background-color:grey;">Submit</button></div>';
-        books_div.append(card);
-        $(".btn").click(submitReview);
+        //vue.js
+        var book = new Vue({
+            el: '#details',
+            data: {
+                cover_image: book.cover_image,
+                name: book.book_name,
+                ISBN: book.book_ISBN,
+                Author: book.book_author,
+                Publish_firm: book.book_publish_firm,
+                Publish_date: book.book_publish_date,
+                Edition: book.book_edition,
+                Genre: book.book_category,
+                Reviews: book.reviews
+            }
+        });
+//        var books_div = $(".details");
+//		var card = '<img src="' + book.cover_image + '" alt="Book Avatar " class="col-lg-2">';
+//        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
+//        card += '<h2 class="col-lg-10 book-top">';
+//        card += book.book_name + '</h2>';
+//        card += '<p class="col-lg-10 book-content">ISBN: ' + book.book_ISBN + '</p>';
+//        card += '<p class="col-lg-10 book-content">Author: ' + book.book_author + '</p>';
+//        card += '<p class="col-lg-10 book-content">Published by: ' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
+//        card += '<p class="col-lg-10 book-content">Edition: ' + book.book_edition + '</p>';
+//        card += '<p class="col-lg-10 book-content">Genre: ' + book.book_category + '</p>';
+//        card += '<h2 class="col-lg-12" style="padding-left:25px;">Reviews</h2>';
+//        for (var i = 0; i < book.reviews.length; i++) {
+//            card += '<a class="col-lg-12 review-link" id="' + book.reviews[i].id + '"onclick="reviewAOnClick(this)">' + book.reviews[i].content + '</a>'
+//        }
+//        card += '<h2 class="col-lg-6" style="padding-left:25px;">Add Your Review</h2>';
+//        card += '            <div class="col-lg-6 stars">\n' +
+//            '                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>\n' +
+//            '                <label class="star star-5" for="star-5" title="Amazing"></label>\n' +
+//            '                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>\n' +
+//            '                <label class="star star-4" for="star-4" title="Good"></label>\n' +
+//            '                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>\n' +
+//            '                <label class="star star-3" for="star-3" title="Ok"></label>\n' +
+//            '                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>\n' +
+//            '                <label class="star star-2" for="star-2" title="Not recommend"></label>\n' +
+//            '                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>\n' +
+//            '                <label class="star star-1" for="star-1" title="Really bad"></label>\n' +
+//            '            </div>';
+//        card += '<textarea class="col-lg-12" id="booktextarea" style="background-color:transparent;"></textarea>';
+//        card += '<div class="col-lg-12"><button class="btn" style="background-color:grey;">Submit</button></div>';
+//        books_div.append(card);
+//        $(".btn").click(submitReview);
     }
 
 

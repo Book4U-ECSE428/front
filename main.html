@@ -51,8 +51,8 @@
                             <div id="username" style="display: inline-block">Username</div>
                             <span class="caret"></span></a>
                             <ul>
-                                <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
-                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
+                                <li data-toggle="collapse"><a href="profile.html" class="profile">Profile</a></li>
+                                <li data-toggle="collapse"><a href="login.html" class="logout">Logout</a></li>
                             </ul>
                         </li>
                     </div>
@@ -123,8 +123,6 @@
     }
 
     function generateAllCard(book_list) {
-        var books_div = $(".book-cards");
-        books_div.empty();
         var cardList= new Vue({
             el: "#card-list",
             data: {

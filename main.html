@@ -46,7 +46,7 @@
                     <!--<li data-toggle="collapse"><a>Register</a></li>-->
                     <!--</div>-->
                     <!-- else -->
-                    <div class="loggedin-div">
+                    <!-- <div class="loggedin-div">
                         <li><a href="" class="user-dropdown">Hi!
                             <div id="username" style="display: inline-block">Username</div>
                             <span class="caret"></span></a>
@@ -55,7 +55,8 @@
                                 <li data-toggle="collapse"><a href="login.html" class="logout">Logout</a></li>
                             </ul>
                         </li>
-                    </div>
+                    </div> -->
+                    <div class ="loggedin-div"></div>
                     <!-- endif -->
                 </ul>
             </div>
@@ -82,6 +83,10 @@
 </div>
 </body>
 <script>
+
+     $(function(){
+         $(".loggedin-div").load("nav.html");
+     });
 
     function getCookie(cname) {
         var name = cname + "=";

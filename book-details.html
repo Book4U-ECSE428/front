@@ -41,16 +41,7 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
                     <!-- Authentication Links -->
-                    <div class="loggedin-div">
-                        <li><a href="" class="user-dropdown">Hi!
-                            <div id="username" style="display: inline-block">Username</div>
-                            <span class="caret"></span></a>
-                            <ul>
-                                <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
-                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
-                            </ul>
-                        </li>
-                    </div>
+                    <div class="loggedin-div"></div>
                     <!-- endif -->
                 </ul>
             </div>
@@ -110,7 +101,10 @@
         }
         return "";
     }
-
+    $(function(){
+         $(".loggedin-div").load("nav.html");
+     });
+     
     $.post('http://127.0.0.1:8000/api/getBookByID/',
         {
             'session_key': getCookie('session_key'),

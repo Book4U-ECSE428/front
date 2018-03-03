@@ -112,11 +112,11 @@
     });
 
     function b_cb(data) {
-        console.log(data);
+        // console.log(data);
         if (data.status === "success") {
             $(".loggedin-div").show();
             console.log(data.user);
-            $("#username").html(data.user);
+            // $("#username").html(data.user);
             generateAllCard(data.books);
         } else {
             if (data.reason === "session expired") {

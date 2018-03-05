@@ -79,6 +79,18 @@
          $(".loggedin-div").load("nav.html");
      });
 
+    $('.edit').click(function(){
+        $(this).hide();
+        $('.box').addClass('editable');
+        $('.text').attr('contenteditable', 'true');
+        $('.save').show();
+    });
+
+
+     $(function(){
+         $(".loggedin-div").load("nav.html");
+     });
+
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');

@@ -7,6 +7,7 @@
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -55,12 +56,11 @@
         </div>
     </nav>
 </div>
-<div class="infobox">
-    <div class="col-lg-12 reviewDiv" style="padding-top: 70px">
+<div class="infobox" id="detail">
+    <div class="col-lg-12 reviewDiv" style="padding-top: 50px">
         <div class="col-lg-9 col-md-9">
-            <div class="infoDiv">Book Name:
+            <div class="infoDiv">Book Name:{{Bookname}}
                 <div class="info" id="info-bookname"></div>
-
             </div>
             <div class="infoDiv">
                 <div class="stars">
@@ -76,50 +76,18 @@
                     <label class="star star-1" for="star-1" title="Really bad"></label>
                 </div>
             </div>
-            <div class="info" id="info-user" style="padding:10px;">Elsie4ever</div>
+            <div class="info" id="info-user" style="padding:10px;">Written by:{{username}}</div>
         </div>
         <div class="col-lg-12 col-md-12 infoDiv" style="padding-left: 25px">Content:</div>
-        <!-- if the review is written by current user-->
-        <!--<div class="col-lg-12 col-md-12 box review-by-user" style="margin-top: 20px">-->
-        <!--<span class="edit">edit</span>-->
-        <!--<span class="save">save</span>-->
-        <!--<div class="info text" id="info-review1">I enjoy meeting new people and finding ways to help them have an-->
-        <!--uplifting experience. I have had a variety of customer service opportunities, through which I was able-->
-        <!--to have fewer returned products and increased repeat customers, when compared with co-workers. I am-->
-        <!--dedicated, outgoing, and a team player. Who could I speak with in your customer service department about-->
-        <!--your organization’s customer service needs?-->
-        <!--</div>-->
-        <!--</div>-->
-        <!-- else -->
         <div class="col-lg-12 col-md-12 box review-not-by-user" style="margin-top: 20px">
-            <div class="info text" id="info-review2">I enjoy meeting new people and finding ways to help them have an
-                uplifting experience. I have had a variety of customer service opportunities, through which I was able
-                to have fewer returned products and increased repeat customers, when compared with co-workers. I am
-                dedicated, outgoing, and a team player. Who could I speak with in your customer service department about
-                your organization’s customer service needs?
+            <div class="info text" id="info-review2">{{Reviewcontent}}
             </div>
         </div>
-        <!-- endif -->
-        <div class="infoDiv col-lg-12 col-md-12">Comment:</div>
-        <div class="comment-list"></div>
-        <!--<div class="review col-lg-12 col-md-12">-->
-        <!--This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking-->
-        <!--about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a-->
-        <!--ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking-->
-        <!--and the last scenes were ajdfksadlfsd.-->
-        <!--</div>-->
-        <!--<div class="review col-lg-12 col-md-12">-->
-        <!--This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking-->
-        <!--about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a-->
-        <!--ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking-->
-        <!--and the last scenes were ajdfksadlfsd.-->
-        <!--</div>-->
-        <!--<div class="review col-lg-12 col-md-12">-->
-        <!--This was so so powerful and basically amazing. I'm actually confused why I haven't heard of people talking-->
-        <!--about this?!? I know it's a slightly older book (2015) but it's like on par with The Hate U Give which has a-->
-        <!--ton of well-earned fame. This one about #blackLivesMatter is like just as powerful and super heartbreaking-->
-        <!--and the last scenes were ajdfksadlfsd.-->
-        <!--</div>-->
+        <div class="infoDiv col-lg-12 col-md-12">Comment:
+            <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:{{comment.content}}</div>
+        </div>
+
+
         <div class="infoDiv col-lg-12 col-md-12">Add Comment:</div>
         <div>
             <textarea name="comment" id="comment" rows="2" cols="120" style="font-family:sans-serif;"></textarea>
@@ -196,22 +164,20 @@
                 window.location = 'index.html';
             }
         }
-
     }
 
     function displayReview(review) {
-        $("#info-bookname").html(review.book_name);
-        $("#info-user").html('Review writen by user: ' + review.review_user);
-        $("#info-review2").html(review.review_content);
-        for (var i = 0; i < review.comments.length; i++) {
-            $(".comment-list").append(
-                '<div class="review col-lg-12 col-md-12" id="'+review.comments[i].id 
-                + '" onclick="editComment(this)">' + review.comments[i].user + ': ' 
-                + review.comments[i].content + '</div>'
-            )
-        }
+        //vue.js
+        var Review = new Vue({
+            el: '#detail',
+            data: {
+                Bookname:review.book_name,
+                Reviewcontent: review.review_content,
+                username:review.review_user,
+		        Comments:review.comments
+            }
+        });
         document.getElementsByClassName("star-" + review.review_rating)[0].checked = true;
-
     }
 
     function remove() {
@@ -263,7 +229,7 @@
                 alert("Keep your comments shorter than 400 characters");
                 return;
             }
-            
+
             $.post('http://127.0.0.1:8000/api/edit_comment/',
                 {
                     'content': newC.value,

@@ -61,12 +61,11 @@
             </div>
             <h2 class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">Reviews</h2>
             <div v-for="(review, index) in Reviews" class="col-lg-12 col-md-12 col-sm-12 reviewDiv">
-                <a v-bind:id="review.id" v-bind:data-reviewid="review.id" class="col-lg-10 col-md-10 col-sm-10 review-link" onclick="reviewAOnClick(this)">
+                <a v-bind:id="review.id" class="col-lg-10 col-md-10 col-sm-10 review-link" onclick="reviewAOnClick(this)">
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
-                <button v-if="user==review.user" id="delete" class="col-lg-2 col-md-2 col-sm-2 delete-button" onclick="deletReview()"><image src="img/delete.png"/></button>
-
+                <button v-if="user==review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
@@ -164,7 +163,6 @@
                 user:book.request_user
             }
         });
-        console.log("123"+book.request_user);
 //        var books_div = $(".details");
 //		var card = '<img src="' + book.cover_image + '" alt="Book Avatar " class="col-lg-2">';
 //        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
@@ -198,15 +196,18 @@
 //        $(".btn").click(submitReview);
     }
 
-    function deletReview(){
-        var reviewid= $(".review-link").data('reviewid');
-        $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
-            {
-                'session_key': getCookie('session_key'),
-                'id': reviewid,
-            }).done(deleteReviewCallBack).fail(function (a) {
-            console.log("delete review error");
-        });
+    function deletReview(e){
+
+            var reviewid= e.target.getAttribute("data-reviewid");
+            console.log(reviewid);
+            $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'id': reviewid
+                }).done(deleteReviewCallBack).fail(function (a) {
+                console.log("delete review error");
+            });
+
     }
 
     function deleteReviewCallBack(data) {

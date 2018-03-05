@@ -60,7 +60,13 @@
                 <div v-else style="display: inline">{{Genre}}</div>
             </div>
             <h2 class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">Reviews</h2>
-            <a v-for="(review, index) in Reviews" v-bind:id="review.id" class="col-lg-12 col-md-12 col-sm-12 review-link" onclick="reviewAOnClick(this)">{{review.content}}</a>
+            <div v-for="(review, index) in Reviews" class="col-lg-12 col-md-12 col-sm-12 reviewDiv">
+                <a v-bind:id="review.id" class="col-lg-10 col-md-10 col-sm-10 review-link" onclick="reviewAOnClick(this)">
+                    <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
+                    <div v-else style="display: inline">{{review.content}}</div>
+                </a>
+                <button v-if="user==review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
+            </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
                 <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>
@@ -85,7 +91,6 @@
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     console.log(id);
-
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -115,6 +120,7 @@
     });
 
     function bookCallBack(data) {
+
         console.log(data);
         if (data.status === "success") {
             $(".loggedin-div").show();
@@ -141,6 +147,7 @@
 
     function displayBook(book) {
         //vue.js
+
         var book = new Vue({
             el: '#details',
             data: {
@@ -152,7 +159,8 @@
                 Publish_date: book.book_publish_date,
                 Edition: book.book_edition,
                 Genre: book.book_category,
-                Reviews: book.reviews
+                Reviews: book.reviews,
+                user:book.request_user
             }
         });
 //        var books_div = $(".details");
@@ -188,6 +196,26 @@
 //        $(".btn").click(submitReview);
     }
 
+    function deletReview(e){
+
+            var reviewid= e.target.getAttribute("data-reviewid");
+            console.log(reviewid);
+            $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'id': reviewid
+                }).done(deleteReviewCallBack).fail(function (a) {
+                console.log("delete review error");
+            });
+
+    }
+
+    function deleteReviewCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            location.reload();
+        }
+    }
 
     function submitReview() {
         if(getvalue()>=1){

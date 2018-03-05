@@ -74,11 +74,13 @@ body {
 .nav{
     padding-right: 5%;
 }
-.infobox{
+
+.infobox1 {
     margin: 5% 10%;
     background: rgba(209, 199, 205, 0.2);
     border:1px solid white;
-    height: 1000px;
+    display:block;
+    overflow:auto;
     -webkit-border-radius: 8px;
     border-radius: 8px;
 }
@@ -189,9 +191,20 @@ label.star {
     color: #444;
     transition: all .2s;
 }
-label.star:before {
-    content: '\f006';
-    font-family: FontAwesome;
+
+input.star:checked ~ label.star:before {
+    content: '\f005';
+    color: #FD4;
+    transition: all .25s;
+}
+
+input.star-5:checked ~ label.star:before {
+    color: #FE7;
+    text-shadow: 0 0 20px #952;
+}
+
+input.star-1:checked ~ label.star:before {
+    color: #F62;
 }
 .review-by-user{
     display: none;

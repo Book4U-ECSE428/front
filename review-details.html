@@ -56,7 +56,7 @@
         </div>
     </nav>
 </div>
-<div class="infobox" id="detail">
+<div class="infobox1" id="detail">
     <div class="col-lg-12 reviewDiv" style="padding-top: 50px">
         <div class="col-lg-9 col-md-9">
             <div class="infoDiv">Book Name:{{Bookname}}
@@ -179,6 +179,8 @@
         });
         document.getElementsByClassName("star-" + review.review_rating)[0].checked = true;
     }
+    //set radio btn non-clickable
+    $(':radio:not(:checked)').attr('disabled', true);
 
     function remove() {
         var context = document.getElementById('comment');

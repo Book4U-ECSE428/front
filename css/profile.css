@@ -78,7 +78,8 @@ body {
     margin: 5% 10%;
     background: rgba(209, 199, 205, 0.2);
     border:1px solid white;
-    height: 80%;
+    display:block;
+    overflow:auto;
     -webkit-border-radius: 8px;
     border-radius: 8px;
 }

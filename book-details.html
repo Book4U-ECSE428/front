@@ -61,7 +61,7 @@
             </div>
             <h2 class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">Reviews</h2>
             <div v-for="(review, index) in Reviews" class="col-lg-12 col-md-12 col-sm-12 reviewDiv">
-                <a v-bind:id="review.id" class="col-lg-10 col-md-10 col-sm-10 review-link" onclick="reviewAOnClick(this)">
+                <a v-bind:id="review.id" v-bind:data-reviewid="review.id" class="col-lg-10 col-md-10 col-sm-10 review-link" onclick="reviewAOnClick(this)">
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
@@ -199,8 +199,23 @@
     }
 
     function deletReview(){
-
+        var reviewid= $(".review-link").data('reviewid');
+        $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
+            {
+                'session_key': getCookie('session_key'),
+                'id': reviewid,
+            }).done(deleteReviewCallBack).fail(function (a) {
+            console.log("delete review error");
+        });
     }
+
+    function deleteReviewCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            location.reload();
+        }
+    }
+
     function submitReview() {
         if(getvalue()>=1){
              $.post('http://127.0.0.1:8000/api/addReview/',

@@ -77,6 +77,9 @@
                         <div class="error_msg" id="error_email">
                             {{message1}}
                         </div>
+                        <div class="error_msg" id="error_ban">
+                            {{message3}}
+                        </div>
                     </div>
 
                     <div>
@@ -116,20 +119,20 @@
     $("button.signin").click(login);
 
     function login() {
-    	if($("input#email").val().length == 0 || $("input#password").val().length == 0)
-    	{
-    		alert("Missing Field");
-    	}
-    	else
-    	{
-    		console.log("login");
-	        $.post('http://127.0.0.1:8000/api/login/',
-	            {
-	                'e_mail': $("#email").val(),
-	                'password': $("#password").val()
-	            }
-	            , loginCallBack);
-    	}
+        if($("input#email").val().length == 0 || $("input#password").val().length == 0)
+        {
+            alert("Missing Field");
+        }
+        else
+        {
+            console.log("login");
+            $.post('http://127.0.0.1:8000/api/login/',
+                {
+                    'e_mail': $("#email").val(),
+                    'password': $("#password").val()
+                }
+                , loginCallBack);
+        }
         
     }
 
@@ -140,42 +143,45 @@
             setCookie("session_key", data.session_key, 1800);
             window.location = 'main.html';
         } else {
-        	if(data.reason==="no such user")
-        	{
-        		$('.error_msg').show();
+            if(data.reason==="no such user")
+            {
 
-	        	var error1= new Vue({
-	            el: "#error_email",
-	            data: {
-	                message1: 'The e-mail address does not match credential'
-	            }
-	        })
+                $('.error_msg').hide();
+                var error1= new Vue({
+                el: "#error_email",
+                data: {
+                    message1: 'The e-mail address does not match credential'
+                }
+            })
 
-	        	var error3= new Vue({
-            	el: '#error_pwd',
-            	data: {
+                var error3= new Vue({
+                el: '#error_pwd',
+                data: {
                 message2: 'The password does not match credential'
-           		}
-       		 })
+                }
+             })
 
-	        	$("#email").val('');
-            	$("#password").val('');
-        	}
-        	else
-        	{
+                $('#error_email').show();
+                $('#error_pwd').show();
+                $("#email").val('');
+                $("#password").val('');
+            }
+            else if(data.reason==="permission denied")
+            {
 
-        		var error2= new Vue({
-            	el: '#error_email',
-           		data: {
-                	message1: 'The e-mail address was banned'
-           		}
-       		 })
-        		$('#error_email').show();
-	            $("#email").val('');
-	            $("#password").val('');
-        	}
-        	
-        	
+                $('.error_msg').hide();
+                var error2= new Vue({
+                el: '#error_ban',
+                data: {
+                    message3: 'The e-mail address was banned'
+                }
+             })
+                
+                $('#error_ban').show();
+                $("#email").val('');
+                $("#password").val('');
+            }
+
         }
     }
 

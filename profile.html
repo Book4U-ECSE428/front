@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -28,7 +29,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
+                    <a class="navbar-brand" style="height:40px;color: white" href="main.html">BOOK4U</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -56,14 +57,16 @@
         <div class="col-lg-12 pic" style="padding-top: 70px">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
             <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
-                <div class="infoDiv">Name: <div class="info" id="info-name"></div>Elsie4ever</div>
-                <div class="infoDiv">Gender: <div class="info" id="info-gender">Female</div></div>
+                <div class="infoDiv">Name: <div class="info" id="info-name"></div>{{info.user}}</div>
+                <div class="infoDiv">Gender: <div class="info" id="info-gender">{{info.gender}}</div></div>
+                <div class="infoDiv">User Type: <div class="info" id="info-usrtype">Normal</div></div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
-                <span class="edit">edit</span>
-                <span class="save">save</span>
-                <div class="info text" id="info-intro">I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
+                <span class="edit" v-on:click="editing">edit</span>
+                <span class="save" v-on:click="saving">save</span>
+                <div class="info text" id="info-intro">
+                    I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
                 </div>
             </div>
         </div>
@@ -71,22 +74,74 @@
 </body>
 <script>
 
+
      $(function(){
          $(".loggedin-div").load("nav.html");
      });
 
-    $('.edit').click(function(){
-        $(this).hide();
-        $('.box').addClass('editable');
-        $('.text').attr('contenteditable', 'true');
-        $('.save').show();
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    $.post('http://127.0.0.1:8000/api/getProfile/',
+    {
+        'session_key': getCookie('session_key')
+    }).done(display_info).fail(function (a) {
+    alert("error occured");
+    window.location = 'index.html';
     });
 
-    $('.save').click(function(){
-        $(this).hide();
-        $('.box').removeClass('editable');
-        $('.text').removeAttr('contenteditable');
-        $('.edit').show();
-    });
+    function display_info(data){
+        console.log(data.personal_intro);
+        if (data.status === "success") {
+            $(".loggedin-div").show();
+            // $("#username").html(data.user);
+            // generateAllCard(data.books);
+            di(data);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'index.html';
+            }
+        }
+    }
+
+
+    // TODO waiting backend implementation of profile editing
+    // TODO personal info not displaying correctly
+    function di(information){
+        var vm = new Vue({
+            el: ".infobox",
+            data:{
+                info: information
+            },
+            methods:{
+                editing: function(e){
+                    $(".edit").hide();
+                    $('.box').addClass('editable');
+                    $('.text').attr('contenteditable', 'true');
+                    $('.save').show();
+                },
+                saving: function(e){
+                    $('.save').hide();
+                    $('.box').removeClass('editable');
+                    $('.text').removeAttr('contenteditable');
+                    $('.edit').show();
+                }
+            }
+        })
+    }
+
 </script>
 </html>

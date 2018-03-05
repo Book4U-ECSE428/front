@@ -83,11 +83,22 @@
 </div>
 </body>
 <script>
-
+    function logout()
+    {
+    	setCookie("","", 10);
+    	window.location = 'login.html';
+    }
+    
+    function setCookie(cname, cvalue, sec) {
+        var d = new Date();
+        d.setTime(d.getTime() + (sec * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        console.log("cookie", document.cookie)
+    }
      $(function(){
          $(".loggedin-div").load("nav.html");
      });
-
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');

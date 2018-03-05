@@ -40,19 +40,12 @@
                     <ul class="nav navbar-nav navbar-right navigation">
                         <!-- Authentication Links -->
                         <!-- if user is not logged in -->
-                        <div class="loggedout-div">
+                        <!-- <div class="loggedout-div">
                             <li data-toggle="collapse"><a>Login</a></li>
                             <li data-toggle="collapse"><a>Register</a></li>
-                        </div>
+                        </div> -->
                         <!-- else -->
-                        <div class="loggedin-div">
-                            <li><a href="" class="user-dropdown">Hi! <div id="username" style="display: inline-block">Username</div><span class="caret"></span></a>
-                                <ul>
-                                    <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
-                                    <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
-                                </ul>
-                            </li>
-                        </div>
+                        <div class="loggedin-div"></div>
                         <!-- endif -->
                     </ul>
                 </div>
@@ -64,7 +57,8 @@
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
             <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
                 <div class="infoDiv">Name: <div class="info" id="info-name"></div>Elsie4ever</div>
-                <div class="infoDiv">Gender: <div class="info" id="info-gender">Female</div></div>
+                <div class="infoDiv">Gender: <div class="info" id="info-gender">Female</div>
+                <div class="infoDiv">User Type: <div class="info" id="info-usrtype">Normal</div></div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
@@ -77,6 +71,11 @@
     </div>
 </body>
 <script>
+
+     $(function(){
+         $(".loggedin-div").load("nav.html");
+     });
+
     $('.edit').click(function(){
         $(this).hide();
         $('.box').addClass('editable');

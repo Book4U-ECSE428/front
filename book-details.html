@@ -65,7 +65,8 @@
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
-                <button class="col-lg-2 col-md-2 col-sm-2 delete-button" onclick="deletReview()"><image src="img/delete.png"/></button>
+                <button v-if="user==review.user" id="delete" class="col-lg-2 col-md-2 col-sm-2 delete-button" onclick="deletReview()"><image src="img/delete.png"/></button>
+
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
@@ -91,7 +92,6 @@
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     console.log(id);
-
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -121,6 +121,7 @@
     });
 
     function bookCallBack(data) {
+
         console.log(data);
         if (data.status === "success") {
             $(".loggedin-div").show();
@@ -147,6 +148,7 @@
 
     function displayBook(book) {
         //vue.js
+
         var book = new Vue({
             el: '#details',
             data: {
@@ -158,9 +160,11 @@
                 Publish_date: book.book_publish_date,
                 Edition: book.book_edition,
                 Genre: book.book_category,
-                Reviews: book.reviews
+                Reviews: book.reviews,
+                user:book.request_user
             }
         });
+        console.log("123"+book.request_user);
 //        var books_div = $(".details");
 //		var card = '<img src="' + book.cover_image + '" alt="Book Avatar " class="col-lg-2">';
 //        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';

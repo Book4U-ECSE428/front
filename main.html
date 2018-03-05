@@ -67,7 +67,7 @@
                 <div v-for="book in books">
                         <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
         
-                                <img class="bookcover" height="550" width="150" b-bind:src="book.cover_image" alt="No image">
+                                <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
                                 <div class="card-container">
                                         <h4><b>{{book.name}}</b></h4>
                                         <p>{{book.author}}</p>
@@ -107,7 +107,6 @@
         {
             'session_key': getCookie('session_key')
         }).done(b_cb).fail(function (a) {
-        alert("error occured");
         window.location = 'index.html';
     });
 

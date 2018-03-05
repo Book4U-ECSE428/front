@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -74,7 +75,7 @@
                             <input id="email" type="email" class="form-control text" name="email" autofocus>
                         </div>
                         <div class="error_msg" id="error_email">
-                            The e-mail address does not match credential
+                            {{message1}}
                         </div>
                     </div>
 
@@ -84,7 +85,7 @@
                             <input id="password" type="password" class="form-control text" name="password">
                         </div>
                         <div class="error_msg" id="error_pwd">
-                            The password does not match credential
+                            {{message2}}
                         </div>
                     </div>
 
@@ -111,17 +112,25 @@
     </div>
 </div>
 <script>
+
     $("button.signin").click(login);
 
     function login() {
-        console.log("login");
-        $.post('http://127.0.0.1:8000/api/login/',
-            {
-                'e_mail': $("#email").val(),
-                'password': $("#password").val()
-            }
-            , loginCallBack);
-
+    	if($("input#email").val().length == 0 || $("input#password").val().length == 0)
+    	{
+    		alert("Missing Field");
+    	}
+    	else
+    	{
+    		console.log("login");
+	        $.post('http://127.0.0.1:8000/api/login/',
+	            {
+	                'e_mail': $("#email").val(),
+	                'password': $("#password").val()
+	            }
+	            , loginCallBack);
+    	}
+        
     }
 
     function loginCallBack(data) {
@@ -131,9 +140,42 @@
             setCookie("session_key", data.session_key, 1800);
             window.location = 'main.html';
         } else {
-            $('.error_msg').show();
-            $("#email").val('');
-            $("#password").val('');
+        	if(data.reason==="no such user")
+        	{
+        		$('.error_msg').show();
+
+	        	var error1= new Vue({
+	            el: "#error_email",
+	            data: {
+	                message1: 'The e-mail address does not match credential'
+	            }
+	        })
+
+	        	var error3= new Vue({
+            	el: '#error_pwd',
+            	data: {
+                message2: 'The password does not match credential'
+           		}
+       		 })
+
+	        	$("#email").val('');
+            	$("#password").val('');
+        	}
+        	else
+        	{
+
+        		var error2= new Vue({
+            	el: '#error_email',
+           		data: {
+                	message1: 'The e-mail address was banned'
+           		}
+       		 })
+        		$('#error_email').show();
+	            $("#email").val('');
+	            $("#password").val('');
+        	}
+        	
+        	
         }
     }
 

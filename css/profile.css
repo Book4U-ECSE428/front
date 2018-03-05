@@ -136,7 +136,9 @@ body {
     cursor: pointer;
     box-shadow: -1px 1px 4px rgba(0,0,0,0.5);
 }
-
+.info-top{
+    padding-top: 100px
+}
 .edit {
     background: #557a11;
     color: #f0f0f0;
@@ -176,4 +178,10 @@ body {
     color-stop(0.44, rgb(122,153,217)),
     color-stop(0.72, rgb(73,125,189)),
     color-stop(0.86, rgb(28,58,148)));
+}
+
+@media screen and (max-width: 770px) {
+    .info-top{
+        padding-top: 10px
+    }
 }

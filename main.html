@@ -1,7 +1,8 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
@@ -50,8 +51,8 @@
                             <div id="username" style="display: inline-block">Username</div>
                             <span class="caret"></span></a>
                             <ul>
-                                <li data-toggle="collapse"><a href="" class="profile">Profile</a></li>
-                                <li data-toggle="collapse"><a href="" class="logout">Logout</a></li>
+                                <li data-toggle="collapse"><a href="profile.html" class="profile">Profile</a></li>
+                                <li data-toggle="collapse"><a href="login.html" class="logout">Logout</a></li>
                             </ul>
                         </li>
                     </div> -->
@@ -61,16 +62,43 @@
             </div>
         </div>
     </nav>
-    <div class="book-cards">
+    <div class="book-cards" id="card-list">
+        <div v-if="books.length>0">
+                <div v-for="book in books">
+                        <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
+        
+                                <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
+                                <div class="card-container">
+                                        <h4><b>{{book.name}}</b></h4>
+                                        <p>{{book.author}}</p>
+                                        <p>Rate: {{book.rating}}</p>
+                                        <p>Edition: {{book.edition}}</p>
+                                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
+                                </div>    
+                        </div>   
+                </div>
+        </div>
+        
     </div>
 </div>
 </body>
 <script>
-
+    function logout()
+    {
+    	setCookie("","", 10);
+    	window.location = 'login.html';
+    }
+    
+    function setCookie(cname, cvalue, sec) {
+        var d = new Date();
+        d.setTime(d.getTime() + (sec * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        console.log("cookie", document.cookie)
+    }
      $(function(){
          $(".loggedin-div").load("nav.html");
      });
-
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
@@ -94,11 +122,11 @@
     });
 
     function b_cb(data) {
-        console.log(data);
+        // console.log(data);
         if (data.status === "success") {
             $(".loggedin-div").show();
             console.log(data.user);
-            $("#username").html(data.user);
+            // $("#username").html(data.user);
             generateAllCard(data.books);
         } else {
             if (data.reason === "session expired") {
@@ -110,11 +138,12 @@
     }
 
     function generateAllCard(book_list) {
-        var books_div = $(".book-cards");
-        books_div.empty();
-        for (var i = 0; i < book_list.length; i++) {
-            books_div.append(createCard(book_list[i]));
-        }
+        var cardList= new Vue({
+            el: "#card-list",
+            data: {
+                books: book_list
+            }
+        })
     }
 
     var book_pic_list = [
@@ -126,20 +155,6 @@
         'http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg'
     ];
 
-    function createCard(book) {
-        var card = '<div class="card" onclick="card_on_click(this)" id="' + book.id + '"><img class="bookcover" height="550" width="150"';
-        //card += 'src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar ">';
-        card += 'src="' + book.cover_image + '" alt="No image">';
-        card += '<div class="card-container">';
-        card += '<h4><b>' + book.name + '</b></h4>';
-        card += '<p>' + 'By ' + book.author + '</p>';
-        card += '<p>' + 'Rate:' + book.rating + '</p>';
-        card += '<p>' + 'Edition: ' + book.edition + '</p>';
-        card += '<p>' + 'Published by ' + book.publish_firm + ' on ' + book.publish_date + '</p>';
-        card += ' </div> </div>';
-        return card;
-    }
-
     function card_on_click(obj) {
         console.log(obj);
         // alert(obj.id);
@@ -147,4 +162,5 @@
     }
 
 </script>
-</html>
+</html> 
+

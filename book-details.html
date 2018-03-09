@@ -60,7 +60,10 @@
                 <div v-else style="display: inline">{{Genre}}</div>
             </div>
             <h2 class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">Reviews</h2>
-            <a v-for="(review, index) in Reviews" v-bind:id="review.id" class="col-lg-12 col-md-12 col-sm-12 review-link" onclick="reviewAOnClick(this)">{{review.content}}</a>
+            <div v-for="(review, index) in Reviews" v-bind:id="review.id">
+                <a class="col-lg-12 col-md-12 col-sm-12 review-link" onclick="reviewAOnClick(this)">{{review.content}}</a>
+                <span v-if="permission=='Moderator'" class="col-lg-12" style="padding-bottom: 20px"><button class="btn" style="background-color:grey;" onclick="deleteReview()">Delete</button></span>
+            </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
                 <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>
@@ -152,7 +155,8 @@
                 Publish_date: book.book_publish_date,
                 Edition: book.book_edition,
                 Genre: book.book_category,
-                Reviews: book.reviews
+                Reviews: book.reviews,
+                permission: book.permission
             }
         });
 //        var books_div = $(".details");
@@ -227,6 +231,10 @@
 
     function reviewAOnClick(obj) {
         window.location = 'review-details.html?id=' + obj.id;
+    }
+
+    function deleteReview(obj) {
+        window.location = 'mod_delete.html?id=' + obj.id;
     }
 
 </script>

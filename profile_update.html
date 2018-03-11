@@ -24,36 +24,7 @@
                 <div class="panel-heading" style="color: #092756"><b>Profile Update</b></div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST">
-                        <!--name-->
-                        <div class="content_sec">
-                            <label for="name" class="control-label">New Name</label>
-                            <div>
-                                <input id="name" type="text" class="form-control" name="name"
-                                       style="background: transparent" autofocus required>
-                            </div>
-                            <div class="error_msg" id="update_err_name">{{msg}}</div>
-                        </div>
-                        <!--email-->
-                        <div class="content_sec">
-                            <label for="email" class="control-label">New E-Mail Address</label>
-                            <div>
-                                <input id="email" type="email" class="form-control" name="email"
-                                       style="background: transparent" required>
-                            </div>
-                            <div class="error_msg" id="update_err_email">{{msg}}</div>
-                        </div>
-                        <!--gender-->
-                        <div class="content_sec">
-                            <label for="position" class="control-label">Gender</label>
-                            <div>
-                                <select id="position" type="text" class="form-control" name="position"
-                                        style="background: transparent" required>
-                                    <option>Male</option>
-                                    <option>Female</option>
-                                    <option>Unknown</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <!--pwd-->
                         <div class="content_sec">
                             <label for="password" class="control-label">Password</label>
@@ -61,17 +32,19 @@
                                 <input id="password" type="password" class="form-control" name="password"
                                        style="background: transparent" required>
                             </div>
-                            <div class="error_msg" id="update_err_psw">{{msg}}</div>
-                        </div>
-                        <!--intro-->
-                        <div class="content_sec">
-                            <label for="intro" class="control-label">Introduction</label>
+                            <label for="newpassword" class="control-label">New Password</label>
                             <div>
-                                <input id="intro" type="text" class="form-control" name="intro"
+                                <input id="newpassword" type="text" class="form-control" name="newpassword"
                                        style="background: transparent" required>
                             </div>
-                            <div class="error_msg" id="update_err_intro">{{msg}}</div>
+                            <label for="newpassword1" class="control-label">Confirm New Password</label>
+                            <div>
+                                <input id="newpassword1" type="text" class="form-control" name="newpassword1"
+                                       style="background: transparent" required>
+                            </div>
+                            <div class="error_msg" id="update_err_psw">{{msg}}</div>
                         </div>
+                       
 
                     </form>
                     <div>
@@ -132,7 +105,7 @@
     $("#update_err_intro").hide(); 
     $("#update_err_gender").hide(); 
     
-    $("#Update").click(update);
+    $("#Update").click(updatePassword);
     $("#Back").click(back);
 
     function back(){
@@ -162,85 +135,28 @@
         return "";
     }
 
-    function update() {
-        console.log("setEmail");
-        
-        if($("input#name").val().length ==0){
-            err_name.msg = "Name should not be empty.";
-            $("#update_err_name").show();
-        }
-        else if($("input#email").val().length == 0){
-            err_email.msg = "Email should not be empty.";
-            $("#update_err_email").show();
-        }
-        else if($("input#password").val().length == 0){
-            err_psw.msg = "Password should not be empty.";
-            $("#update_err_psw").show();
-        } else {
-            $.post('http://127.0.0.1:8000/api/setEmail/',
-                {
-                    'session_key': getCookie('session_key'),
-                    'NewEmail': $("input#email").val(),
-                    'Password': $("input#password").val()
-                }, updateCallBack);
-        }
-
-
-    }
     
-    function updateName(){
-    	console.log("setName"); 
-    	
-    	 if($("input#name").val().length == 0){
-    		 err_name.msg = "Name should not be empty"
-    	 } else if ($("input#password").val().length == 0){
-    		 err_psw.msg = "Password should not be empty"
-    	 } else {
-    		 $.post('http://127.0.0.1:8000/api/setName/', 
-    			 { 
-    			 	'session_key': getCookie('session_key'), 
-    				 
-    				 'NewName': $("input#name").val(), 
-    				 'Password': $("input#password").val()
-    			 }, updateCallBack); 
-    	 } 
-    }
     
-    function updateGender(){
-    	console.log("setGender"); 
-    	
-    	if($("input#gender").val().length == 0){
-    		err_gender.msg = "Gender should not be empty"
-    	} else if($("input#password").val().length == 0){
-    		err_psw.msg = "Password should not be empty"
-    	}else {
-    		$.post('http://127.0.0.1:8000/api/setGender/',
-                    {
-                        'session_key': getCookie('session_key'),
-                        'NewGender': $("input#gender").val(),
-                        'Password': $("input#password").val()
-                    }, updateCallBack);
-    		
-    	}
-    }
-    
-    function updateIntro(){
-    	console.log("setIntro"); 
-    	
-    	if($("input#intro").val().length == 0){
-    		err_intro.msg = "Introduction should not be empty"
+    //password JS logics and popout 
+    function updatePassword(){
+    	console.log("setPassword")
+    	if($("input#newpassword").val().length == 0){
+    		err_psw.msg = "New Password required"; 
+    	}else if($("input#newpassword1").val().length == 0){
+    		err_psw.msg = "Password confirmation required"; 
     	}else if($("input#password").val().length == 0){
-    		err_psw.msg = "Password should not be empty"
+    		err_psw.msg = "Password should be empty"; 
     	}else {
-    		$.post('http://127.0.0.1:8000/api/setIntro/',
+    		$.post('http://127.0.0.1:8000/api/setPassword/',
                     {
                         'session_key': getCookie('session_key'),
-                        'NewIntro': $("input#intro").val(),
-                        'Password': $("input#password").val()
+                        'NewPassword': $("input#newpassword").val(),
+                        'NewPassword2': $("input#newpassword1").val(), 
+                        'OldPassword': $("input#password").val()
                     }, updateCallBack);
+    		err_psw.msg = "successful"; 
     	}
     }
-    
 
     function updateCallBack(data) {
         console.log(data);

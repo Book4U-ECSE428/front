@@ -65,7 +65,7 @@
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
-                <button v-if="add_del_btn(review)" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
+                <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
@@ -124,7 +124,6 @@
         console.log(data);
         if (data.status === "success") {
             $(".loggedin-div").show();
-            console.log(data.user);
             $("#username").html(data.request_user);
             displayBook(data);
         } else {
@@ -151,6 +150,7 @@
         var book = new Vue({
             el: '#details',
             data: {
+                request_user: book.request_user,
                 cover_image: book.cover_image,
                 name: book.book_name,
                 ISBN: book.book_ISBN,
@@ -161,12 +161,7 @@
                 Genre: book.book_category,
                 Reviews: book.reviews,
                 permission: book.permission,
-                user:book.request_user
-            },
-            computed: {
-                add_del_btn: function(obj){
-                    return (user==obj.user || permission=="Moderator")
-                }
+                user: book.request_user
             }
         });
 //        var books_div = $(".details");
@@ -219,7 +214,12 @@
     function deleteReviewCallBack(data) {
         console.log(data);
         if (data.status === "success") {
-            location.reload();
+            if (data.permission === "Moderator"){
+                window.location = 'mod_delete.html?id=' + data.id;
+            } else {
+                location.reload();
+            }
+            
         }
     }
 

@@ -46,6 +46,22 @@
 </div>
 </body>
 <script>
+    function reviewcallBack(data) {
+
+        console.log(data);
+        if (data.status === "success") {
+            $(".loggedin-div").show();
+            console.log(data.user);
+            $("#username").html(data.request_user);
+            displayBook(data);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'index.html';
+            }
+        }
+
+    }
  //wating for backend
 </script>
 </html>

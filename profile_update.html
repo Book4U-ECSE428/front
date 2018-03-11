@@ -24,7 +24,7 @@
                 <div class="panel-heading" style="color: #092756"><b>Profile Update</b></div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST">
-                        
+
                         <!--pwd-->
                         <div class="content_sec">
                             <label for="password" class="control-label">Password</label>
@@ -44,7 +44,7 @@
                             </div>
                             <div class="error_msg" id="update_err_psw">{{msg}}</div>
                         </div>
-                       
+
 
                     </form>
                     <div>
@@ -66,49 +66,49 @@
 </body>
 <script>
     //vue.js
-    var err_name= new Vue({
-            el: "#update_err_name",
-            data: {
-                msg: ''
-            }
-       })
-    var err_email= new Vue({
-            el: "#update_err_email",
-            data: {
-                msg: ''
-            }
-       })
-    var err_psw= new Vue({
-            el: "#update_err_psw",
-            data: {
-                msg: ''
-            }
-   })
+    var err_name = new Vue({
+        el: "#update_err_name",
+        data: {
+            msg: ''
+        }
+    })
+    var err_email = new Vue({
+        el: "#update_err_email",
+        data: {
+            msg: ''
+        }
+    })
+    var err_psw = new Vue({
+        el: "#update_err_psw",
+        data: {
+            msg: ''
+        }
+    })
 
-   var err_intro = new Vue({
-	   el: "#update_err_intro", 
-	   data: {
-		   msg: ''
-	   }
-   })
-    
-   var err_gender = new Vue({
-	   el: "#update_err_intro", 
-	   data: {
-		   msg: ''
-	   }
-   })
-    
+    var err_intro = new Vue({
+        el: "#update_err_intro",
+        data: {
+            msg: ''
+        }
+    })
+
+    var err_gender = new Vue({
+        el: "#update_err_intro",
+        data: {
+            msg: ''
+        }
+    })
+
     $("#update_err_name").hide();
     $("#update_err_email").hide();
     $("#update_err_psw").hide();
-    $("#update_err_intro").hide(); 
-    $("#update_err_gender").hide(); 
-    
+    $("#update_err_intro").hide();
+    $("#update_err_gender").hide();
+
     $("#Update").click(updatePassword);
     $("#Back").click(back);
 
-    function back(){
+    function back() {
         window.location = 'profile.html';
     }
 
@@ -135,27 +135,26 @@
         return "";
     }
 
-    
-    
+
     //password JS logics and popout 
-    function updatePassword(){
-    	console.log("setPassword")
-    	if($("input#newpassword").val().length == 0){
-    		err_psw.msg = "New Password required"; 
-    	}else if($("input#newpassword1").val().length == 0){
-    		err_psw.msg = "Password confirmation required"; 
-    	}else if($("input#password").val().length == 0){
-    		err_psw.msg = "Password should be empty"; 
-    	}else {
-    		$.post('http://127.0.0.1:8000/api/setPassword/',
-                    {
-                        'session_key': getCookie('session_key'),
-                        'NewPassword': $("input#newpassword").val(),
-                        'NewPassword2': $("input#newpassword1").val(), 
-                        'OldPassword': $("input#password").val()
-                    }, updateCallBack);
-    		err_psw.msg = "successful"; 
-    	}
+    function updatePassword() {
+        console.log("setPassword")
+        if ($("input#newpassword").val().length == 0) {
+            err_psw.msg = "New Password required";
+        } else if ($("input#newpassword1").val().length == 0) {
+            err_psw.msg = "Password confirmation required";
+        } else if ($("input#password").val().length == 0) {
+            err_psw.msg = "Password should be empty";
+        } else {
+            $.post('http://127.0.0.1:8000/api/setPassword/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewPassword': $("input#newpassword").val(),
+                    'NewPassword2': $("input#newpassword1").val(),
+                    'OldPassword': $("input#password").val()
+                }, updateCallBack);
+            err_psw.msg = "successful";
+        }
     }
 
     function updateCallBack(data) {
@@ -165,15 +164,22 @@
             setCookie("session_key", data.session_key, 1800);
             window.location = 'profile.html';
         } else {
-            if(data.reason === "authentication failed"){
+            if (data.reason === "authentication failed") {
                 err_psw.msg = "The password is wrong.";
                 $("#signup_err_psw").show();
             }
-            if(data.reason === "Saving failed"){
+            if (data.reason === "Saving failed") {
                 alert("Saving failed.");
             }
-            $("input#password").val('');
+            if (data.reason === "authentication failure") {
+                alert("Old password wrong");
             }
+            if (data.reason === "passwords do not match") {
+                alert("passwords do not match");
+            }
+
+            $("input#password").val('');
+        }
     }
 
 

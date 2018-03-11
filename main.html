@@ -56,7 +56,7 @@
                             </ul>
                         </li>
                     </div> -->
-                    <div class ="loggedin-div"></div>
+                    <div class="loggedin-div"></div>
                     <!-- endif -->
                 </ul>
             </div>
@@ -64,31 +64,30 @@
     </nav>
     <div class="book-cards" id="card-list">
         <div v-if="books.length>0">
-                <div v-for="book in books">
-                        <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
-        
-                                <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
-                                <div class="card-container">
-                                        <h4><b>{{book.name}}</b></h4>
-                                        <p>{{book.author}}</p>
-                                        <p>Rate: {{book.rating}}</p>
-                                        <p>Edition: {{book.edition}}</p>
-                                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
-                                </div>    
-                        </div>   
+            <div v-for="book in books">
+                <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
+
+                    <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
+                    <div class="card-container">
+                        <h4><b>{{book.name}}</b></h4>
+                        <p>{{book.author}}</p>
+                        <p>Rate: {{book.rating}}</p>
+                        <p>Edition: {{book.edition}}</p>
+                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
+                    </div>
                 </div>
+            </div>
         </div>
-        
+
     </div>
 </div>
 </body>
 <script>
-    function logout()
-    {
-    	setCookie("","", 10);
-    	window.location = 'login.html';
+    function logout() {
+        setCookie("", "", 10);
+        window.location = 'login.html';
     }
-    
+
     function setCookie(cname, cvalue, sec) {
         var d = new Date();
         d.setTime(d.getTime() + (sec * 1000));
@@ -96,9 +95,11 @@
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
         console.log("cookie", document.cookie)
     }
-     $(function(){
-         $(".loggedin-div").load("nav.html");
-     });
+
+    $(function () {
+        $(".loggedin-div").load("nav.html");
+    });
+
     function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
@@ -126,7 +127,8 @@
         if (data.status === "success") {
             $(".loggedin-div").show();
             console.log(data.user);
-            // $("#username").html(data.user);
+            $("#username").html(data.user);
+            setCookie('username', data.user, 3600);
             generateAllCard(data.books);
         } else {
             if (data.reason === "session expired") {
@@ -138,7 +140,7 @@
     }
 
     function generateAllCard(book_list) {
-        var cardList= new Vue({
+        var cardList = new Vue({
             el: "#card-list",
             data: {
                 books: book_list

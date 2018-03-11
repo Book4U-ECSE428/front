@@ -53,6 +53,7 @@
             </div>
         </nav>
     </div>
+    <div class="se-pre-con"></div>
     <div class="infobox">
         <div class="col-lg-12 pic" style="padding-top: 70px">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
@@ -155,5 +156,16 @@
         })
     }
 
+</script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<script>
+
+    //paste this code under the head tag or in a separate js file.
+    // Wait for window load
+    $(window).load(function() {
+// Animate loader off screen
+        $(".se-pre-con").fadeOut("slow");;
+    });
 </script>
 </html>

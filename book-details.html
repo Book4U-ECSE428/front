@@ -31,7 +31,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" style="height:40px;color: white" href="#">BOOK4U</a>
+                <a class="navbar-brand" style="height:40px;color: white" href="main.html">BOOK4U</a>
             </div>
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
@@ -47,6 +47,7 @@
             </div>
         </div>
     </nav>
+    <div class="se-pre-con"></div>
     <div class="book">
         <div class="details" id="details" >
             <img  id="cover_img" v-bind:src="cover_image" alt="Book Avatar " class="col-lg-2 col-md-2 col-sm-2">
@@ -126,6 +127,7 @@
             $(".loggedin-div").show();
             $("#username").html(data.request_user);
             displayBook(data);
+            $(".se-pre-con").fadeOut("slow");
         } else {
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");
@@ -264,4 +266,6 @@
     }
 
 </script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </html>

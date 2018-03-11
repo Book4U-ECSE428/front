@@ -65,7 +65,7 @@
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
-                <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
+                <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" v-on:click="deletReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
@@ -162,6 +162,24 @@
                 Reviews: book.reviews,
                 permission: book.permission,
                 user: book.request_user
+            },
+            methods:{
+                deletReview: function(e){
+                    var reviewid= e.target.getAttribute("data-reviewid");
+                    console.log(reviewid);
+                    if (this.permission=="Moderator"){
+                        window.location = 'mod_delete.html?id=' + reviewid;
+                    } else {
+                        $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
+                            {
+                                'session_key': getCookie('session_key'),
+                                'id': reviewid
+                            }).done(deleteReviewCallBack).fail(function (a) {
+                            console.log("delete review error");
+                        });
+                    }
+
+                }
             }
         });
 //        var books_div = $(".details");
@@ -197,29 +215,11 @@
 //        $(".btn").click(submitReview);
     }
 
-    function deletReview(e){
-
-            var reviewid= e.target.getAttribute("data-reviewid");
-            console.log(reviewid);
-            $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
-                {
-                    'session_key': getCookie('session_key'),
-                    'id': reviewid
-                }).done(deleteReviewCallBack).fail(function (a) {
-                console.log("delete review error");
-            });
-
-    }
 
     function deleteReviewCallBack(data) {
         console.log(data);
         if (data.status === "success") {
-            if (data.permission === "Moderator"){
-                window.location = 'mod_delete.html?id=' + data.id;
-            } else {
-                location.reload();
-            }
-            
+            location.reload();            
         }
     }
 

@@ -62,6 +62,7 @@
             </div>
         </div>
     </nav>
+    <div class="se-pre-con"></div>
     <div class="book-cards" id="card-list">
         <div v-if="books.length>0">
             <div v-for="book in books">
@@ -130,6 +131,8 @@
             $("#username").html(data.user);
             setCookie('username', data.user, 3600);
             generateAllCard(data.books);
+            $(".se-pre-con").fadeOut("slow");;
+
         } else {
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");
@@ -164,5 +167,7 @@
     }
 
 </script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </html> 
 

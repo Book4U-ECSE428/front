@@ -66,7 +66,7 @@
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
-                <button v-if="user==review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
+                <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" v-on:click="deletReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
@@ -108,9 +108,9 @@
         return "";
     }
     $(function(){
-         $(".loggedin-div").load("nav.html");
-     });
-     
+        $(".loggedin-div").load("nav.html");
+    });
+
     $.post('http://127.0.0.1:8000/api/getBookByID/',
         {
             'session_key': getCookie('session_key'),
@@ -125,7 +125,6 @@
         console.log(data);
         if (data.status === "success") {
             $(".loggedin-div").show();
-            console.log(data.user);
             $("#username").html(data.request_user);
             displayBook(data);
             $(".se-pre-con").fadeOut("slow");
@@ -153,6 +152,7 @@
         var book = new Vue({
             el: '#details',
             data: {
+                request_user: book.request_user,
                 cover_image: book.cover_image,
                 name: book.book_name,
                 ISBN: book.book_ISBN,
@@ -162,7 +162,26 @@
                 Edition: book.book_edition,
                 Genre: book.book_category,
                 Reviews: book.reviews,
-                user:book.request_user
+                permission: book.permission,
+                user: book.request_user
+            },
+            methods:{
+                deletReview: function(e){
+                    var reviewid= e.target.getAttribute("data-reviewid");
+                    console.log(reviewid);
+                    if (this.permission=="Moderator"){
+                        window.location = 'mod_delete.html?id=' + reviewid;
+                    } else {
+                        $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
+                            {
+                                'session_key': getCookie('session_key'),
+                                'id': reviewid
+                            }).done(deleteReviewCallBack).fail(function (a) {
+                            console.log("delete review error");
+                        });
+                    }
+
+                }
             }
         });
 //        var books_div = $(".details");
@@ -198,19 +217,6 @@
 //        $(".btn").click(submitReview);
     }
 
-    function deletReview(e){
-
-            var reviewid= e.target.getAttribute("data-reviewid");
-            console.log(reviewid);
-            $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
-                {
-                    'session_key': getCookie('session_key'),
-                    'id': reviewid
-                }).done(deleteReviewCallBack).fail(function (a) {
-                console.log("delete review error");
-            });
-
-    }
 
     function deleteReviewCallBack(data) {
         console.log(data);
@@ -221,15 +227,15 @@
 
     function submitReview() {
         if(getvalue()>=1){
-             $.post('http://127.0.0.1:8000/api/addReview/',
-            {
-                'session_key': getCookie('session_key'),
-                'BookID': id,
-                'content': $("#booktextarea").val(),
-                'rating': getvalue()
-            }).done(submitReviewCallBack).fail(function (a) {
-            console.log("submit review error");
-        });
+            $.post('http://127.0.0.1:8000/api/addReview/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'BookID': id,
+                    'content': $("#booktextarea").val(),
+                    'rating': getvalue()
+                }).done(submitReviewCallBack).fail(function (a) {
+                console.log("submit review error");
+            });
         }else{
             alert("You must at least rate this book!");
         }

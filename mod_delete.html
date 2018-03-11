@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!--Page title-->
+    <title>Delete Confirmation</title>
+    <!-- Styles -->
+    <link rel="stylesheet" type="text/css" href="css/mod_delete.css"/>
+</head>
+<body>
+<div class="container delete-container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading" style="color: #092756"><b>Delete Confirmation</b></div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="POST">
+                        <!--intro-->
+                        <div class="content_sec">
+                            <label class="control-label">Delete reason</label>
+                            <div>
+                                <textarea id="reason" rows="4" type="text" class="form-control" name="reason"
+                                          style="background: transparent;"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                    <div>
+                        <div style="text-align:center; padding-top: 10px">
+                            <button id="confirm" class="btn btn-primary" style="background: white; color: #092756" onclick="deletReview(event)">
+                                <b>Confirm</b>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    var url_string = window.location.href;
+    var url = new URL(url_string);
+    var id = url.searchParams.get("id");
+    console.log(id);
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    $(function(){
+        $(".loggedin-div").load("nav.html");
+    });
+    function deletReview(e){
+        var reasoninput = document.getElementById("reason").value;
+        if(reasoninput == "" ||reasoninput.length == 0 || reasoninput == null){
+            alert("Reason cannot be empty!");
+        }
+        else {
+            $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'id': id
+                }).done(reviewcallBack).fail(function (a) {
+                console.log("delete review error");
+            });
+        }
+    }
+    function reviewcallBack(data) {
+
+        console.log(data);
+        if (data.status === "success") {
+            window.history.back();
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'index.html';
+            }
+        }
+
+    }
+
+</script>
+</html>

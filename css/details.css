@@ -189,3 +189,9 @@ img {
     padding: 10px 0px;
     margin: 0px 200px 0px 20px;
 }
+#delete{
+    display: inline;
+}
+#mod{
+    display: inline;
+}

@@ -66,7 +66,8 @@
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
 
-                <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id">{{user}}{{review.user}}<image v-bind:data-reviewid="review.id" src="img/delete.png" /></button>
+                <button v-if="user === review.user" id="delete" class="delete-button" onclick="deletReview(event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png" /></button>
+                <button v-else-if="permission === Moderator" id="mod" class="delete-button"><image src="img/delete.png" onclick="modOnClick(this)"/></button>
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>
             <div class="col-lg-6 col-md-6 col-sm-6 stars">
@@ -212,12 +213,7 @@
     function deleteReviewCallBack(data) {
         console.log(data);
         if (data.status === "success") {
-            if (data.permission === "Moderator"){
-                window.location = 'mod_delete.html?id=' + data.id;
-            } else {
-                location.reload();
-            }
-
+            location.reload();
         }
     }
 
@@ -268,17 +264,26 @@
         window.location = 'index.html';
     });
     function profileCallBack(data) {
-        console.log(data);
+        if(data.permission == 'Moderator'){
+            document.getElementById("delete").setAttribute("style","display:none");
+            document.getElementById("mod").setAttribute("style","display:inline");
+        }
+        else {
+            document.getElementById("delete").setAttribute("style","display:inline");
+            document.getElementById("mod").setAttribute("style","display:none");
+        }
         var user = new Vue({
             el: '#mod',
             data: {
-                permission: data.permission
+                permission: data.permission,
+                review: data.review
             }
         });
 
     }
     function modOnClick(obj) {
-        window.location = 'mod_delete.html?id=' + obj.id;
+        console.log(obj.parentNode.parentNode.firstChild.attributes.item(0).nodeValue);
+        window.location = 'mod_delete.html?id=' + obj.parentNode.parentNode.firstChild.attributes.item(0).nodeValue;
     }
 
 </script>

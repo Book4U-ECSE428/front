@@ -127,6 +127,10 @@
                 $(".loggedin-div").load("nav.html");
             });
 
+            $(function(){
+                $(".loggedin-div").load("nav.html");
+            });
+
             $('.edit').click(function(){
                 $(this).hide();
                 $('.box').addClass('editable');
@@ -134,10 +138,12 @@
                 $('.save').show();
             });
 
-
             $(function(){
                 $(".loggedin-div").load("nav.html");
             });
+			var username = getCookie('username');
+            document.getElementById("username").innerText=username;
+            console.log(username);
         } else {
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");

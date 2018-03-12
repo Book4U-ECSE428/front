@@ -16,7 +16,7 @@
     <!--Page title-->
     <title>Profile</title>
     <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="css/nav.css"/>
+    <link rel="stylesheet" type="text/css" href="css/profile.css"/>
 </head>
 <body>
 <div class="se-pre-con"></div>
@@ -49,22 +49,7 @@
                             <li data-toggle="collapse"><a>Register</a></li>
                         </div> -->
                         <!-- else -->
-                        <div class="loggedin-div">
-                            <li>
-                                <a href="" class="user-dropdown">Hi!
-                                    <div id="username" style="display: inline-block"></div>
-                                    <span class="caret"></span>
-                                </a>
-                                <ul>
-                                    <li data-toggle="collapse">
-                                        <a href="profile.html" class="profile">Profile</a>
-                                    </li>
-                                    <li data-toggle="collapse">
-                                        <a href='' class="logout">Logout</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </div>
+                        <div class="loggedin-div"></div>
                         <!-- endif -->
                     </ul>
                 </div>
@@ -134,9 +119,13 @@
         console.log(data.personal_intro);
         if (data.status === "success") {
             $(".se-pre-con").fadeOut("slow");
-            //$(".loggedin-div").show();
+            $(".loggedin-div").show();
+            $("#username").html(data.user);
             // generateAllCard(data.books);
             di(data);
+            $(function(){
+                $(".loggedin-div").load("nav.html");
+            });
 
             $(function(){
                 $(".loggedin-div").load("nav.html");
@@ -149,6 +138,9 @@
                 $('.save').show();
             });
 
+            $(function(){
+                $(".loggedin-div").load("nav.html");
+            });
 			var username = getCookie('username');
             document.getElementById("username").innerText=username;
             console.log(username);

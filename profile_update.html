@@ -50,6 +50,7 @@
                                         style="background: transparent" required>
                                     <option>Male</option>
                                     <option>Female</option>
+                                    <option>Unknown</option>
                                 </select>
                             </div>
                         </div>
@@ -61,6 +62,15 @@
                                        style="background: transparent" required>
                             </div>
                             <div class="error_msg" id="update_err_psw">{{msg}}</div>
+                        </div>
+                        <!--intro-->
+                        <div class="content_sec">
+                            <label for="intro" class="control-label">Introduction</label>
+                            <div>
+                                <input id="intro" type="text" class="form-control" name="intro"
+                                       style="background: transparent" required>
+                            </div>
+                            <div class="error_msg" id="update_err_intro">{{msg}}</div>
                         </div>
 
                     </form>
@@ -101,10 +111,25 @@
                 msg: ''
             }
    })
+   var err_intro = new Vue({
+	   el: "#update_err_intro", 
+	   data: {
+		   msg: ''
+	   }
+   })
+    
+   var err_gender = new Vue({
+	   el: "#update_err_intro", 
+	   data: {
+		   msg: ''
+	   }
+   })
     
     $("#update_err_name").hide();
     $("#update_err_email").hide();
     $("#update_err_psw").hide();
+    $("#update_err_intro").hide(); 
+    $("#update_err_gender").hide(); 
     
     $("#Update").click(update);
     $("#Back").click(back);
@@ -161,6 +186,60 @@
 
 
     }
+    
+    function updateName(){
+    	console.log("setName"); 
+    	
+    	 if($("input#name").val().length == 0){
+    		 err_name.msg = "Name should not be empty"
+    	 } else if ($("input#password").val().length == 0){
+    		 err_psw.msg = "Password should not be empty"
+    	 } else {
+    		 $.post('http://127.0.0.1:8000/api/setName/', 
+    			 { 
+    			 	'session_key': getCookie('session_key'), 
+    				 
+    				 'NewName': $("input#name").val(), 
+    				 'Password': $("input#password").val()
+    			 }, updateCallBack); 
+    	 } 
+    }
+    
+    function updateGender(){
+    	console.log("setGender"); 
+    	
+    	if($("input#gender").val().length == 0){
+    		err_gender.msg = "Gender should not be empty"
+    	} else if($("input#password").val().length == 0){
+    		err_psw.msg = "Password should not be empty"
+    	}else {
+    		$.post('http://127.0.0.1:8000/api/setGender/',
+                    {
+                        'session_key': getCookie('session_key'),
+                        'NewGender': $("input#gender").val(),
+                        'Password': $("input#password").val()
+                    }, updateCallBack);
+    		
+    	}
+    }
+    
+    function updateIntro(){
+    	console.log("setIntro"); 
+    	
+    	if($("input#intro").val().length == 0){
+    		err_intro.msg = "Introduction should not be empty"
+    	}else if($("input#password").val().length == 0){
+    		err_psw.msg = "Password should not be empty"
+    	}else {
+    		$.post('http://127.0.0.1:8000/api/setIntro/',
+                    {
+                        'session_key': getCookie('session_key'),
+                        'NewIntro': $("input#intro").val(),
+                        'Password': $("input#password").val()
+                    }, updateCallBack);
+    	}
+    }
+    
 
     function updateCallBack(data) {
         console.log(data);
@@ -179,6 +258,8 @@
             $("input#password").val('');
             }
     }
+    
+    
 
 
 </script>

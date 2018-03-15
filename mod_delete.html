@@ -6,13 +6,15 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Page title-->
     <title>Delete Confirmation</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/mod_delete.css"/>
+    <script src="js/mod_delete.js"></script>
 </head>
 <body>
 <div class="container delete-container">
@@ -64,9 +66,6 @@
         }
         return "";
     }
-    $(function(){
-        $(".loggedin-div").load("nav.html");
-    });
     function deletReview(e){
         var reasoninput = document.getElementById("reason").value;
         if(reasoninput == "" ||reasoninput.length == 0 || reasoninput == null){
@@ -95,6 +94,5 @@
         }
 
     }
-
 </script>
 </html>

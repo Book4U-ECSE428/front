@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <meta charset="UTF-8">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,6 +17,7 @@
     <title>Profile</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+    <script src="js/profile.js"></script>
 </head>
 <body>
 <div class="se-pre-con"></div>
@@ -82,62 +83,6 @@
 	function update() {
 			window.location='profile_update.html';
 	}
-	function setCookie(cname, cvalue, sec) {
-        var d = new Date();
-        d.setTime(d.getTime() + (sec * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        console.log("cookie", document.cookie)
-    }
-
-    function getCookie(cname) {
-        var name = cname + "=";
-        var ca = document.cookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
-    $.post('http://127.0.0.1:8000/api/getProfile/',
-    {
-        'session_key': getCookie('session_key')
-    }).done(display_info).fail(function (a) {
-    alert("error occured");
-    window.location = 'index.html';
-    });
-    $(function(){
-        $(".loggedin-div").load("nav.html");
-    });
-    function display_info(data){
-        console.log(data.personal_intro);
-        if (data.status === "success") {
-            $(".se-pre-con").fadeOut("slow");
-            // generateAllCard(data.books);
-            di(data);
-            $(".loggedin-div").show();
-            $('.edit').click(function(){
-                $(this).hide();
-                $('.box').addClass('editable');
-                $('.text').attr('contenteditable', 'true');
-                $('.save').show();
-            });
-            $("#username").html(data.user);
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-    }
-
-
     // TODO waiting backend implementation of profile editing
     // TODO personal info not displaying correctly
     function di(information){

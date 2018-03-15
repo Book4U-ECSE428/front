@@ -82,8 +82,6 @@
 	function update() {
 			window.location='profile_update.html';
 	}
-
-
 	function setCookie(cname, cvalue, sec) {
         var d = new Date();
         d.setTime(d.getTime() + (sec * 1000));
@@ -114,36 +112,23 @@
     alert("error occured");
     window.location = 'index.html';
     });
-
+    $(function(){
+        $(".loggedin-div").load("nav.html");
+    });
     function display_info(data){
         console.log(data.personal_intro);
         if (data.status === "success") {
             $(".se-pre-con").fadeOut("slow");
-            $(".loggedin-div").show();
-            $("#username").html(data.user);
             // generateAllCard(data.books);
             di(data);
-            $(function(){
-                $(".loggedin-div").load("nav.html");
-            });
-
-            $(function(){
-                $(".loggedin-div").load("nav.html");
-            });
-
+            $(".loggedin-div").show();
             $('.edit').click(function(){
                 $(this).hide();
                 $('.box').addClass('editable');
                 $('.text').attr('contenteditable', 'true');
                 $('.save').show();
             });
-
-            $(function(){
-                $(".loggedin-div").load("nav.html");
-            });
-			var username = getCookie('username');
-            document.getElementById("username").innerText=username;
-            console.log(username);
+            $("#username").html(data.user);
         } else {
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");

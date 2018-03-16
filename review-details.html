@@ -6,7 +6,8 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
@@ -17,6 +18,8 @@
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/review-details.css"/>
     <link rel="stylesheet" type="text/css" href="css/Rating.css"/>
+    <script src="js/review-detail.js"></script>
+    <script src="js/serverIP.js"></script>
 </head>
 <body>
 <div id="app">
@@ -102,31 +105,11 @@
     </div>
 </div>
 </body>
-<script>
-
-    $(function(){
-         $(".loggedin-div").load("nav.html");
-     });
-
-    $('.edit').click(function () {
-        $(this).hide();
-        $('.box').addClass('editable');
-        $('.text').attr('contenteditable', 'true');
-        $('.save').show();
-    });
-    $('.save').click(function () {
-        $(this).hide();
-        $('.box').removeClass('editable');
-        $('.text').removeAttr('contenteditable');
-        $('.edit').show();
-    });
-</script>
 <script type="text/javascript">
     var url_string = window.location.href;
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     console.log(id);
-
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -142,32 +125,6 @@
         }
         return "";
     }
-
-    $.post('http://127.0.0.1:8000/api/getReviewByID/',
-        {
-            'session_key': getCookie('session_key'),
-            'id': id
-        }).done(ReviewCallBack).fail(function (a) {
-        alert("error occured");
-        window.location = 'index.html';
-    });
-
-    function ReviewCallBack(data) {
-        console.log(data);
-        if (data.status === "success") {
-            $(".loggedin-div").show();
-            console.log(data.user);
-            $("#username").html(data.request_user);
-            displayReview(data);
-            $(".se-pre-con").fadeOut("slow");
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-    }
-
     function displayReview(review) {
         //vue.js
         var Review = new Vue({
@@ -197,7 +154,7 @@
             return;
         }
         if (comment.value !== '') {
-            $.post('http://127.0.0.1:8000/api/addComment/',
+            $.post(serverIP+'/api/addComment/',
                 {
                     'content': comment.value,
                     'session_key': getCookie('session_key'),
@@ -234,7 +191,7 @@
                 return;
             }
 
-            $.post('http://127.0.0.1:8000/api/edit_comment/',
+            $.post(serverIP+'/api/edit_comment/',
                 {
                     'content': newC.value,
                     'session_key': getCookie('session_key'),
@@ -267,6 +224,4 @@
 </html>
 
 </body>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </html>

@@ -6,7 +6,8 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -15,6 +16,7 @@
     <title>Signup</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/signup.css"/>
+    <script src="js/signup.js"></script>
 </head>
 <body>
 <div class="container signup-container">
@@ -104,113 +106,4 @@
     </div>
 </div>
 </body>
-<script>
-    //vue.js
-    var err_name= new Vue({
-            el: "#signup_err_name",
-            data: {
-                msg: ''
-            }
-       })
-    var err_email= new Vue({
-            el: "#signup_err_email",
-            data: {
-                msg: ''
-            }
-       })
-    var err_psw= new Vue({
-            el: "#signup_err_psw",
-            data: {
-                msg: ''
-            }
-   })
-    var err_psw2= new Vue({
-            el: "#signup_err_psw2",
-            data: {
-                msg: ''
-            }
-   })
-    
-    $("#signup_err_name").hide();
-    $("#signup_err_email").hide();
-    $("#signup_err_psw").hide();
-    $("#signup_err_psw2").hide();
-    
-    $('#password').on('keyup', function () {
-        var password = $(this).val();
-        var count = $(this).val().length;
-        if (count == 0) {
-            $('.bar').css('width', '0%');
-        }
-        else {
-            if (count < 8) {
-                $('.bar').css('width', '33%');
-            }
-            if (count >= 8 && ((password != password.toLowerCase()) || password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/))) {
-                $('.bar').css('width', '66%');
-            }
-            if (count >= 8 && (password != password.toLowerCase()) && password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) {
-                $('.bar').css('width', '100%');
-            }
-        }
-    });
-    $("#register").click(register);
-    
-    function register() {
-        console.log("register");
-        
-        // check if two password are the same
-        if ($("input#password").val() != $("input#password-confirm").val()) {
-            err_psw2.msg = "Password does not match.";
-            $("#signup_err_psw2").show();
-        }
-        else if($("input#name").val().length ==0){
-            err_name.msg = "Name should not be empty.";
-            $("#signup_err_name").show();
-        }
-        else if($("input#email").val().length == 0){
-            err_email.msg = "Email should not be empty.";
-            $("#signup_err_email").show();
-        }
-        else if($("input#password").val().length < 8){
-            err_psw.msg = "Password too short.";
-            $("#signup_err_psw").show();
-        } else {
-            $.post('http://127.0.0.1:8000/api/createAccount/',
-                {
-                    'e_mail': $("input#email").val(),
-                    'password': $("input#password").val(),
-                    'name': $("input#name").val(),
-                    'personal_intro': $("textarea#intro").val(),
-                    'gender': $("select#position").val()
-                }, regiserCallBack);
-        }
-
-
-    }
-
-    function regiserCallBack(data) {
-        console.log(data);
-        if (data.status === "success") {
-            window.location = 'index.html';
-        } else {
-            if(data.reason == "pwd_filter_failure"){
-                err_psw.msg = "The password should at least have 1 capital letter and numbers.";
-                $("#signup_err_psw").show();
-            }
-            if(data.reason == "existing_email"){
-                err_email.msg = "Email already been registered by another user.";
-                $("#signup_err_email").show();
-            }
-            $("input#password").val('');
-            $("input#password-confirm").val('');
-            $("select#intro").val('');
-            $("textarea#position").val('');
-            }
-    }
-
-
-</script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </html>

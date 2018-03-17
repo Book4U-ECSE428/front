@@ -88,7 +88,11 @@
             </div>
         </div>
         <div class="infoDiv col-lg-12 col-md-12">Comment:
-            <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:{{comment.content}}</div>
+            <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:
+                <div id="commentContent" style="display: inline">{{comment.content}}</div>
+                <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none"><image src="img/edit.png" style="height: 20px"/></button>
+                <button id="confirm-edit" class="btn btn-primary" style="display: none" v-on:click="confirmEdit($event)" v-bind:data-commentid="comment.id">confirm</button>
+            </div>
         </div>
 
 
@@ -133,7 +137,44 @@
                 Bookname:review.book_name,
                 Reviewcontent: review.review_content,
                 username:review.review_user,
-		        Comments:review.comments
+		        Comments:review.comments,
+                request_user: review.request_user
+            },
+            methods:{
+                editComment: function(e){
+                    console.log(e.target.parentNode.parentNode.childNodes.item(5));
+                    var content =e.target.parentNode.parentNode.childNodes.item(1);
+                    $(content).addClass('editable');
+                    $(content).attr('contenteditable', 'true');
+                    $(content).css("background-color","white");
+                    $(content).css("display","block");
+                    $(content).css("color","grey");
+                    $(e.target.parentNode).hide();
+                    $(e.target.parentNode.parentNode.childNodes.item(5)).css("display","block");
+                },
+                confirmEdit: function(e){
+                    var newC = e.target.parentNode.childNodes.item(1);
+                    var commentid = e.target.getAttribute("data-commentid");
+                    console.log(newC.innerText.length);
+                    if (newC.innerText.length > 400){ // If longer than 400 unicode char.
+                        alert("Keep your comments shorter than 400 characters");
+                        return;
+                    }
+                    $(e.target.parentNode.childNodes.item(5)).hide();
+                    $(newC).removeClass('editable');
+                    $(newC).css("background-color","transparent");
+                    $(newC).css("display","inline");
+                    $(newC).css("color","white");
+                    $(e.target.parentNode.childNodes.item(3)).show();
+                    $.post(serverIP+'/api/edit_comment/',
+                        {
+                            'content': newC.innerText,
+                            'session_key': getCookie('session_key'),
+                            'id': commentid,
+                        }).done(editCommentCallback).fail(function (a) {
+                        console.log("edit review error");
+                    });
+                }
             }
         });
         document.getElementsByClassName("star-" + review.review_rating)[0].checked = true;
@@ -220,6 +261,8 @@
         var char_cnt = 400 - this.value.length;
         $("#charCounter").html(char_cnt + " remaining");
     })
+
+    document.onclick
 </script>
 </html>
 

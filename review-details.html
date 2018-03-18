@@ -92,6 +92,7 @@
                 <div id="commentContent" style="display: inline">{{comment.content}}</div>
                 <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none"><image src="img/edit.png" style="height: 20px"/></button>
                 <button id="confirm-edit" class="btn btn-primary" style="display: none" v-on:click="confirmEdit($event)" v-bind:data-commentid="comment.id">confirm</button>
+                <p style="font-size: 10px;"v-if="(comment.modified==True&&request_user==comment.user)">This comment has been modified </p>
             </div>
         </div>
 

@@ -160,6 +160,10 @@
                         alert("Keep your comments shorter than 400 characters");
                         return;
                     }
+                    if (newC.innerText.length == 0){ // If comment is null.
+                        alert("Comment cannot be empty");
+                        return;
+                    }
                     $(e.target.parentNode.childNodes.item(5)).hide();
                     $(newC).removeClass('editable');
                     $(newC).css("background-color","transparent");

@@ -6,6 +6,8 @@
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--vue.js-->
@@ -42,13 +44,34 @@
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
+                    <li>
+                        <button class="searchBtn" id="searchBtn"><i class="material-icons md-light">search</i></button>
+                    </li>
                     <!-- Authentication Links -->
-                    <div class="loggedin-div"></div>
+                    <li>
+                        <div class="loggedin-div"></div>
+                    </li>
                     <!-- endif -->
                 </ul>
             </div>
         </div>
     </nav>
+    <div class="searchBar">
+        <div class="col-md-12">
+            <input id="search-input" type="text"/>
+            <button>Search</button>
+            <button class="closeBtn" id="closeBtn"><i class="material-icons md-light">close</i></button>
+        </div>
+        <div class="col-md-12 option">
+            Search By:
+            <input type="radio" name="tab" value="isbn" checked/>
+            ISBN
+            <input type="radio" name="tab" value="author" />
+            AUTHOR
+            <input type="radio" name="tab" value="firm"/>
+            PUBLISH FIRM
+        </div>
+    </div>
     <div class="se-pre-con"></div>
     <div class="book">
         <div class="details" id="details" >
@@ -149,6 +172,12 @@
     function reviewAOnClick(obj) {
         window.location = 'review-details.html?id=' + obj.id;
     }
+    document.getElementById("searchBtn").onclick = function() {
+        $(".searchBar").show();
+    };
+    document.getElementById("closeBtn").onclick = function() {
+        $(".searchBar").hide();
+    };
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>

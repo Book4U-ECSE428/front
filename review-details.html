@@ -7,6 +7,8 @@
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
@@ -52,7 +54,12 @@
                         <li data-toggle="collapse"><a>Register</a></li>
                     </div> -->
                     <!-- else -->
-                    <div class="loggedin-div"></div>
+                    <li>
+                        <button class="searchBtn" id="searchBtn"><i class="material-icons md-light">search</i></button>
+                    </li>
+                    <li>
+                        <div class="loggedin-div"></div>
+                    </li>
                     <!-- endif -->
                 </ul>
             </div>
@@ -60,6 +67,22 @@
     </nav>
 </div>
 <div class="se-pre-con"></div>
+<div class="searchBar">
+    <div class="col-md-12">
+        <input id="search-input" type="text"/>
+        <button>Search</button>
+        <button class="closeBtn" id="closeBtn"><i class="material-icons md-light">close</i></button>
+    </div>
+    <div class="col-md-12 option">
+        Search By:
+        <input type="radio" name="tab" value="isbn" checked/>
+        ISBN
+        <input type="radio" name="tab" value="author" />
+        AUTHOR
+        <input type="radio" name="tab" value="firm"/>
+        PUBLISH FIRM
+    </div>
+</div>
 <div class="infobox1" id="detail">
     <div class="col-lg-12 reviewDiv" style="padding-top: 50px">
         <div class="col-lg-9 col-md-9">
@@ -220,6 +243,12 @@
         var char_cnt = 400 - this.value.length;
         $("#charCounter").html(char_cnt + " remaining");
     })
+    document.getElementById("searchBtn").onclick = function() {
+        $(".searchBar").show();
+    };
+    document.getElementById("closeBtn").onclick = function() {
+        $(".searchBar").hide();
+    };
 </script>
 </html>
 

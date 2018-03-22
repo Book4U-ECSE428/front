@@ -63,7 +63,12 @@ $.getScript('/js/serverIP.js', function()
             el: "#card-list",
             data: {
                 books: book_list
-            }
+            },
+			/*method:{
+				removeElement: function(index){
+					this.books.splice(index,1);
+				}
+			}*/
         })
     }
 

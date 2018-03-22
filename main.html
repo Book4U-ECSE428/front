@@ -103,9 +103,33 @@
                 </div>
             </div>
         </div>
+		
 
     </div>
+	
+	<div class="book-cards" id="search-list" hidden>
+        <div v-if="books.length>0">
+            <div v-for="book in books">
+                <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
+
+                    <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
+                    <div class="card-container">
+                        <h4><b>{{book.name}}</b></h4>
+                        <p>{{book.author}}</p>
+                        <p>Rate: {{book.rating}}</p>
+                        <p>Edition: {{book.edition}}</p>
+                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+	
 </div>
+    <div>
+	<button class="backBtn" id="backBtn" onclick="window.location.reload()" hidden><i>Back to Main Page/ Continue Searching</i></button>
+	</div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 <script>
@@ -134,6 +158,8 @@
     document.getElementById("closeBtn").onclick = function() {
         $(".searchBar").hide();
     };
+	
+
     function searchBook() {
         var searchInput = document.getElementById('search-input').value;
         console.log(searchInput);
@@ -171,13 +197,35 @@
     }
     function search_cb(data) {
         console.log(data);
-//        if (data.status === "success") {
-//             console.log(data.request_user);
-//        } else {
-//            console.log("fail!!!!");
-//        }
+        if (data.status === "success") {
+            console.log(data.request_user);
+            //$("#username").html(data.user);
+            generateSearchCard(data.books);
+			document.getElementById("card-list").hidden=true;
+			document.getElementById("search-list").hidden=false;
+			$(".searchBar").hide();
+			document.getElementById("searchBtn").hidden=true;
+			document.getElementById("backBtn").hidden=false;
+        } else {
+            console.log("fail!!!!");
+        }
 
     }
+	
+
+	 function generateSearchCard(book_list) {
+        var cardList = new Vue({
+            el: "#search-list",
+            data: {
+                books: book_list
+            },
+
+        })
+
+    }
+	
+	
+
 </script>
 </html> 
 

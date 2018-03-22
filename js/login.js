@@ -2,6 +2,12 @@ $.getScript('/js/serverIP.js', function()
 {
     $("button.signin").click(login);
 
+    $("body").keyup(function(e){
+        if (e.which==13){ // if the key pressed is ENTER
+            login();
+        }
+    });
+
     function login() {
         if($("input#email").val().length == 0 || $("input#password").val().length == 0)
         {

@@ -25,12 +25,13 @@
                         data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>                                console.log(book_cat[j]);
                     <span class="icon-bar"></span>
                 </button>
 
                 <a class="navbar-brand" style="height:40px;color: white" href="main.html">BOOK4U</a>
                 <a class="navbar-brand" style="height:40px;color: white" href="addbookinfo.html">add new book</a>
+                <span class="navbar-brand" id="byCategory" style="height:40px;color: white;cursor: pointer" >Book Categories</span>
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -65,10 +66,30 @@
     </nav>
     <div class="se-pre-con"></div>
     <div class="book-cards" id="card-list">
-        <div v-if="books.length>0">
+        <div v-if="cat">
+            <div v-for="(c, c_index) in cat_list">
+                <div class="category_title" title="Show All" v-on:click="showCategory(c_index)">
+                    Category: {{c}}
+                </div>
+                <div class="heightlim">
+                        <div v-for="(book,b_index) in books" v-if="catCheck(c_index, b_index)">
+                                <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
+                                        <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
+                                        <div class="card-container">
+                                            <h4><b>{{book.name}}</b></h4>
+                                            <p>{{book.author}}</p>
+                                            <p>Rate: {{book.rating}}</p>
+                                            <p>Edition: {{book.edition}}</p>
+                                            <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <div v-else>
             <div v-for="book in books">
                 <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
-
                     <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
                     <div class="card-container">
                         <h4><b>{{book.name}}</b></h4>

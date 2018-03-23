@@ -112,6 +112,24 @@ body {
     width: 30vw;
 }
 
+.category_title{
+    margin-left: 1%;
+    margin: 1%;
+    width: 80 vw;
+    font-size: 20px;
+    cursor: pointer;
+    background-color:grey;
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+}
+
+.heightlim {
+    overflow: hidden;
+    display: block;
+    max-height: 25vh;
+}
+
 p {
     max-width: 30vw;
     word-wrap: break-word;

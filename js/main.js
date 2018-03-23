@@ -109,7 +109,13 @@ $.getScript('/js/serverIP.js', function()
             created(){
                 this.fillCategoryList();
             }
-        })
+
+			/*method:{
+				removeElement: function(index){
+					this.books.splice(index,1);
+				}
+			}*/
+        });
     }
 
     var book_pic_list = [

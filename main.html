@@ -7,6 +7,8 @@
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Page title-->
@@ -17,7 +19,7 @@
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-static-top">
+    <nav class="navbar navbar-static-top" style="margin-bottom: 0">
         <div>
             <div class="navbar-header">
                 <!-- Collapsed -->
@@ -58,12 +60,33 @@
                             </ul>
                         </li>
                     </div> -->
-                    <div class="loggedin-div"></div>
+                    <li>
+                        <button class="searchBtn" id="searchBtn"><i class="material-icons md-light">search</i></button>
+                    </li>
+                    <li>
+                        <div class="loggedin-div"></div>
+                    </li>
                     <!-- endif -->
                 </ul>
             </div>
         </div>
     </nav>
+    <div class="searchBar">
+        <div class="col-md-12">
+            <input id="search-input" type="text"/>
+            <button id="searchLoad" onclick="searchBook()">Search</button>
+            <button class="closeBtn" id="closeBtn"><i class="material-icons md-light">close</i></button>
+        </div>
+        <div class="col-md-12 option">
+            Search By:
+            <input id="isbn" type="radio" name="tab" value="isbn" checked/>
+            ISBN
+            <input id="author" type="radio" name="tab" value="author" />
+            AUTHOR
+            <input id="firm" type="radio" name="tab" value="firm"/>
+            PUBLISH FIRM
+        </div>
+    </div>
     <div class="se-pre-con"></div>
     <div class="book-cards" id="card-list">
         <div v-if="cat">
@@ -101,17 +124,129 @@
                 </div>
             </div>
         </div>
+		
 
     </div>
+	
+	<div class="book-cards" id="search-list" hidden>
+        <div v-if="books.length>0">
+            <div v-for="book in books">
+                <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
+
+                    <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
+                    <div class="card-container">
+                        <h4><b>{{book.name}}</b></h4>
+                        <p>{{book.author}}</p>
+                        <p>Rate: {{book.rating}}</p>
+                        <p>Edition: {{book.edition}}</p>
+                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+	
 </div>
+    <div>
+	<button class="backBtn" id="backBtn" onclick="window.location.reload()" hidden><i>Back to Main Page/ Continue Searching</i></button>
+	</div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 <script>
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
     function card_on_click(obj) {
         console.log(obj);
         // alert(obj.id);
         window.location = 'book-details.html?id=' + obj.id;
     }
+    document.getElementById("searchBtn").onclick = function() {
+        $(".searchBar").show();
+    };
+    document.getElementById("closeBtn").onclick = function() {
+        $(".searchBar").hide();
+    };
+	
+
+    function searchBook() {
+        var searchInput = document.getElementById('search-input').value;
+        console.log(searchInput);
+        console.log(getCookie('session_key'));
+        if(document.getElementById('isbn').checked){
+            console.log("isbn");
+            $.post(serverIP+'/api/get_books_by_isbn',
+                {
+                    'session_key':getCookie('session_key'),
+                    'isbn':searchInput
+                }).done(search_cb).fail(function (a) {
+                console.log("fail");
+            });
+        }
+        else if(document.getElementById('author').checked){
+            console.log("author");
+            $.post(serverIP+'/api/get_books_by_author',
+                {
+                    'session_key': getCookie('session_key'),
+                    'author':searchInput
+                }).done(search_cb).fail(function (a) {
+                console.log("fail");
+            });
+        }
+        else{
+            console.log("firm");
+            $.post(serverIP+'/api/get_books_by_publish_firm',
+                {
+                    'session_key': getCookie('session_key'),
+                    'publish_firm':searchInput
+                }).done(search_cb).fail(function (a) {
+                console.log("fail");
+            });
+        }
+    }
+    function search_cb(data) {
+        console.log(data);
+        if (data.status === "success") {
+            console.log(data.request_user);
+            //$("#username").html(data.user);
+            generateSearchCard(data.books);
+			document.getElementById("card-list").hidden=true;
+			document.getElementById("search-list").hidden=false;
+			$(".searchBar").hide();
+			document.getElementById("searchBtn").hidden=true;
+			document.getElementById("backBtn").hidden=false;
+        } else {
+            console.log("fail!!!!");
+        }
+
+    }
+	
+
+	 function generateSearchCard(book_list) {
+        var cardList = new Vue({
+            el: "#search-list",
+            data: {
+                books: book_list
+            },
+
+        })
+
+    }
+	
+	
+
 </script>
 </html> 
 

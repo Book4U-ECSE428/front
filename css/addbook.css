@@ -36,6 +36,7 @@ body {
     background: rgba(209, 199, 205, 0.5);
     border-color: transparent;
     min-height: 40px;
+    margin-bottom: 0;
 }
 .navigation li {
     float: left;
@@ -209,4 +210,47 @@ body {
     .info-top{
         padding-top: 10px
     }
+}
+.material-icons.md-light {
+    color: rgba(255, 255, 255, 1);
+    padding-top: 5px;
+}
+.searchBtn{
+    background-color: transparent;
+    border: none;
+    height: 40px;
+}
+.searchBtn:hover {
+    background: pink;
+}
+.searchBar{
+    text-align: center;
+    top:-20px;
+    background: rgba(209, 199, 205, 0.7);
+    width: 80%;
+    margin-left: 10%;
+    padding-top: 10px;
+    margin-bottom: 20px;
+    height: 70px;
+    display: none;
+}
+.searchBar #search-input{
+    width: 60%;
+    top:-5px;
+}
+.searchBar .closeBtn{
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    float: right;
+}
+.searchBar .closeBtn .material-icons{
+    padding: 0;
+}
+.searchBar .option{
+    padding-top: 5px;
+    color: white;
+}
+.searchBar .option input{
+    margin-left: 10px;
 }

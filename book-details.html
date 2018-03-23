@@ -44,9 +44,6 @@
                 </ul>
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
-                    <li>
-                        <button class="searchBtn" id="searchBtn"><i class="material-icons md-light">search</i></button>
-                    </li>
                     <!-- Authentication Links -->
                     <li>
                         <div class="loggedin-div"></div>
@@ -56,22 +53,6 @@
             </div>
         </div>
     </nav>
-    <div class="searchBar">
-        <div class="col-md-12">
-            <input id="search-input" type="text"/>
-            <button>Search</button>
-            <button class="closeBtn" id="closeBtn"><i class="material-icons md-light">close</i></button>
-        </div>
-        <div class="col-md-12 option">
-            Search By:
-            <input type="radio" name="tab" value="isbn" checked/>
-            ISBN
-            <input type="radio" name="tab" value="author" />
-            AUTHOR
-            <input type="radio" name="tab" value="firm"/>
-            PUBLISH FIRM
-        </div>
-    </div>
     <div class="se-pre-con"></div>
     <div class="book">
         <div class="details" id="details" >
@@ -172,12 +153,6 @@
     function reviewAOnClick(obj) {
         window.location = 'review-details.html?id=' + obj.id;
     }
-    document.getElementById("searchBtn").onclick = function() {
-        $(".searchBar").show();
-    };
-    document.getElementById("closeBtn").onclick = function() {
-        $(".searchBar").hide();
-    };
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>

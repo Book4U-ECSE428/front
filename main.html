@@ -200,16 +200,48 @@
         if (data.status === "success") {
             console.log(data.request_user);
             //$("#username").html(data.user);
-            generateSearchCard(data.books);
-			document.getElementById("card-list").hidden=true;
-			document.getElementById("search-list").hidden=false;
-			$(".searchBar").hide();
-			document.getElementById("searchBtn").hidden=true;
-			document.getElementById("backBtn").hidden=false;
+            if(data.books.length>0)
+            {
+                generateSearchCard(data.books);
+                document.getElementById("card-list").hidden=true;
+                document.getElementById("search-list").hidden=false;
+                $(".searchBar").hide();
+                document.getElementById("searchBtn").hidden=true;
+                document.getElementById("backBtn").hidden=false;
+            }
+            else if(document.getElementById('isbn').checked){
+                alert("no ISBN found!");
+            }
+            else if (document.getElementById('author').checked){
+                alert("no Author found!");
+            }
+            else if(document.getElementById('firm').checked){
+                alert("no publish firm found!");
+            }
+            else
+            {
+                alert("no book found!");
+            }
+
         } else {
             console.log("fail!!!!");
+            if(data.reason==="no ISBN")
+            {
+                alert("no ISBN found!");
+            }
+            else if(data.reason==="no publish firm")
+            {
+                alert("no publish found!");
+            }
+            else if(data.reason==="no author")
+            {
+                alert("no author found!");
+            }
+            else
+            {
+                alert("no book found!");
+            }
         }
-
     }
 	
 

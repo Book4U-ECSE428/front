@@ -1,3 +1,4 @@
+
 body {
     background: #092756;
     background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104, 128, 138, .4) 10%, rgba(138, 114, 76, 0) 40%), -moz-linear-gradient(top, rgba(57, 173, 219, 0.25) 0%, rgba(42, 60, 87, .4) 100%), -moz-linear-gradient(-45deg, #670d10 0%, #092756 100%);
@@ -77,19 +78,6 @@ body {
 .navbar-default .navbar-nav > li > a {
     color: black;
 }
-
-.loggedout-div {
-    display: block;
-}
-
-.loggedin-div {
-    display: none;
-}
-
-.nav {
-    padding-right: 5%;
-}
-
 .book {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;

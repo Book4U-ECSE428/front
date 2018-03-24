@@ -161,39 +161,47 @@
 	
 
     function searchBook() {
-        var searchInput = document.getElementById('search-input').value;
-        console.log(searchInput);
-        console.log(getCookie('session_key'));
-        if(document.getElementById('isbn').checked){
-            console.log("isbn");
-            $.post(serverIP+'/api/get_books_by_isbn',
-                {
-                    'session_key':getCookie('session_key'),
-                    'isbn':searchInput
-                }).done(search_cb).fail(function (a) {
-                console.log("fail");
-            });
+        if (document.getElementById('search-input').value==="")
+        {
+            alert("Please enter your input.");
         }
-        else if(document.getElementById('author').checked){
-            console.log("author");
-            $.post(serverIP+'/api/get_books_by_author',
-                {
-                    'session_key': getCookie('session_key'),
-                    'author':searchInput
-                }).done(search_cb).fail(function (a) {
-                console.log("fail");
-            });
+        else
+        {
+            var searchInput = document.getElementById('search-input').value;
+            console.log(searchInput);
+            console.log(getCookie('session_key'));
+            if(document.getElementById('isbn').checked){
+                console.log("isbn");
+                $.post(serverIP+'/api/get_books_by_isbn',
+                    {
+                        'session_key':getCookie('session_key'),
+                        'isbn':searchInput
+                    }).done(search_cb).fail(function (a) {
+                    console.log("fail");
+                });
+            }
+            else if(document.getElementById('author').checked){
+                console.log("author");
+                $.post(serverIP+'/api/get_books_by_author',
+                    {
+                        'session_key': getCookie('session_key'),
+                        'author':searchInput
+                    }).done(search_cb).fail(function (a) {
+                    console.log("fail");
+                });
+            }
+            else{
+                console.log("firm");
+                $.post(serverIP+'/api/get_books_by_publish_firm',
+                    {
+                        'session_key': getCookie('session_key'),
+                        'publish_firm':searchInput
+                    }).done(search_cb).fail(function (a) {
+                    console.log("fail");
+                });
+            }
         }
-        else{
-            console.log("firm");
-            $.post(serverIP+'/api/get_books_by_publish_firm',
-                {
-                    'session_key': getCookie('session_key'),
-                    'publish_firm':searchInput
-                }).done(search_cb).fail(function (a) {
-                console.log("fail");
-            });
-        }
+       
     }
     function search_cb(data) {
         console.log(data);
@@ -222,7 +230,6 @@
             {
                 alert("no book found!");
             }
-
         } else {
             console.log("fail!!!!");
             if(data.reason==="no ISBN")

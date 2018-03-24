@@ -236,9 +236,6 @@ input.star-1:checked ~ label.star:before {
     z-index: 9999;
     background: url(../img/loader-64x/Preloader_1.gif) center no-repeat #fff;
 }
-button{
-    background-color: transparent !important;
-}
 
 .editBtn{
     background-color: transparent !important;
@@ -248,9 +245,9 @@ button{
     width: 20px;
     height: 20px;
 }
-#commentContent{
+#commentContent {
     display: inline;
-=======
+}
 .material-icons.md-light {
     color: rgba(255, 255, 255, 1);
     padding-top: 5px;

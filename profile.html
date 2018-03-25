@@ -19,7 +19,7 @@
     <title>Profile</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
-    <script src="js/profile.js"></script>
+    <!--<script src="js/profile.js"></script>-->
 </head>
 <body>
 <div class="se-pre-con"></div>
@@ -65,51 +65,366 @@
         <div class="col-lg-12 pic" style="padding-top: 70px">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
             <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
-            <div class="infoDiv">Name: <div class="info" id="info-name"></div>{{info.user}}</div> 
-                <div class="infoDiv">Gender: <div class="info" id="info-gender">{{info.gender}}</div></div>
+                <!--name-->
+                <div class="infoDiv">Name:
+                    <div class="user-name" id="user-name" style = "display:inline;">{{info.user}}</div>
+                    <button class="edit-name" style = "display:inline; background-color: transparent; border:none" onclick = "editName()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <button class="btn confirm-name" style = "display:none;color: gray" onclick="confirmName()">Confirm</button>
+                    <div class="cd-popup" id="pop1" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <p>This Change requires your password</p>
+                            <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updateName()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
+                <!--gender-->
+                <div class="infoDiv">Gender:
+                    <div class="user-gender" id="user-gender" style = "display:inline;">{{info.gender}}</div>
+                    <button class="edit-gender" style = "display:inline; background-color: transparent; border:none" onclick = "editGender()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <button class="btn confirm-gender" style = "display:none;color: gray" onclick="confirmGender()">Confirm</button>
+                    <p id="ps" style="font-size: 12px">Please enter Male/Female/Unknown</p>
+                    <div class="cd-popup" id="pop2" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <p>This Change requires your password</p>
+                            <input id="password2" type="password" class="form-control" name="password2" style="background: transparent" required>
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updateGender()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop2()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
+                <!--user type-->
                 <div class="infoDiv">User Type: <div class="info" id="info-usrtype">{{info.permission}}</div></div>
+                <!--email-->
+                <div class="infoDiv">Email:
+                    <div class="user-email" id="user-email" style = "display:inline;">{{info.e_mail}}</div>
+                    <button class="edit-email" style = "display:inline; background-color: transparent; border:none" onclick = "editEmail()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <button class="btn confirm-email" style = "display:none;color: gray" onclick="confirmEmail()">Confirm</button>
+                    <div class="cd-popup" id="pop3" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <p>This Change requires your password</p>
+                            <input id="password3" type="password" class="form-control" name="password3" style="background: transparent" required>
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updateEmail()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop3()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
+                <!--pwd-->
+                <div class="infoDiv">Password
+                    <button class="edit-pwd" style = "display:inline; background-color: transparent; border:none" onclick = "editPwd()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <div class="cd-popup" id="pop4" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <div style="padding-top: 10%">
+                                <input id="password4" type="password" class="form-control" name="password4" placeholder="Old Password" style="background: transparent;" required>
+                                <input id="password5" type="password" class="form-control" name="password5" placeholder="New Password" style="background: transparent;" required>
+                                <input id="password6" type="password" class="form-control" name="password6" placeholder="Confirm New Password" style="background: transparent;" required>
+                            </div>
+
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updatePwd()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop4()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
             </div>
             <div style="position: absolute; left: 700px;">
-            <button style="border:none;" class="profiledit" onclick="update()">edit</button>
+            
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
-                <span class="edit" v-on:click="editing">edit</span>
-                <span class="save" v-on:click="saving">save</span>
-                <div class="info text" id="info-intro">
-                    I enjoy meeting new people and finding ways to help them have an uplifting experience. I have had a variety of customer service opportunities, through which I was able to have fewer returned products and increased repeat customers, when compared with co-workers. I am dedicated, outgoing, and a team player. Who could I speak with in your customer service department about your organization’s customer service needs?
-                </div>
+                <span class="edit">edit</span>
+                <span class="save">save</span>
+                <div class="info text" id="info-intro">{{info.personal_intro}}</div>
+            </div>
+            <div class="cd-popup" id="pop5" role="alert">
+                <div class="cd-popup-container">
+                    <p>This Change requires your password</p>
+                    <input id="password7" type="password" class="form-control" name="password7" style="background: transparent" required>
+                    <div class="cd-buttons">
+                        <button class="btn confirmBtn" onclick="updateIntro()">Confirm</button>
+                        <button class="btn cancelBtn" onclick="closepop5()">Cancel</button>
+                    </div>
+                </div> <!-- cd-popup-container -->
             </div>
         </div>
     </div>
 </body>
 <script>
-	function update() {
-			window.location='profile_update.html';
-	}
-    // TODO waiting backend implementation of profile editing
-    // TODO personal info not displaying correctly
+    $(function(){
+        $(".loggedin-div").load("nav.html");
+    });
+    $(".loggedin-div").show();
+	function setCookie(cname, cvalue, sec) {
+        var d = new Date();
+        d.setTime(d.getTime() + (sec * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        console.log("cookie", document.cookie)
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    $.post('https://www.book4u.ca/api/getProfile/',
+    {
+        'session_key': getCookie('session_key')
+    }).done(display_info).fail(function (a) {
+    alert("error occured");
+    window.location = 'index.html';
+    });
+
+    function display_info(data){
+        console.log(data.personal_intro);
+        if (data.status === "success") {
+            $(".se-pre-con").fadeOut("slow");
+            $(".loggedin-div").show();
+            $("#username").html(data.user);
+            di(data);
+            $('.edit').click(function(){
+                console.log("edit");
+                $(this).hide();
+                $('.box').addClass('editable');
+                $('.text').attr('contenteditable', 'true');
+                $('.save').show();
+
+            });
+            $('.save').click(function(){
+                console.log("save");
+                $('.save').hide();
+                $('.box').removeClass('editable');
+                $('.text').removeAttr('contenteditable');
+                $('.edit').show();
+                $('#pop5').addClass('is-visible');
+            });
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'index.html';
+            }
+        }
+    }
+
     function di(information){
         var vm = new Vue({
             el: ".infobox",
             data:{
                 info: information
-            },
-            methods:{
-                editing: function(e){
-                    $(".edit").hide();
-                    $('.box').addClass('editable');
-                    $('.text').attr('contenteditable', 'true');
-                    $('.save').show();
-                },
-                saving: function(e){
-                    $('.save').hide();
-                    $('.box').removeClass('editable');
-                    $('.text').removeAttr('contenteditable');
-                    $('.edit').show();
-                }
             }
         })
+    }
+
+    
+    function updateName(){
+    	var NewName = document.getElementById('user-name').innerText;
+    	var password = document.getElementById('password').innerText;
+        console.log(password);
+    	if(NewName.length === 0){
+    		alert("No Input");
+    	}else if($("input#password").val().length === 0){
+    		alert("Password Required")
+    	} else {
+    		$.post('https://www.book4u.ca/api/setName/',
+       			 {
+       			 	'session_key': getCookie('session_key'),
+
+       				 'NewName': NewName,
+       				 'Password': $("input#password").val()
+       			 }, updateCallBack);
+    	}
+
+
+
+    }
+    
+    function updateGender(){
+    	var NewGender = document.getElementById('user-gender').innerText;
+    	
+    	if(NewGender.length === 0){
+    		//alert("No Input"); 
+    	}else if($("input#password2").val().length===0){
+    		//alert("Password Required")l 
+    	} else {
+    		$.post('https://www.book4u.ca/api/setGender/',
+       			 { 
+       			 	'session_key': getCookie('session_key'), 
+       				 
+       				 'NewGender': NewGender, 
+       				 'Password': $("input#password2").val()
+       			 }, updateCallBack); 
+    		//alert("Successful"); 
+    	}
+    	
+    }
+    function updateEmail() {
+        var NewEmail = document.getElementById('user-email').innerText;
+
+        if(NewEmail.length === 0){
+            alert("Email should not be empty.");
+        }
+        else if($("input#password3").val().length === 0){
+            alert("Password should not be empty.");
+        } else {
+            $.post('https://www.book4u.ca/api/setEmail/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewEmail': NewEmail,
+                    'Password': $("input#password3").val()
+                }, updateCallBack);
+        }
+    }
+
+    function updatePwd() {
+        console.log("password5");
+        if ($("input#newpassword").value == '') {
+            alert("New Password required");
+        } else if ($("input#password6").length === 0) {
+            alert("Password confirmation required");
+        } else if ($("input#password4").length === 0) {
+            alert("Password should be empty");
+        } else {
+            $.post('https://www.book4u.ca/api/setPassword/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewPassword': $("input#password5").val(),
+                    'NewPassword2': $("input#password6").val(),
+                    'OldPassword': $("input#password4").val()
+                }, updateCallBack);
+        }
+    }
+
+    function updateIntro(){
+        console.log("setIntro");
+        var newIntro = document.getElementById('info-intro').innerText;
+        if(newIntro.length === 0){
+            alert("Introduction should not be empty");
+            location.reload();
+        } else if($("input#password7").val().length === 0){
+            alert("Password should not be empty");
+            location.reload();
+        }else {
+            $.post('https://www.book4u.ca/api/setIntro/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewIntro': newIntro,
+                    'Password': $("input#password7").val()
+                }, updateCallBack);
+
+        }
+    }
+    
+    function updateCallBack(data) {
+        console.log(data);
+        if (data.status === "success") {
+            console.log(data.session_key);
+            window.location = 'profile.html';
+        } else {
+            if(data.reason === "authentication failed"||data.reason === "authentication failure"){
+                alert("The password is wrong.");
+
+            }
+            if(data.reason === "Saving failed"){
+                alert("Saving failed.");
+            }
+            if(data.reason === "existing_username"){
+                alert("Cannot set the same username as the old one.");
+            }
+            if(data.reason === "existing_email"){
+                alert("Cannot set the same email as the old one.");
+            }
+            if(data.reason === "passwords do not match"){
+                alert("Passwords do not match.");
+
+            }
+            
+            }
+    }
+    //name
+    function editName() {
+        $('.edit-name').hide();
+        $('.user-name').addClass('editable');
+        $('.user-name').attr('contenteditable', 'true');
+        $('.confirm-name').show();
+    }
+    function confirmName() {
+        $('.user-name').removeClass('editable');
+        $('.user-name').removeAttr('contenteditable');
+        $('.edit-name').show();
+        $('.confirm-name').hide();
+        $('#pop1').addClass('is-visible');
+    }
+    function closepop() {
+        $('#pop1').removeClass('is-visible');
+        location.reload();
+    }
+    //gender
+    function editGender() {
+        $('.edit-gender').hide();
+        $('.user-gender').addClass('editable');
+        $('.user-gender').attr('contenteditable', 'true');
+        $('.confirm-gender').show();
+        $('#ps').show();
+    }
+    function confirmGender() {
+        $('.user-gender').removeClass('editable');
+        $('.user-gender').removeAttr('contenteditable');
+        $('.edit-gender').show();
+        $('.confirm-gender').hide();
+        $('#pop2').addClass('is-visible');
+        $('#ps').hide();
+    }
+    function closepop2() {
+        $('#pop2').removeClass('is-visible');
+        location.reload();
+    }
+    //email
+    function editEmail() {
+        $('.edit-email').hide();
+        $('.user-email').addClass('editable');
+        $('.user-email').attr('contenteditable', 'true');
+        $('.confirm-email').show();
+    }
+    function confirmEmail() {
+        $('.user-email').removeClass('editable');
+        $('.user-email').removeAttr('contenteditable');
+        $('.edit-email').show();
+        $('.confirm-email').hide();
+        $('#pop3').addClass('is-visible');
+    }
+    function closepop3() {
+        $('#pop3').removeClass('is-visible');
+        location.reload();
+    }
+    //pwd
+    function editPwd() {
+        $('#pop4').addClass('is-visible');
+    }
+    function closepop4() {
+        $('#pop4').removeClass('is-visible');
+        location.reload();
+    }
+    function closepop5() {
+        $('#pop5').removeClass('is-visible');
+        location.reload();
     }
 </script>
 </html>

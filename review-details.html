@@ -94,6 +94,7 @@
         <div class="infoDiv col-lg-12 col-md-12">Comment:
             <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:
                 <div id="commentContent" style="display: inline">{{comment.content}}</div>
+                <button id="report" class="editBtn" v-on:click="reportComment($event)" style="background-color: transparent; border: none"><image src="img/report.png" style="height: 20px"/></button>
                 <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none"><image src="img/edit.png" style="height: 20px"/></button>
                 <button id="confirm-edit" class="btn btn-primary" style="display: none" v-on:click="confirmEdit($event)" v-bind:data-commentid="comment.id">confirm</button>
                 <div v-if="(comment.modified && request_user==comment.user)" style="font-size: 10px;" id="comment_modified">
@@ -148,6 +149,18 @@
                 request_user: review.request_user
             },
             methods:{
+                reportComment: function(e)
+                {
+                    var commentid = e.target.getAttribute("data-commentid");
+                    console.log(commentid);
+                    $.post(serverIP+'/api/reportComment/',
+                        {
+                            'session_key': getCookie('session_key'),
+                            'id': commentid,
+                        }).done(reportCommentCallback).fail(function (a) {
+                        console.log("report review error");
+                    });
+                },
                 editComment: function(e){
                     console.log(e.target.parentNode.parentNode.childNodes.item(5));
                     var content =e.target.parentNode.parentNode.childNodes.item(1);
@@ -227,6 +240,17 @@
         }
     }
 
+
+    function reportCommentCallback(data) {
+        console.log(data);
+        if (data.status == "success") {
+            alert("reported!");
+            location.reload();
+        } else {
+            alert("error!");
+        }
+    }
+    
     // Click on comment to edit
     function editComment(comment){
         var cid = "#"+comment.id;

@@ -182,7 +182,7 @@
         return "";
     }
 
-    $.post('http://127.0.0.1:8000/api/getProfile/',
+    $.post('https://www.book4u.ca/api/getProfile/',
     {
         'session_key': getCookie('session_key')
     }).done(display_info).fail(function (a) {
@@ -243,7 +243,7 @@
     	}else if($("input#password").val().length === 0){
     		alert("Password Required")
     	} else {
-    		$.post('http://127.0.0.1:8000/api/setName/',
+    		$.post('https://www.book4u.ca/api/setName/',
        			 {
        			 	'session_key': getCookie('session_key'),
 
@@ -264,7 +264,7 @@
     	}else if($("input#password2").val().length===0){
     		//alert("Password Required")l 
     	} else {
-    		$.post('http://127.0.0.1:8000/api/setGender/', 
+    		$.post('https://www.book4u.ca/api/setGender/',
        			 { 
        			 	'session_key': getCookie('session_key'), 
        				 
@@ -284,7 +284,7 @@
         else if($("input#password3").val().length === 0){
             alert("Password should not be empty.");
         } else {
-            $.post('http://127.0.0.1:8000/api/setEmail/',
+            $.post('https://www.book4u.ca/api/setEmail/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewEmail': NewEmail,
@@ -302,7 +302,7 @@
         } else if ($("input#password4").length === 0) {
             alert("Password should be empty");
         } else {
-            $.post('http://127.0.0.1:8000/api/setPassword/',
+            $.post('https://www.book4u.ca/api/setPassword/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewPassword': $("input#password5").val(),
@@ -322,7 +322,7 @@
             alert("Password should not be empty");
             location.reload();
         }else {
-            $.post('http://127.0.0.1:8000/api/setIntro/',
+            $.post('https://www.book4u.ca/api/setIntro/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewIntro': newIntro,

@@ -92,18 +92,23 @@
             </div>
         </div>
         <div class="infoDiv col-lg-12 col-md-12">Comment:
-            <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:
+            <div v-for="comment in Comments" style="padding:10px;" v-bind:data-user="comment.user">{{comment.user}}:
                 <div id="commentContent" style="display: inline">{{comment.content}}</div>
-                <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none"><image src="img/edit.png" style="height: 20px"/></button>
+                <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none" title="Edit"><image src="img/edit.png" style="height: 20px"/></button>
+                <button id="reply" class="replyBtn" onclick="replyComment(event)" style="background-color: transparent; border: none" title="Reply"><image src="img/reply.png" style="height: 20px"/></button>
                 <button id="confirm-edit" class="btn btn-primary" style="display: none" v-on:click="confirmEdit($event)" v-bind:data-commentid="comment.id">confirm</button>
                 <div v-if="(comment.modified && request_user==comment.user)" style="font-size: 10px;" id="comment_modified">
                       This comment has been modified.
                 </div>
+
             </div>
         </div>
 
 
         <div class="infoDiv col-lg-12 col-md-12">Add Comment:</div>
+        <div class="col-lg-12 col-md-12">
+            <button type="button" id="cancel-reply">Cancel Reply</button>
+        </div>
         <div>
             <textarea name="comment" id="comment" rows="2" cols="120" style="font-family:sans-serif;"></textarea>
         </div>
@@ -121,6 +126,7 @@
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     console.log(id);
+    var userCom='';
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -199,13 +205,20 @@
     }
 
     function post() {
-        console.log(comment);
+
         var comment = document.getElementById('comment');
+        console.log(comment.value.length);
         if (comment.value.length > 400){ // If longer than 400 unicode char.
             alert("Keep your comments shorter than 400 characters");
             return;
         }
-        if (comment.value !== '') {
+       if(comment.value == ''){
+            alert("There is no comment");
+        }
+        else if(comment.value.length===(userCom.length+2)&&userCom.length!==0){
+           alert("There is no comment");
+       }
+        else if (comment.value !== ''&&userCom.length===0) {
             $.post(serverIP+'/api/addComment/',
                 {
                     'content': comment.value,
@@ -213,9 +226,16 @@
                     'id': id
                 }
                 , commentCallBack);
-        } else {
-            alert("There is no comment");
         }
+        else{
+           $.post(serverIP+'/api/addComment/',
+               {
+                   'content': comment.value,
+                   'session_key': getCookie('session_key'),
+                   'id': id,
+               }
+               , commentCallBack);
+       }
     }
 
     function commentCallBack(data) {
@@ -273,7 +293,27 @@
         $("#charCounter").html(char_cnt + " remaining");
     })
 
-    document.onclick
+    function replyComment(comment) {
+        var commentUser = comment.target.parentNode.parentNode.attributes.item(0).value;
+        userCom = comment.target.parentNode.parentNode.attributes.item(0).value;
+        var content = document.getElementById('comment');
+        if(document.getElementById('comment').value==""){
+            $('#cancel-reply').show();
+            document.getElementById('comment').value += '@'+commentUser+':'
+            $('#cancel-reply').click(function () {
+                $('#cancel-reply').hide();
+                userCom='';
+                document.getElementById('comment').value='';
+            });
+        }
+        else if(content.value.length===userCom.length+2){
+            alert("You can only reply to one user!");
+        }
+        else {
+            alert("Please clear your comment before reply");
+        }
+
+    }
 </script>
 </html>
 

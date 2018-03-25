@@ -291,3 +291,10 @@ input.star-1:checked ~ label.star:before {
 .searchBar .option input{
     margin-left: 10px;
 }
+#cancel-reply{
+    border-radius: 8px;
+    margin-bottom: 5px;
+    background-color: #670d10;
+    color: white;
+    display: none;
+}

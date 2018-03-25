@@ -72,6 +72,8 @@
                     <div v-if="review.content=='' " style="display: inline">The user did not write any comment.</div>
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
+                <button v-if="request_user!==review.user" id="like" class="delete-button" v-on:click="likeReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/like.png"/></button>
+                <button v-if="request_user!==review.user"id="dislike" class="delete-button" v-on:click="dislikeReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/dislike.jpg"/></button>
                 <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" v-on:click="deletReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>
             <h2 class="col-lg-6 col-md-6 col-sm-6" style="padding-left:25px;">Add Your Review</h2>

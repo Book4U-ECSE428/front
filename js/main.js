@@ -1,31 +1,20 @@
-var category=false;
-var cardList;
-
 $.getScript('/js/serverIP.js', function()
 {
     function logout() {
         setCookie("", "", 10);
         window.location = 'login.html';
     }
-    
+
     function setCookie(cname, cvalue, sec) {
         var d = new Date();
         d.setTime(d.getTime() + (sec * 1000));
         var expires = "expires=" + d.toUTCString();
         document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        //console.log("cookie", document.cookie);
-
+        console.log("cookie", document.cookie)
     }
-
 
     $(function () {
         $(".loggedin-div").load("nav.html");
-        // Toggle category mode on click
-        $("#byCategory").click(function(e){
-            console.log(category);
-            category = !category;
-            Vue.set(cardList, 'cat', category);
-        });
     });
 
     function getCookie(cname) {
@@ -70,52 +59,17 @@ $.getScript('/js/serverIP.js', function()
     }
 
     function generateAllCard(book_list) {
-        cardList = new Vue({
+        var cardList = new Vue({
             el: "#card-list",
             data: {
-                books: book_list,
-                cat: category,
-                cat_list: [],
-                show_cat: -1
+                books: book_list
             },
-            methods:{
-                fillCategoryList(){
-                    for (var i=0; i<this.books.length;i++){
-                        var book_cat = this.books[i]['book_category'];
-                        for (var j=0; j<book_cat.length; j++){
-                            if (this.cat_list.indexOf(book_cat[j])==-1){
-                                // console.log(book_cat[j]);
-                                this.cat_list.push(book_cat[j]);
-                            }
-                        }
-                    }
-                },
-                catCheck(cat_index, book_index){
-                    if (this.show_cat>=0 && this.show_cat!=cat_index){
-                        return false;
-                    }
-                    if (this.books[book_index]['book_category'].indexOf(this.cat_list[cat_index])>-1){
-                        return true;
-                    } else {
-                        return false;
-                    }
-
-                },
-                showCategory(cat_index){
-                    this.show_cat=cat_index;
-                    $(".heightlim").css({'max-height': 'none'});
-                }
-            },
-            created(){
-                this.fillCategoryList();
-            }
-
 			/*method:{
 				removeElement: function(index){
 					this.books.splice(index,1);
 				}
 			}*/
-        });
+        })
     }
 
     var book_pic_list = [

@@ -211,9 +211,9 @@
                 $('.edit').show();
                 $('#pop5').addClass('is-visible');
             });
-			var username = getCookie('username');
-            document.getElementById("username").innerText=username;
-            console.log(username);
+//			var username = getCookie('username');
+//            document.getElementById("username").innerText=username;
+//            console.log(username);
         } else {
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");
@@ -238,9 +238,9 @@
     	var NewName = document.getElementById('user-name').innerText;
     	var password = document.getElementById('password').innerText;
         console.log(password)
-    	if(NewName == null){
+    	if(NewName.length === 0){
     		alert("No Input");
-    	}else if(password == null){
+    	}else if($("input#password").val().length === 0){
     		alert("Password Required")
     	} else {
     		$.post('http://127.0.0.1:8000/api/setName/',
@@ -259,9 +259,9 @@
     function updateGender(){
     	var NewGender = document.getElementById('user-gender').innerText;
     	
-    	if(NewGender == null){
+    	if(NewGender.length === 0){
     		//alert("No Input"); 
-    	}else if(password == null){
+    	}else if($("input#password2").val().length===0){
     		//alert("Password Required")l 
     	} else {
     		$.post('http://127.0.0.1:8000/api/setGender/', 

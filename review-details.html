@@ -6,7 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <script src="https://unpkg.com/vue"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
@@ -17,6 +20,8 @@
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/review-details.css"/>
     <link rel="stylesheet" type="text/css" href="css/Rating.css"/>
+    <script src="js/review-detail.js"></script>
+    <script src="js/serverIP.js"></script>
 </head>
 <body>
 <div id="app">
@@ -49,7 +54,9 @@
                         <li data-toggle="collapse"><a>Register</a></li>
                     </div> -->
                     <!-- else -->
-                    <div class="loggedin-div"></div>
+                    <li>
+                        <div class="loggedin-div"></div>
+                    </li>
                     <!-- endif -->
                 </ul>
             </div>
@@ -85,7 +92,14 @@
             </div>
         </div>
         <div class="infoDiv col-lg-12 col-md-12">Comment:
-            <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:{{comment.content}}</div>
+            <div v-for="comment in Comments" style="padding:10px;">{{comment.user}}:
+                <div id="commentContent" style="display: inline">{{comment.content}}</div>
+                <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none"><image src="img/edit.png" style="height: 20px"/></button>
+                <button id="confirm-edit" class="btn btn-primary" style="display: none" v-on:click="confirmEdit($event)" v-bind:data-commentid="comment.id">confirm</button>
+                <div v-if="(comment.modified && request_user==comment.user)" style="font-size: 10px;" id="comment_modified">
+                      This comment has been modified.
+                </div>
+            </div>
         </div>
 
 
@@ -102,31 +116,11 @@
     </div>
 </div>
 </body>
-<script>
-
-    $(function(){
-         $(".loggedin-div").load("nav.html");
-     });
-
-    $('.edit').click(function () {
-        $(this).hide();
-        $('.box').addClass('editable');
-        $('.text').attr('contenteditable', 'true');
-        $('.save').show();
-    });
-    $('.save').click(function () {
-        $(this).hide();
-        $('.box').removeClass('editable');
-        $('.text').removeAttr('contenteditable');
-        $('.edit').show();
-    });
-</script>
 <script type="text/javascript">
     var url_string = window.location.href;
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     console.log(id);
-
 
     function getCookie(cname) {
         var name = cname + "=";
@@ -142,32 +136,6 @@
         }
         return "";
     }
-
-    $.post('http://127.0.0.1:8000/api/getReviewByID/',
-        {
-            'session_key': getCookie('session_key'),
-            'id': id
-        }).done(ReviewCallBack).fail(function (a) {
-        alert("error occured");
-        window.location = 'index.html';
-    });
-
-    function ReviewCallBack(data) {
-        console.log(data);
-        if (data.status === "success") {
-            $(".loggedin-div").show();
-            console.log(data.user);
-            $("#username").html(data.request_user);
-            displayReview(data);
-            $(".se-pre-con").fadeOut("slow");
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-    }
-
     function displayReview(review) {
         //vue.js
         var Review = new Vue({
@@ -176,7 +144,48 @@
                 Bookname:review.book_name,
                 Reviewcontent: review.review_content,
                 username:review.review_user,
-		        Comments:review.comments
+		        Comments:review.comments,
+                request_user: review.request_user
+            },
+            methods:{
+                editComment: function(e){
+                    console.log(e.target.parentNode.parentNode.childNodes.item(5));
+                    var content =e.target.parentNode.parentNode.childNodes.item(1);
+                    $(content).addClass('editable');
+                    $(content).attr('contenteditable', 'true');
+                    $(content).css("background-color","white");
+                    $(content).css("display","block");
+                    $(content).css("color","grey");
+                    $(e.target.parentNode).hide();
+                    $(e.target.parentNode.parentNode.childNodes.item(5)).css("display","block");
+                },
+                confirmEdit: function(e){
+                    var newC = e.target.parentNode.childNodes.item(1);
+                    var commentid = e.target.getAttribute("data-commentid");
+                    console.log(newC.innerText.length);
+                    if (newC.innerText.length > 400){ // If longer than 400 unicode char.
+                        alert("Keep your comments shorter than 400 characters");
+                        return;
+                    }
+                    if (newC.innerText.length == 0){ // If comment is null.
+                        alert("Comment cannot be empty");
+                        return;
+                    }
+                    $(e.target.parentNode.childNodes.item(5)).hide();
+                    $(newC).removeClass('editable');
+                    $(newC).css("background-color","transparent");
+                    $(newC).css("display","inline");
+                    $(newC).css("color","white");
+                    $(e.target.parentNode.childNodes.item(3)).show();
+                    $.post(serverIP+'/api/edit_comment/',
+                        {
+                            'content': newC.innerText,
+                            'session_key': getCookie('session_key'),
+                            'id': commentid,
+                        }).done(editCommentCallback).fail(function (a) {
+                        console.log("edit review error");
+                    });
+                }
             }
         });
         document.getElementsByClassName("star-" + review.review_rating)[0].checked = true;
@@ -197,7 +206,7 @@
             return;
         }
         if (comment.value !== '') {
-            $.post('http://127.0.0.1:8000/api/addComment/',
+            $.post(serverIP+'/api/addComment/',
                 {
                     'content': comment.value,
                     'session_key': getCookie('session_key'),
@@ -234,7 +243,7 @@
                 return;
             }
 
-            $.post('http://127.0.0.1:8000/api/edit_comment/',
+            $.post(serverIP+'/api/edit_comment/',
                 {
                     'content': newC.value,
                     'session_key': getCookie('session_key'),
@@ -263,10 +272,10 @@
         var char_cnt = 400 - this.value.length;
         $("#charCounter").html(char_cnt + " remaining");
     })
+
+    document.onclick
 </script>
 </html>
 
 </body>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
 </html>

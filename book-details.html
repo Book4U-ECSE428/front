@@ -5,7 +5,9 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--vue.js-->
@@ -16,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="css/details.css"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/Rating.css"/>
+    <script src="js/book-details.js"></script>
+    <script src="js/serverIP.js" charset="utf-8" type="text/javascript"></script>
 </head>
 <body>
 <div id="app">
@@ -41,7 +45,9 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
                     <!-- Authentication Links -->
-                    <div class="loggedin-div"></div>
+                    <li>
+                        <div class="loggedin-div"></div>
+                    </li>
                     <!-- endif -->
                 </ul>
             </div>
@@ -107,127 +113,10 @@
         }
         return "";
     }
-    $(function(){
-        $(".loggedin-div").load("nav.html");
-    });
-
-    $.post('http://127.0.0.1:8000/api/getBookByID/',
-        {
-            'session_key': getCookie('session_key'),
-            'id': id
-        }).done(bookCallBack).fail(function (a) {
-        alert("error occured");
-        window.location = 'index.html';
-    });
-
-    function bookCallBack(data) {
-
-        console.log(data);
-        if (data.status === "success") {
-            $(".loggedin-div").show();
-            $("#username").html(data.request_user);
-            displayBook(data);
-            $(".se-pre-con").fadeOut("slow");
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-
-    }
-
-    var book_pic_list = [
-        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/creative_bookcover.png',
-        'https://about.canva.com/wp-content/uploads/sites/3/2015/01/children_bookcover.png',
-        'https://marketplace.canva.com/MAB___U-clw/1/0/thumbnail_large/canva-yellow-lemon-children-book-cover-MAB___U-clw.jpg',
-        'https://spark.adobe.com/images/landing/examples/how-to-book-cover.jpg',
-        'https://marketplace.canva.com/MACSXEOzaeQ/1/0/thumbnail_large/canva-orange-and-dark-purple-triangular-modern-architecture-book-cover-MACSXEOzaeQ.jpg',
-        'http://www.creativindie.com/wp-content/uploads/2013/10/Enchantment-Book-Cover-Best-Seller1.jpg'
-    ];
-
-    function displayBook(book) {
-        //vue.js
-
-        var book = new Vue({
-            el: '#details',
-            data: {
-                request_user: book.request_user,
-                cover_image: book.cover_image,
-                name: book.book_name,
-                ISBN: book.book_ISBN,
-                Author: book.book_author,
-                Publish_firm: book.book_publish_firm,
-                Publish_date: book.book_publish_date,
-                Edition: book.book_edition,
-                Genre: book.book_category,
-                Reviews: book.reviews,
-                permission: book.permission,
-                user: book.request_user
-            },
-            methods:{
-                deletReview: function(e){
-                    var reviewid= e.target.getAttribute("data-reviewid");
-                    console.log(reviewid);
-                    if (this.permission=="Moderator"){
-                        window.location = 'mod_delete.html?id=' + reviewid;
-                    } else {
-                        $.post('http://127.0.0.1:8000/api/deleteReviewByID/',
-                            {
-                                'session_key': getCookie('session_key'),
-                                'id': reviewid
-                            }).done(deleteReviewCallBack).fail(function (a) {
-                            console.log("delete review error");
-                        });
-                    }
-
-                }
-            }
-        });
-//        var books_div = $(".details");
-//		var card = '<img src="' + book.cover_image + '" alt="Book Avatar " class="col-lg-2">';
-//        var card = '<img src="' + book_pic_list[Math.floor(Math.random() * book_pic_list.length)] + '" alt="Book Avatar " class="col-lg-2">';
-//        card += '<h2 class="col-lg-10 book-top">';
-//        card += book.book_name + '</h2>';
-//        card += '<p class="col-lg-10 book-content">ISBN: ' + book.book_ISBN + '</p>';
-//        card += '<p class="col-lg-10 book-content">Author: ' + book.book_author + '</p>';
-//        card += '<p class="col-lg-10 book-content">Published by: ' + book.book_publish_firm + ' on ' + book.book_publish_date + '</p>';
-//        card += '<p class="col-lg-10 book-content">Edition: ' + book.book_edition + '</p>';
-//        card += '<p class="col-lg-10 book-content">Genre: ' + book.book_category + '</p>';
-//        card += '<h2 class="col-lg-12" style="padding-left:25px;">Reviews</h2>';
-//        for (var i = 0; i < book.reviews.length; i++) {
-//            card += '<a class="col-lg-12 review-link" id="' + book.reviews[i].id + '"onclick="reviewAOnClick(this)">' + book.reviews[i].content + '</a>'
-//        }
-//        card += '<h2 class="col-lg-6" style="padding-left:25px;">Add Your Review</h2>';
-//        card += '            <div class="col-lg-6 stars">\n' +
-//            '                <input class="star star-5" id="star-5" type="radio" name="star" value="5" onclick="getvalue()"/>\n' +
-//            '                <label class="star star-5" for="star-5" title="Amazing"></label>\n' +
-//            '                <input class="star star-4" id="star-4" type="radio" name="star" value="4" onclick="getvalue()"/>\n' +
-//            '                <label class="star star-4" for="star-4" title="Good"></label>\n' +
-//            '                <input class="star star-3" id="star-3" type="radio" name="star" value="3" onclick="getvalue()"/>\n' +
-//            '                <label class="star star-3" for="star-3" title="Ok"></label>\n' +
-//            '                <input class="star star-2" id="star-2" type="radio" name="star" value="2" onclick="getvalue()"/>\n' +
-//            '                <label class="star star-2" for="star-2" title="Not recommend"></label>\n' +
-//            '                <input class="star star-1" id="star-1" type="radio" name="star" value="1" onclick="getvalue()"/>\n' +
-//            '                <label class="star star-1" for="star-1" title="Really bad"></label>\n' +
-//            '            </div>';
-//        card += '<textarea class="col-lg-12" id="booktextarea" style="background-color:transparent;"></textarea>';
-//        card += '<div class="col-lg-12"><button class="btn" style="background-color:grey;">Submit</button></div>';
-//        books_div.append(card);
-//        $(".btn").click(submitReview);
-    }
-
-
-    function deleteReviewCallBack(data) {
-        console.log(data);
-        if (data.status === "success") {
-            location.reload();            
-        }
-    }
 
     function submitReview() {
         if(getvalue()>=1){
-            $.post('http://127.0.0.1:8000/api/addReview/',
+            $.post(serverIP+'/api/addReview/',
                 {
                     'session_key': getCookie('session_key'),
                     'BookID': id,
@@ -266,6 +155,5 @@
     }
 
 </script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 </html>

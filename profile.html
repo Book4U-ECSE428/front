@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.2/modernizr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
     <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
     <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
     <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -17,6 +19,7 @@
     <title>Profile</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
+    <script src="js/profile.js"></script>
 </head>
 <body>
 <div class="se-pre-con"></div>
@@ -49,7 +52,9 @@
                             <li data-toggle="collapse"><a>Register</a></li>
                         </div> -->
                         <!-- else -->
-                        <div class="loggedin-div"></div>
+                        <li>
+                            <div class="loggedin-div"></div>
+                        </li>
                         <!-- endif -->
                     </ul>
                 </div>
@@ -60,47 +65,99 @@
         <div class="col-lg-12 pic" style="padding-top: 70px">
             <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
             <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
-            <div class="infoDiv">Name: <div class="info" id="info-name"></div>{{info.user}}</div> 
-            <button style = "display:inline;" onclick = "updateName()">Update</button>
-            <div class="infoDiv">Gender: <div class="info" id="info-gender">{{info.gender}}</div></div>
-            <button style = "display:inline;" onclick = "updateGender()">Update</button>
-            <div class="infoDiv">User Type: <div class="info" id="info-usrtype">{{info.permission}}</div></div>
-            <div class="infoDiv">Email: <div class="info" id="info-email">{{info.e_mail}}</div></div>
-            <button style = "display:inline;" onclick = "updateEmail()">Update</button>
-            <div class="infoDiv">Password</div>
-            <button style = "display:inline;" onclick = "update()">Update</button>
+                <!--name-->
+                <div class="infoDiv">Name:
+                    <div class="user-name" id="user-name" style = "display:inline;">{{info.user}}</div>
+                    <button class="edit-name" style = "display:inline; background-color: transparent; border:none" onclick = "editName()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <button class="btn confirm-name" style = "display:none;color: gray" onclick="confirmName()">Confirm</button>
+                    <div class="cd-popup" id="pop1" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <p>This Change requires your password</p>
+                            <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updateName()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
+                <!--gender-->
+                <div class="infoDiv">Gender:
+                    <div class="user-gender" id="user-gender" style = "display:inline;">{{info.gender}}</div>
+                    <button class="edit-gender" style = "display:inline; background-color: transparent; border:none" onclick = "editGender()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <button class="btn confirm-gender" style = "display:none;color: gray" onclick="confirmGender()">Confirm</button>
+                    <p id="ps" style="font-size: 12px">Please enter Male/Female/Unknown</p>
+                    <div class="cd-popup" id="pop2" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <p>This Change requires your password</p>
+                            <input id="password2" type="password" class="form-control" name="password2" style="background: transparent" required>
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updateGender()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop2()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
+                <!--user type-->
+                <div class="infoDiv">User Type: <div class="info" id="info-usrtype">{{info.permission}}</div></div>
+                <!--email-->
+                <div class="infoDiv">Email:
+                    <div class="user-email" id="user-email" style = "display:inline;">{{info.e_mail}}</div>
+                    <button class="edit-email" style = "display:inline; background-color: transparent; border:none" onclick = "editEmail()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <button class="btn confirm-email" style = "display:none;color: gray" onclick="confirmEmail()">Confirm</button>
+                    <div class="cd-popup" id="pop3" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <p>This Change requires your password</p>
+                            <input id="password3" type="password" class="form-control" name="password3" style="background: transparent" required>
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updateEmail()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop3()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
+                <!--pwd-->
+                <div class="infoDiv">Password
+                    <button class="edit-pwd" style = "display:inline; background-color: transparent; border:none" onclick = "editPwd()"><img src="img/edit.png" style="height: 20px;"/></button>
+                    <div class="cd-popup" id="pop4" role="alert" style="z-index: 99;">
+                        <div class="cd-popup-container">
+                            <div style="padding-top: 10%">
+                                <input id="password4" type="password" class="form-control" name="password4" placeholder="Old Password" style="background: transparent;" required>
+                                <input id="password5" type="password" class="form-control" name="password5" placeholder="New Password" style="background: transparent;" required>
+                                <input id="password6" type="password" class="form-control" name="password6" placeholder="Confirm New Password" style="background: transparent;" required>
+                            </div>
+
+                            <div class="cd-buttons">
+                                <button class="btn confirmBtn" onclick="updatePwd()">Confirm</button>
+                                <button class="btn cancelBtn" onclick="closepop4()">Cancel</button>
+                            </div>
+                        </div> <!-- cd-popup-container -->
+                    </div>
+                </div>
             </div>
             <div style="position: absolute; left: 700px;">
             
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
-                <span class="edit" v-on:click="editing">edit</span>
-                <span class="save" v-on:click="saving">save</span>
+                <span class="edit">edit</span>
+                <span class="save">save</span>
                 <div class="info text" id="info-intro">{{info.personal_intro}}</div>
-            	<button style = "display:inline;" onclick = "updateIntro()">Update</button>
+            </div>
+            <div class="cd-popup" id="pop5" role="alert">
+                <div class="cd-popup-container">
+                    <p>This Change requires your password</p>
+                    <input id="password7" type="password" class="form-control" name="password7" style="background: transparent" required>
+                    <div class="cd-buttons">
+                        <button class="btn confirmBtn" onclick="updateIntro()">Confirm</button>
+                        <button class="btn cancelBtn" onclick="closepop5()">Cancel</button>
+                    </div>
+                </div> <!-- cd-popup-container -->
             </div>
         </div>
     </div>
 </body>
 <script>
-	function update() {
-			window.location='profile_update.html';
-	}
-	function updateName(){
-		window.location = 'profile_updateName.html'; 
-	}
-	function updateEmail(){
-		window.location = 'profile_updateEmail.html'; 
-	}
-	function updateGender(){
-		window.location = 'profile_updateGender.html'; 
-	}
-	function updateIntro(){
-		window.location = 'profile_updateIntro.html'; 
-	}
-	
-
 
 	function setCookie(cname, cvalue, sec) {
         var d = new Date();
@@ -141,23 +198,18 @@
             $("#username").html(data.user);
             // generateAllCard(data.books);
             di(data);
-            $(function(){
-                $(".loggedin-div").load("nav.html");
-            });
-
-            $(function(){
-                $(".loggedin-div").load("nav.html");
-            });
-
             $('.edit').click(function(){
                 $(this).hide();
                 $('.box').addClass('editable');
                 $('.text').attr('contenteditable', 'true');
                 $('.save').show();
             });
-
-            $(function(){
-                $(".loggedin-div").load("nav.html");
+            $('.save').click(function(){
+                $('.save').hide();
+                $('.box').removeClass('editable');
+                $('.text').removeAttr('contenteditable');
+                $('.edit').show();
+                $('#pop5').addClass('is-visible');
             });
 			var username = getCookie('username');
             document.getElementById("username").innerText=username;
@@ -170,7 +222,6 @@
         }
     }
 
-
     // TODO waiting backend implementation of profile editing
     // TODO personal info not displaying correctly
     function di(information){
@@ -178,62 +229,37 @@
             el: ".infobox",
             data:{
                 info: information
-            },
-            methods:{
-                editing: function(e){
-                    $(".edit").hide();
-                    $('.box').addClass('editable');
-                    $('.text').attr('contenteditable', 'true');
-                    $('.save').show();
-                },
-                saving: function(e){
-                    $('.save').hide();
-                    $('.box').removeClass('editable');
-                    $('.text').removeAttr('contenteditable');
-                    $('.edit').show();
-                    $.post('http://127.0.0.1:8000/api/setIntro/',
-                            {
-                    	
-                    			'session_key': getCookie('session_key'),
-                                'NewIntro': $("#info-intro").val(),
-                                'Password': getCookie('password')
-                                
-                            }, updateCallBack);
-                }
             }
         })
     }
+
     
-    /*function updateName(){
-    	var msg = "text"; 
-    	var NewName = prompt("Please Enter A New Name:", "New Name"); 
-    	var password = getCookie('password'); 
-    	
-    	if(NewName == null){ 
-    		//alert("No Input"); 
+    function updateName(){
+    	var NewName = document.getElementById('user-name').innerText;
+    	var password = document.getElementById('password').innerText;
+        console.log(password)
+    	if(NewName == null){
+    		alert("No Input");
     	}else if(password == null){
-    		//alert("Password Required")l 
+    		alert("Password Required")
     	} else {
-    		$.post('http://127.0.0.1:8000/api/setName/', 
-       			 { 
-       			 	'session_key': getCookie('session_key'), 
-       				 
-       				 'NewName': NewName.val(), 
-       				 'Password': password.val()
-       			 }, updateCallBack); 
-    		alert("Successful"); 
+    		$.post('http://127.0.0.1:8000/api/setName/',
+       			 {
+       			 	'session_key': getCookie('session_key'),
+
+       				 'NewName': NewName,
+       				 'Password': $("input#password").val()
+       			 }, updateCallBack);
     	}
-    	
-    	
-    	
-    }*/
+
+
+
+    }
     
-    /*function updateGender(){
-    	var msg = "text"; 
-    	var NewGender = prompt("Please Enter A New Gender:", "New Gender"); 
-    	var password = getCookie('password'); 
+    function updateGender(){
+    	var NewGender = document.getElementById('user-gender').innerText;
     	
-    	if(NewName == null){ 
+    	if(NewGender == null){
     		//alert("No Input"); 
     	}else if(password == null){
     		//alert("Password Required")l 
@@ -243,33 +269,163 @@
        			 	'session_key': getCookie('session_key'), 
        				 
        				 'NewGender': NewGender, 
-       				 'Password': password
+       				 'Password': $("input#password2").val()
        			 }, updateCallBack); 
     		//alert("Successful"); 
     	}
     	
-    	
-    	
-    }*/
+    }
+    function updateEmail() {
+        var NewEmail = document.getElementById('user-email').innerText;
+
+        if(NewEmail.length === 0){
+            alert("Email should not be empty.");
+        }
+        else if($("input#password3").val().length === 0){
+            alert("Password should not be empty.");
+        } else {
+            $.post('http://127.0.0.1:8000/api/setEmail/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewEmail': NewEmail,
+                    'Password': $("input#password3").val()
+                }, updateCallBack);
+        }
+    }
+
+    function updatePwd() {
+        console.log("password5")
+        if ($("input#newpassword").value == '') {
+            alert("New Password required");
+        } else if ($("input#password6").length === 0) {
+            alert("Password confirmation required");
+        } else if ($("input#password4").length === 0) {
+            alert("Password should be empty");
+        } else {
+            $.post('http://127.0.0.1:8000/api/setPassword/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewPassword': $("input#password5").val(),
+                    'NewPassword2': $("input#password6").val(),
+                    'OldPassword': $("input#password4").val()
+                }, updateCallBack);
+        }
+    }
+
+    function updateIntro(){
+        console.log("setIntro");
+        var newIntro = document.getElementById('info-intro').innerText;
+        if(newIntro.length === 0){
+            alert("Introduction should not be empty");
+            location.reload();
+        } else if($("input#password7").val().length === 0){
+            alert("Password should not be empty");
+            location.reload();
+        }else {
+            $.post('http://127.0.0.1:8000/api/setIntro/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'NewIntro': newIntro,
+                    'Password': $("input#password7").val()
+                }, updateCallBack);
+
+        }
+    }
     
     function updateCallBack(data) {
         console.log(data);
         if (data.status === "success") {
             console.log(data.session_key);
-            setCookie("session_key", data.session_key, 1800);
             window.location = 'profile.html';
         } else {
-            if(data.reason === "authentication failed"){
-                err_psw.msg = "The password is wrong.";
-               
+            if(data.reason === "authentication failed"||data.reason === "authentication failure"){
+                alert("The password is wrong.");
+
             }
             if(data.reason === "Saving failed"){
                 alert("Saving failed.");
             }
+            if(data.reason === "existing_username"){
+                alert("Cannot set the same username as the old one.");
+            }
+            if(data.reason === "existing_email"){
+                alert("Cannot set the same email as the old one.");
+            }
+            if(data.reason === "passwords do not match"){
+                alert("Passwords do not match.");
+
+            }
             
             }
     }
-
-
+    //name
+    function editName() {
+        $('.edit-name').hide();
+        $('.user-name').addClass('editable');
+        $('.user-name').attr('contenteditable', 'true');
+        $('.confirm-name').show();
+    }
+    function confirmName() {
+        $('.user-name').removeClass('editable');
+        $('.user-name').removeAttr('contenteditable');
+        $('.edit-name').show();
+        $('.confirm-name').hide();
+        $('#pop1').addClass('is-visible');
+    }
+    function closepop() {
+        $('#pop1').removeClass('is-visible');
+        location.reload();
+    }
+    //gender
+    function editGender() {
+        $('.edit-gender').hide();
+        $('.user-gender').addClass('editable');
+        $('.user-gender').attr('contenteditable', 'true');
+        $('.confirm-gender').show();
+        $('#ps').show();
+    }
+    function confirmGender() {
+        $('.user-gender').removeClass('editable');
+        $('.user-gender').removeAttr('contenteditable');
+        $('.edit-gender').show();
+        $('.confirm-gender').hide();
+        $('#pop2').addClass('is-visible');
+        $('#ps').hide();
+    }
+    function closepop2() {
+        $('#pop2').removeClass('is-visible');
+        location.reload();
+    }
+    //email
+    function editEmail() {
+        $('.edit-email').hide();
+        $('.user-email').addClass('editable');
+        $('.user-email').attr('contenteditable', 'true');
+        $('.confirm-email').show();
+    }
+    function confirmEmail() {
+        $('.user-email').removeClass('editable');
+        $('.user-email').removeAttr('contenteditable');
+        $('.edit-email').show();
+        $('.confirm-email').hide();
+        $('#pop3').addClass('is-visible');
+    }
+    function closepop3() {
+        $('#pop3').removeClass('is-visible');
+        location.reload();
+    }
+    //pwd
+    function editPwd() {
+        $('#pop4').addClass('is-visible');
+        location.reload();
+    }
+    function closepop4() {
+        $('#pop4').removeClass('is-visible');
+        location.reload();
+    }
+    function closepop5() {
+        $('#pop5').removeClass('is-visible');
+        location.reload();
+    }
 </script>
 </html>

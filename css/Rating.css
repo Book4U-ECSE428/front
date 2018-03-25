@@ -58,3 +58,6 @@ label.star:before {
     content: '\f006';
     font-family: FontAwesome;
 }
+#commentContent{
+    display: inline;
+}

@@ -153,7 +153,7 @@
                 {
                     var commentid = e.target.getAttribute("data-commentid");
                     console.log(commentid);
-                    $.post(serverIP+'/api/reportComment/',
+                    $.post(serverIP+'/api/report_comment/',
                         {
                             'session_key': getCookie('session_key'),
                             'id': commentid,

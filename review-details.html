@@ -177,8 +177,9 @@
                     $(content).css("display","block");
                     $(content).css("color","grey");
                     $(e.target.parentNode).hide();
-                    $(e.target.parentNode.parentNode.childNodes.item(5)).css("display","none");
-                    $(e.target.parentNode.parentNode.childNodes.item(7)).css("display","block");
+                    $(e.target.parentNode.parentNode.childNodes.item(3)).css("display","none");
+                    $(e.target.parentNode.parentNode.childNodes.item(7)).css("display","none");
+                    $(e.target.parentNode.parentNode.childNodes.item(9)).css("display","block");
                 },
                 confirmEdit: function(e){
                     var newC = e.target.parentNode.childNodes.item(1);

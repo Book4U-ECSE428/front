@@ -1,6 +1,3 @@
-var category=false;
-var cardList;
-
 $.getScript('/js/serverIP.js', function()
 {
     function logout() {
@@ -20,12 +17,6 @@ $.getScript('/js/serverIP.js', function()
 
     $(function () {
         $(".loggedin-div").load("nav.html");
-        // Toggle category mode on click
-        $("#byCategory").click(function(e){
-            console.log(category);
-            category = !category;
-            Vue.set(cardList, 'cat', category);
-        });
     });
 
     function getCookie(cname) {
@@ -70,11 +61,10 @@ $.getScript('/js/serverIP.js', function()
     }
 
     function generateAllCard(book_list) {
-        cardList = new Vue({
+        var cardList = new Vue({
             el: "#card-list",
             data: {
                 books: book_list,
-                cat: category,
                 cat_list: [],
                 show_cat: -1
             },

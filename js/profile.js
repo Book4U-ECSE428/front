@@ -33,27 +33,6 @@ $.getScript('/js/serverIP.js', function()
     $(function(){
         $(".loggedin-div").load("nav.html");
     });
-
-    function display_info(data){
-        console.log(data.personal_intro);
-        if (data.status === "success") {
-            $(".se-pre-con").fadeOut("slow");
-            // generateAllCard(data.books);
-            di(data);
-            $(".loggedin-div").show();
-            $('.edit').click(function(){
-                $(this).hide();
-                $('.box').addClass('editable');
-                $('.text').attr('contenteditable', 'true');
-                $('.save').show();
-            });
-            $("#username").html(data.user);
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-    }
+    
 
 });

@@ -79,7 +79,7 @@ $.getScript('/js/serverIP.js', function()
                         if (this.pastreviewid[i]===reviewid)
                         {
                            if (!window.alreadyClicked) {
-                            $.post(serverIP+'/api/voteLike/',
+                            $.post(serverIP+'/api/vote_like/',
                                 {
                                     'session_key': getCookie('session_key'),
                                     'id': reviewid
@@ -90,7 +90,7 @@ $.getScript('/js/serverIP.js', function()
                             this.like=1;
                             this.dislike=0;
                         }else if(window.alreadyClicked&&this.dislike===1){
-                                $.post(serverIP+'/api/voteLike/',
+                                $.post(serverIP+'/api/vote_like/',
                                     {
                                         'session_key': getCookie('session_key'),
                                         'id': reviewid
@@ -116,7 +116,7 @@ $.getScript('/js/serverIP.js', function()
                         this.pastreviewid.push(reviewid); 
                         window.alreadyClicked=false;
                         if (!window.alreadyClicked) {
-                                $.post(serverIP+'/api/voteLike/',
+                                $.post(serverIP+'/api/vote_like/',
                                 {
                                     'session_key': getCookie('session_key'),
                                     'id': reviewid
@@ -144,7 +144,7 @@ $.getScript('/js/serverIP.js', function()
                         if (this.pastreviewid[i]===reviewid)
                         {
                            if (!window.alreadyClicked) {
-                            $.post(serverIP+'/api/voteDislike/',
+                            $.post(serverIP+'/api/vote_dislike/',
                                 {
                                     'session_key': getCookie('session_key'),
                                     'id': reviewid
@@ -155,7 +155,7 @@ $.getScript('/js/serverIP.js', function()
                             this.like=0;
                             this.dislike=1;
                             }else if(window.alreadyClicked&&this.like===1){
-                                $.post(serverIP+'/api/voteDislike/',
+                                $.post(serverIP+'/api/vote_dislike/',
                                     {
                                         'session_key': getCookie('session_key'),
                                         'id': reviewid
@@ -180,7 +180,7 @@ $.getScript('/js/serverIP.js', function()
                         this.pastreviewid.push(reviewid); 
                         window.alreadyClicked=false;
                         if (!window.alreadyClicked) {
-                            $.post(serverIP+'/api/voteDislike/',
+                            $.post(serverIP+'/api/vote_dislike/',
                                 {
                                     'session_key': getCookie('session_key'),
                                     'id': reviewid

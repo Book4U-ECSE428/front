@@ -155,7 +155,7 @@
             },
             methods:{
                 editComment: function(e){
-                    console.log(e.target.parentNode.parentNode.childNodes.item(5));
+                    console.log(e.target.parentNode.parentNode.childNodes);
                     var content =e.target.parentNode.parentNode.childNodes.item(1);
                     $(content).addClass('editable');
                     $(content).attr('contenteditable', 'true');
@@ -163,7 +163,8 @@
                     $(content).css("display","block");
                     $(content).css("color","grey");
                     $(e.target.parentNode).hide();
-                    $(e.target.parentNode.parentNode.childNodes.item(5)).css("display","block");
+                    $(e.target.parentNode.parentNode.childNodes.item(5)).css("display","none");
+                    $(e.target.parentNode.parentNode.childNodes.item(7)).css("display","block");
                 },
                 confirmEdit: function(e){
                     var newC = e.target.parentNode.childNodes.item(1);

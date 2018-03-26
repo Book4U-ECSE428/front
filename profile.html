@@ -194,37 +194,6 @@
     window.location = 'index.html';
     });
 
-    function display_info(data){
-        console.log(data.personal_intro);
-        if (data.status === "success") {
-            $(".se-pre-con").fadeOut("slow");
-            $(".loggedin-div").show();
-            $("#username").html(data.user);
-            di(data);
-            $('.edit').click(function(){
-                console.log("edit");
-                $(this).hide();
-                $('.box').addClass('editable');
-                $('.text').attr('contenteditable', 'true');
-                $('.save').show();
-
-            });
-            $('.save').click(function(){
-                console.log("save");
-                $('.save').hide();
-                $('.box').removeClass('editable');
-                $('.text').removeAttr('contenteditable');
-                $('.edit').show();
-                $('#pop5').addClass('is-visible');
-            });
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-    }
-
     function di(information){
         var vm = new Vue({
             el: ".infobox",
@@ -234,7 +203,6 @@
         })
     }
 
-    
     function updateName(){
     	var NewName = document.getElementById('user-name').innerText;
     	var password = document.getElementById('password').innerText;
@@ -426,6 +394,37 @@
     function closepop5() {
         $('#pop5').removeClass('is-visible');
         location.reload();
+    }
+    function display_info(data){
+        console.log(data.personal_intro);
+        if (data.status === "success") {
+            $(".se-pre-con").fadeOut("slow");
+            // generateAllCard(data.books);
+            di(data);
+            $(".loggedin-div").show();
+            $('.edit').click(function(){
+                console.log("edit");
+                $(this).hide();
+                $('.box').addClass('editable');
+                $('.text').attr('contenteditable', 'true');
+                $('.save').show();
+
+            });
+            $('.save').click(function(){
+                console.log("save");
+                $('.save').hide();
+                $('.box').removeClass('editable');
+                $('.text').removeAttr('contenteditable');
+                $('.edit').show();
+                $('#pop5').addClass('is-visible');
+            });
+            $("#username").html(data.user);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'index.html';
+            }
+        }
     }
 </script>
 </html>

@@ -72,6 +72,7 @@
                     <button class="edit-name" style = "display:inline; background-color: transparent; border:none" onclick = "editName()"><img src="img/edit.png" style="height: 20px;"/></button>
                     <button class="btn confirm-name" style = "display:none;color: gray" onclick="confirmName()">Confirm</button>
                     <div class="cd-popup" id="pop1" role="alert" style="z-index: 99;">
+                        <!--use popup to collect update info -->
                         <div class="cd-popup-container">
                             <p>This Change requires your password</p>
                             <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
@@ -100,6 +101,7 @@
                     </div>
                 </div>
                 <!--user type-->
+                <!--user type can not be changed by the user him/herself-->
                 <div class="infoDiv">User Type: <div class="info" id="info-usrtype">{{info.permission}}</div></div>
                 <!--email-->
                 <div class="infoDiv">Email:
@@ -207,9 +209,11 @@
     	var NewName = document.getElementById('user-name').innerText;
     	var password = document.getElementById('password').innerText;
         console.log(password);
+        //validate the name input
     	if(NewName.length === 0){
-    		alert("No Input");
+    		alert("New Name Required");
     	}else if($("input#password").val().length === 0){
+    	    //validate the password input
     		alert("Password Required")
     	} else {
     		$.post(serverIP+'/api/setName/',
@@ -227,11 +231,11 @@
     
     function updateGender(){
     	var NewGender = document.getElementById('user-gender').innerText;
-    	
+    	//input validation
     	if(NewGender.length === 0){
-    		//alert("No Input"); 
+    		alert("Update Gender Required");
     	}else if($("input#password2").val().length===0){
-    		//alert("Password Required")l 
+    		alert("Password Required");
     	} else {
     		$.post(serverIP+'/api/setGender/',
        			 { 
@@ -240,18 +244,19 @@
        				 'NewGender': NewGender, 
        				 'Password': $("input#password2").val()
        			 }, updateCallBack); 
-    		//alert("Successful"); 
+
     	}
     	
     }
     function updateEmail() {
         var NewEmail = document.getElementById('user-email').innerText;
 
+        //input validation
         if(NewEmail.length === 0){
-            alert("Email should not be empty.");
+            alert("New Email Address Required.");
         }
         else if($("input#password3").val().length === 0){
-            alert("Password should not be empty.");
+            alert("Password Required.");
         } else {
             $.post(serverIP+'/api/setEmail/',
                 {
@@ -264,12 +269,13 @@
 
     function updatePwd() {
         console.log("password5");
+        //validate the inputs
         if ($("input#newpassword").value == '') {
             alert("New Password required");
         } else if ($("input#password6").length === 0) {
             alert("Password confirmation required");
         } else if ($("input#password4").length === 0) {
-            alert("Password should be empty");
+            alert("Password Required");
         } else {
             $.post(serverIP+'/api/setPassword/',
                 {
@@ -284,11 +290,13 @@
     function updateIntro(){
         console.log("setIntro");
         var newIntro = document.getElementById('info-intro').innerText;
+        //input validation
         if(newIntro.length === 0){
-            alert("Introduction should not be empty");
+            //by definition, the user is required to have a non-empty intro
+            alert("Introduction Required");
             location.reload();
         } else if($("input#password7").val().length === 0){
-            alert("Password should not be empty");
+            alert("Password Required");
             location.reload();
         }else {
             $.post(serverIP+'/api/setIntro/',
@@ -303,30 +311,35 @@
     
     function updateCallBack(data) {
         console.log(data);
+        //if update is successful, stay on the page and display new info
         if (data.status === "success") {
             console.log(data.session_key);
             window.location = 'profile.html';
         } else {
+            //if not successful, display the error msg depends on each case
             if(data.reason === "authentication failed"||data.reason === "authentication failure"){
-                alert("The password is wrong.");
-
+                alert("Password is incorrect.");
             }
             if(data.reason === "Saving failed"){
                 alert("Saving failed.");
             }
             if(data.reason === "existing_username"){
-                alert("Cannot set the same username as the old one.");
+                alert("This Username already exists in the system");
             }
             if(data.reason === "existing_email"){
-                alert("Cannot set the same email as the old one.");
+                alert("This email already exists in the System.");
             }
             if(data.reason === "passwords do not match"){
                 alert("Passwords do not match.");
 
             }
             
-            }
+        }
     }
+
+    /**
+     * Popups management for each attribute
+     */
     //name
     function editName() {
         $('.edit-name').hide();
@@ -345,6 +358,7 @@
         $('#pop1').removeClass('is-visible');
         location.reload();
     }
+    
     //gender
     function editGender() {
         $('.edit-gender').hide();
@@ -365,6 +379,7 @@
         $('#pop2').removeClass('is-visible');
         location.reload();
     }
+
     //email
     function editEmail() {
         $('.edit-email').hide();
@@ -395,11 +410,11 @@
         $('#pop5').removeClass('is-visible');
         location.reload();
     }
+    //display personal info while editing
     function display_info(data){
         console.log(data.personal_intro);
         if (data.status === "success") {
             $(".se-pre-con").fadeOut("slow");
-            // generateAllCard(data.books);
             di(data);
             $(".loggedin-div").show();
             $('.edit').click(function(){
@@ -420,6 +435,7 @@
             });
             $("#username").html(data.user);
         } else {
+            //imposed time limit for editing, security feature
             if (data.reason === "session expired") {
                 alert("login session timeout, need to login again");
                 window.location = 'index.html';

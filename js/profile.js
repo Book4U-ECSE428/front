@@ -33,6 +33,7 @@ $.getScript('/js/serverIP.js', function()
     $(function(){
         $(".loggedin-div").load("nav.html");
     });
+
     function display_info(data){
         console.log(data.personal_intro);
         if (data.status === "success") {
@@ -54,4 +55,5 @@ $.getScript('/js/serverIP.js', function()
             }
         }
     }
+
 });

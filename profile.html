@@ -19,7 +19,8 @@
     <title>Profile</title>
     <!-- Styles -->
     <link rel="stylesheet" type="text/css" href="css/profile.css"/>
-    <!--<script src="js/profile.js"></script>-->
+    <script src="js/profile.js"></script>
+    <script src="js/serverIP.js"></script>
 </head>
 <body>
 <div class="se-pre-con"></div>
@@ -185,44 +186,13 @@
         return "";
     }
 
-    $.post('https://www.book4u.ca/api/getProfile/',
+    $.post(serverIP+'/api/getProfile/',
     {
         'session_key': getCookie('session_key')
     }).done(display_info).fail(function (a) {
     alert("error occured");
     window.location = 'index.html';
     });
-
-    function display_info(data){
-        console.log(data.personal_intro);
-        if (data.status === "success") {
-            $(".se-pre-con").fadeOut("slow");
-            $(".loggedin-div").show();
-            $("#username").html(data.user);
-            di(data);
-            $('.edit').click(function(){
-                console.log("edit");
-                $(this).hide();
-                $('.box').addClass('editable');
-                $('.text').attr('contenteditable', 'true');
-                $('.save').show();
-
-            });
-            $('.save').click(function(){
-                console.log("save");
-                $('.save').hide();
-                $('.box').removeClass('editable');
-                $('.text').removeAttr('contenteditable');
-                $('.edit').show();
-                $('#pop5').addClass('is-visible');
-            });
-        } else {
-            if (data.reason === "session expired") {
-                alert("login session timeout, need to login again");
-                window.location = 'index.html';
-            }
-        }
-    }
 
     function di(information){
         var vm = new Vue({
@@ -233,7 +203,6 @@
         })
     }
 
-    
     function updateName(){
     	var NewName = document.getElementById('user-name').innerText;
     	var password = document.getElementById('password').innerText;
@@ -243,7 +212,7 @@
     	}else if($("input#password").val().length === 0){
     		alert("Password Required")
     	} else {
-    		$.post('https://www.book4u.ca/api/setName/',
+    		$.post(serverIP+'/api/setName/',
        			 {
        			 	'session_key': getCookie('session_key'),
 
@@ -264,7 +233,7 @@
     	}else if($("input#password2").val().length===0){
     		//alert("Password Required")l 
     	} else {
-    		$.post('https://www.book4u.ca/api/setGender/',
+    		$.post(serverIP+'/api/setGender/',
        			 { 
        			 	'session_key': getCookie('session_key'), 
        				 
@@ -284,7 +253,7 @@
         else if($("input#password3").val().length === 0){
             alert("Password should not be empty.");
         } else {
-            $.post('https://www.book4u.ca/api/setEmail/',
+            $.post(serverIP+'/api/setEmail/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewEmail': NewEmail,
@@ -302,7 +271,7 @@
         } else if ($("input#password4").length === 0) {
             alert("Password should be empty");
         } else {
-            $.post('https://www.book4u.ca/api/setPassword/',
+            $.post(serverIP+'/api/setPassword/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewPassword': $("input#password5").val(),
@@ -322,7 +291,7 @@
             alert("Password should not be empty");
             location.reload();
         }else {
-            $.post('https://www.book4u.ca/api/setIntro/',
+            $.post(serverIP+'/api/setIntro/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewIntro': newIntro,
@@ -425,6 +394,37 @@
     function closepop5() {
         $('#pop5').removeClass('is-visible');
         location.reload();
+    }
+    function display_info(data){
+        console.log(data.personal_intro);
+        if (data.status === "success") {
+            $(".se-pre-con").fadeOut("slow");
+            // generateAllCard(data.books);
+            di(data);
+            $(".loggedin-div").show();
+            $('.edit').click(function(){
+                console.log("edit");
+                $(this).hide();
+                $('.box').addClass('editable');
+                $('.text').attr('contenteditable', 'true');
+                $('.save').show();
+
+            });
+            $('.save').click(function(){
+                console.log("save");
+                $('.save').hide();
+                $('.box').removeClass('editable');
+                $('.text').removeAttr('contenteditable');
+                $('.edit').show();
+                $('#pop5').addClass('is-visible');
+            });
+            $("#username").html(data.user);
+        } else {
+            if (data.reason === "session expired") {
+                alert("login session timeout, need to login again");
+                window.location = 'index.html';
+            }
+        }
     }
 </script>
 </html>

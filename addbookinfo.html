@@ -12,13 +12,11 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Page title-->
     <title>Add book information</title>
-
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/addbook.css"/>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <!--<script src="js/addbookinfo.js"></script>-->
 </head>
 <body>
 
@@ -47,12 +45,6 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
                     <!-- Authentication Links -->
-                    <!--&lt;!&ndash; if user is not logged in &ndash;&gt;-->
-                    <!--<div class="loggedout-div">-->
-                    <!--<li data-toggle="collapse"><a>Login</a></li>-->
-                    <!--<li data-toggle="collapse"><a>Register</a></li>-->
-                    <!--</div>-->
-                    <!-- else -->
                     <li>
                         <div class="loggedin-div">
                     <li><a href="" class="user-dropdown" style="color: white">Hi!
@@ -185,30 +177,30 @@
         }
         else {
             $.get(cover_image)
-                .done(function () {
-                    //Now you know the image exists.
-                    $.post(serverIP + '/api/add_book/',
-                        {
-                            'session_key': getCookie('session_key'),
-                            'name': name,
-                            'author': author,
-                            'ISBN': ISBN,
-                            'publish_date': publish_date,
-                            'edition': edition,
-                            'category': category,
-                            'publish_firm': publish_firm,
-                            'cover_image': cover_image
-
-
-                        }, bookinfoCallBack);
-                }).fail(function () {
+                .done(add_book()).fail(function () {
                 // Image doesn't exist
-                alert('That image does no exist!');
-            })
+                alert('That image may not load correctly');
+                add_book();
+            });
 
-
+            function add_book() {
+                //Now you know the image exists.
+                $.post(serverIP + '/api/add_book/',
+                    {
+                        'session_key': getCookie('session_key'),
+                        'name': name,
+                        'author': author,
+                        'ISBN': ISBN,
+                        'publish_date': publish_date,
+                        'edition': edition,
+                        'category': category,
+                        'publish_firm': publish_firm,
+                        'cover_image': cover_image
+                    }, bookinfoCallBack);
+            }
         }
     }
+
 
     function getCookie(cname) {
         var name = cname + "=";

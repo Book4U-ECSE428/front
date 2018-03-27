@@ -95,7 +95,7 @@
             <div v-for="comment in Comments" style="padding:10px;" v-bind:data-user="comment.user">{{comment.user}}:
                 <div id="commentContent" style="display: inline">{{comment.content}}</div>
 
-                <button id="report" class="editBtn" v-on:click="reportComment($event)" style="background-color: transparent; border: none"><image src="img/report.png" style="height: 20px"/></button>
+                <button id="report" class="editBtn" v-on:click="reportComment($event,comment.id)" style="background-color: transparent; border: none"><image src="img/report.png" style="height: 20px"/></button>
                 <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none" title="Edit"><image src="img/edit.png" style="height: 20px"/></button>
                 <button id="reply" class="replyBtn" onclick="replyComment(event)" style="background-color: transparent; border: none" title="Reply"><image src="img/reply.png" style="height: 20px"/></button>
                 <button id="confirm-edit" class="btn btn-primary" style="display: none" v-on:click="confirmEdit($event)" v-bind:data-commentid="comment.id">confirm</button>
@@ -156,14 +156,13 @@
                 request_user: review.request_user
             },
             methods:{
-                reportComment: function(e)
+                reportComment: function(e,commentid)
                 {
-                    var commentid = e.target.getAttribute("data-commentid");
                     console.log(commentid);
                     $.post(serverIP+'/api/report_comment/',
                         {
                             'session_key': getCookie('session_key'),
-                            'id': commentid,
+                            'id': Number(commentid),
                         }).done(reportCommentCallback).fail(function (a) {
                         console.log("report review error");
                     });
@@ -184,6 +183,7 @@
                 confirmEdit: function(e){
                     var newC = e.target.parentNode.childNodes.item(1);
                     var commentid = e.target.getAttribute("data-commentid");
+					console.log(commentid);
                     console.log(newC.innerText.length);
                     if (newC.innerText.length > 400){ // If longer than 400 unicode char.
                         alert("Keep your comments shorter than 400 characters");
@@ -262,18 +262,45 @@
             $("textarea#comment").val('');
         }
     }
-
-
+/*
+    function reportComment(commentid)
+    {
+            console.log(commentid);
+            $.post(serverIP+'/api/report_comment/',
+                {
+                    'session_key': getCookie('session_key'),
+                    'id': commentid,
+                }).done(reportCommentCallback).fail(function (a) {
+            console.log("report review error");
+        });
+    }
+	*/
     function reportCommentCallback(data) {
         console.log(data);
         if (data.status == "success") {
             alert("reported!");
             location.reload();
         } else {
-            alert("error!");
+            if(data.reason=="no comment key")
+            {
+                alert("no comment key!");
+            }else if(data.reason=="comment already reported")
+            {
+                alert("comment already reported!");
+            }else if(data.reason=="Comment Object does not exist")
+            {
+                alert("Comment Object does not exist!");
+            }else if(data.reason=="Session Object does not exist")
+            {
+                alert("Session Object does not exist!");
+            }else
+            {
+                alert("error!");
+            }
+            
         }
     }
-    
+    /*
     // Click on comment to edit
     function editComment(comment){
         var cid = "#"+comment.id;
@@ -305,7 +332,7 @@
         })
 
     }
-
+*/
     function editCommentCallback(data){
         if (data.status == "success") {
             location.reload();

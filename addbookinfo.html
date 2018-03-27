@@ -150,7 +150,7 @@
         }
         else {
             function checkURL(url) {
-                return (url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+                return (url.match(/\.(jpeg|jpg|gif|png)$/) != null) || (url.match(/data:image/) != null);
             }
 
             if (checkURL(cover_image)) {

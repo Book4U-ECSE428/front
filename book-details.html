@@ -73,6 +73,7 @@
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
                 <button v-if="request_user!==review.user" id="like" class="delete-button" v-on:click="likeReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/like.png"/></button>
+				<strong style="font-size:150%;">{{review.liked_counter}}<strong>
                 <button v-if="request_user!==review.user"id="dislike" class="delete-button" v-on:click="dislikeReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/dislike.jpg"/></button>
                 <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" v-on:click="deletReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>

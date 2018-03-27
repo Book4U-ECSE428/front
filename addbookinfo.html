@@ -122,7 +122,14 @@
         }
         else {
             $.get(cover_image)
-                .done(function () {
+                .done(add_book()).fail(function () {
+                // Image doesn't exist
+                alert('That image may not load correctly');
+                add_book();
+            });
+
+
+            function add_book() {
                     //Now you know the image exists.
                     $.post(serverIP+'/api/add_book/',
                         {
@@ -135,17 +142,14 @@
                             'category': category,
                             'publish_firm': publish_firm,
                             'cover_image': cover_image
-
-
                         }, bookinfoCallBack);
-                }).fail(function () {
-                // Image doesn't exist
-                alert('That image does no exist!');
-            })
+                }
+
 
 
         }
     }
+
 	    function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');

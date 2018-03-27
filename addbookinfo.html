@@ -17,7 +17,6 @@
     <link rel="stylesheet" type="text/css" href="css/addbook.css"/>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="js/addbookinfo.js"></script>
 </head>
 <body>
 
@@ -46,61 +45,90 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right navigation">
                     <!-- Authentication Links -->
-                    <!--&lt;!&ndash; if user is not logged in &ndash;&gt;-->
-                    <!--<div class="loggedout-div">-->
-                    <!--<li data-toggle="collapse"><a>Login</a></li>-->
-                    <!--<li data-toggle="collapse"><a>Register</a></li>-->
-                    <!--</div>-->
-                    <!-- else -->
                     <li>
                         <div class="loggedin-div">
-                            <li><a href="" class="user-dropdown" style="color: white">Hi!
-                                <div id="username" style="display: inline-block">Username</div>
-                                <span class="caret"></span></a>
-                                <ul>
-                                    <li data-toggle="collapse"><a href="profile.html" class="profile">Profile</a></li>
-                                    <li data-toggle="collapse"><a href="login.html" class="logout">Logout</a></li>
-                                </ul>
-                            </li>
-                        </div>
+                    <li><a href="" class="user-dropdown" style="color: white">Hi!
+                        <div id="username" style="display: inline-block">Username</div>
+                        <span class="caret"></span></a>
+                        <ul>
+                            <li data-toggle="collapse"><a href="profile.html" class="profile">Profile</a></li>
+                            <li data-toggle="collapse"><a href="login.html" class="logout">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </div>
-<div class="addbook_panel" style="text-align: center">
-    <form>
-        <p align="center">
-            Please enter the ISBN:&nbsp<input type="text" style="border:1px solid black"
-                                              id="ISBN"><br><br>
-            Please enter the book name:&nbsp<input type="text" style="border:1px solid black"
-                                                   id="name"><br><br>
-            Please enter the publish date:&nbsp<input type="date" style="border:1px solid black"
-                                                      id="publish_date"><br><br>
-            Please enter the author name:&nbsp<input type="text" style="border:1px solid black" id="author"><br><br>
-            Please enter the edition:&nbsp<input type="text" style="border:1px solid black"
-                                                 id="edition"><br><br>
-            Please enter the category:&nbsp<input type="text" style="border:1px solid black"
-                                                  id="category"><br><br>
-            Please enter the publish firm:&nbsp<input type="text" style="border:1px solid black"
-                                                      id="publish_firm"><br><br>
+
+<br>
+<br>
+<br>
+<div class="addbook_panel">
+
+    <div class="form-group">
+        <label for="ISBN">ISBN:</label>
+        <input type="text" class="form-control" id="ISBN" placeholder="ISBN">
+    </div>
+    <div class="form-group">
+        <label for="name">Book Name:</label>
+        <input type="text" class="form-control" id="name" placeholder="name">
+    </div>
+    <div class="form-group">
+        <label for="author">Author Name:</label>
+        <input type="text" class="form-control" id="author" placeholder="author name">
+    </div>
+    <div class="form-group">
+        <label for="edition">Edition:</label>
+        <input type="text" class="form-control" id="edition" placeholder="edition">
+    </div>
+    <div class="form-group">
+        <label for="publish_date">Publish Date:</label>
+        <input type="date" class="form-control" id="publish_date" placeholder="publish_date">
+    </div>
+    <div class="form-group">
+        <label for="publish_firm">Publish Firm:</label>
+        <input type="text" class="form-control" id="publish_firm" placeholder="publish_firm">
+    </div>
+    <div class="form-group">
+        <label for="category">Category:</label>
+        <select class="form-control" id="category">
+            <option v-for="c in category">
+                {{ c }}
+            </option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cover_image">Book cover Image URL or Base64 encoding:</label>
+        <textarea class="form-control" id="cover_image" rows="3" style="resize: none;"></textarea>
+    </div>
+    <button type="button" class="btn btn-info" id="book_submit" onclick="checkValid1()">Submit</button>
 
 
-        <h4>Please enter the url of the book image:</h4>
-        <textarea name="cover_image" id="cover_image" rows="4" cols="50"
-                  style="font-family:sans-serif;border:1px solid black;"></textarea><br></br>
-        <div>
-            <button type="button" id="book_submit" style="width:100px;height:50px;" onclick="checkValid()">Submit
-            </button>
-        </div>
-        </p>
-    </form>
 </div>
+<br> <br> <br> <br> <br>
 </body>
 <script>
-	function checkValid() {
+    var serverIP = 'http://127.0.0.1:8000';
+    var app = new Vue({
+        el: '.addbook_panel',
+        data: {
+            category: []
+        }
+    });
+    $.post(serverIP + '/api/allCategory/', {}, allCategoryCallBack);
 
+    function allCategoryCallBack(d) {
+        console.log(d);
+        if (d.status == 'success') {
+            app.category = d.categories
+        } else {
+            alert('Could not get a list of categories, please refresh page');
+        }
+    }
+
+    function checkValid1() {
+        console.log("check valid1");
         var name = document.getElementById("name").value;
         var author = document.getElementById("author").value;
         var ISBN = document.getElementById("ISBN").value;
@@ -121,36 +149,35 @@
             alert("author name must be filled");
         }
         else {
-            $.get(cover_image)
-                .done(add_book()).fail(function () {
-                // Image doesn't exist
-                alert('That image may not load correctly');
-                add_book();
-            });
+            function checkURL(url) {
+                return (url.match(/\.(jpeg|jpg|gif|png)$/) != null) || (url.match(/data:image/) != null);
+            }
 
+            if (checkURL(cover_image)) {
+                add_book1()
+            } else {
+                alert('That image URL/base 64 encoding is not valid');
+            }
 
-            function add_book() {
-                    //Now you know the image exists.
-                    $.post(serverIP+'/api/add_book/',
-                        {
-                            'session_key': getCookie('session_key'),
-                            'name': name,
-                            'author': author,
-                            'ISBN': ISBN,
-                            'publish_date': publish_date,
-                            'edition': edition,
-                            'category': category,
-                            'publish_firm': publish_firm,
-                            'cover_image': cover_image
-                        }, bookinfoCallBack);
-                }
-
-
-
+            function add_book1() {
+                //Now you know the image exists.
+                $.post(serverIP + '/api/add_book/',
+                    {
+                        'session_key': getCookie('session_key'),
+                        'name': name,
+                        'author': author,
+                        'ISBN': ISBN,
+                        'publish_date': publish_date,
+                        'edition': edition,
+                        'category': category,
+                        'publish_firm': publish_firm,
+                        'cover_image': cover_image
+                    }, bookinfoCallBack1);
+            }
         }
     }
 
-	    function getCookie(cname) {
+    function getCookie(cname) {
         var name = cname + "=";
         var ca = document.cookie.split(';');
         for (var i = 0; i < ca.length; i++) {
@@ -164,7 +191,8 @@
         }
         return "";
     }
-	 function bookinfoCallBack(data) {
+
+    function bookinfoCallBack1(data) {
         console.log(data);
         if (data.status == "success") {
             window.location = 'main.html';

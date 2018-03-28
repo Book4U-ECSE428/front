@@ -1,3 +1,4 @@
+
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +65,9 @@
             <p class="col-lg-8 col-md-8 col-sm-8 book-content">Edition: {{Edition}}</p>
             <div class="col-lg-8 col-md-8 col-sm-8 book-content">Genre:
                 <div v-if="Genre==null" style="display: inline">null</div>
-                <div v-else style="display: inline">{{Genre}}</div>
+                <div v-else style="display: inline">
+                    <li v-for="g in Genre">{{ g }}</li>
+                </div>
             </div>
             <h2 class="col-lg-12 col-md-12 col-sm-12" style="padding-left:25px;">Reviews</h2>
             <div v-for="(review, index) in Reviews" class="col-lg-12 col-md-12 col-sm-12 reviewDiv">
@@ -73,7 +76,7 @@
                     <div v-else style="display: inline">{{review.content}}</div>
                 </a>
                 <button v-if="request_user!==review.user" id="like" class="delete-button" v-on:click="likeReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/like.png"/></button>
-				<strong style="font-size:150%;">{{review.liked_counter}}<strong>
+                	<strong style="font-size:150%;">{{review.liked_counter}}<strong>
                 <button v-if="request_user!==review.user"id="dislike" class="delete-button" v-on:click="dislikeReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/dislike.jpg"/></button>
                 <button v-if="permission=='Moderator' || request_user==review.user" id="delete" class="delete-button" v-on:click="deletReview($event)" v-bind:data-reviewid="review.id"><image v-bind:data-reviewid="review.id" src="img/delete.png"/></button>
             </div>
@@ -159,4 +162,5 @@
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
 </html>

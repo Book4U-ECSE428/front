@@ -207,12 +207,19 @@ $.getScript('/js/serverIP.js', function()
         if (data.status === "success") {
             location.reload();
         }
+		else {
+			alert(data.reason);
+		}
     }
     function votedislikeCallBack(data) {
         console.log(data);
         if (data.status === "success") {
             location.reload();
         }
+		else {
+			alert(data.reason);
+		}
+		
     }
  
 });

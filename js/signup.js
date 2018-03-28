@@ -97,6 +97,10 @@ $.getScript('/js/serverIP.js', function()
                 err_email.msg = "Email already been registered by another user.";
                 $("#signup_err_email").show();
             }
+            if (data.reason == "existing_username") {
+                err_name.msg = "This user name has already been used by another user.";
+                $("#signup_err_name").show();
+            }
             $("input#password").val('');
             $("input#password-confirm").val('');
             $("select#intro").val('');

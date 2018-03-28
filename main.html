@@ -89,7 +89,6 @@
     </div>
     <div class="se-pre-con"></div>
     <div class="book-cards" id="card-list">
-        <div v-if="cat">
             <div v-for="(c, c_index) in cat_list">
                 <div class="category_title" title="Show All" v-on:click="showCategory(c_index)">
                     Category: {{c}}
@@ -109,23 +108,6 @@
                         </div>
                 </div>
             </div>
-        </div>
-        <div v-else>
-            <div v-for="book in books">
-                <div class="card" onclick="card_on_click(this)" v-bind:id="book.id">
-                    <img class="bookcover" height="550" width="150" v-bind:src="book.cover_image" alt="No image"/>
-                    <div class="card-container">
-                        <h4><b>{{book.name}}</b></h4>
-                        <p>{{book.author}}</p>
-                        <p>Rate: {{book.rating}}</p>
-                        <p>Edition: {{book.edition}}</p>
-                        <p>Published by {{book.publish_firm}} on {{book.publish_date}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-		
-
     </div>
 	
 	<div class="book-cards" id="search-list" hidden>

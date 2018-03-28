@@ -80,7 +80,8 @@ body {
     background: rgba(209, 199, 205, 0.2);
     border:1px solid white;
     display:block;
-    overflow:auto;
+    overflow-y:auto;
+    overflow-x: hidden;
     -webkit-border-radius: 8px;
     border-radius: 8px;
 }

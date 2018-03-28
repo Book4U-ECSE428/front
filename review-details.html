@@ -92,8 +92,8 @@
             </div>
         </div>
         <div class="infoDiv col-lg-12 col-md-12">Comment:
-            <div v-for="comment in Comments" style="padding:10px;" v-bind:data-user="comment.user">{{comment.user}}:
-                <div id="commentContent" style="display: inline">{{comment.content}}</div>
+            <div class="col-lg-12 col-md-12" v-for="comment in Comments" style="padding:10px;" v-bind:data-user="comment.user">{{comment.user}}:
+                <div class="col-lg-12 col-md-12" id="commentContent" style="display: inline-block;word-wrap: break-word">{{comment.content}}</div>
 
                 <button id="report" class="editBtn" v-on:click="reportComment($event)" style="background-color: transparent; border: none"><image src="img/report.png" style="height: 20px"/></button>
                 <button v-if="request_user==comment.user" id="edit" class="editBtn" v-on:click="editComment($event)" style="background-color: transparent; border: none" title="Edit"><image src="img/edit.png" style="height: 20px"/></button>

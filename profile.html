@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
     <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
-    <!--<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>-->
-    <!--<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!--Page title-->
@@ -24,148 +22,166 @@
 </head>
 <body>
 <div class="se-pre-con"></div>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top">
-            <div>
-                <div class="navbar-header">
+<div id="app">
+    <nav class="navbar navbar-default navbar-static-top">
+        <div>
+            <div class="navbar-header">
 
-                    <!-- Collapsed -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                        <span class="sr-only">Toggle Navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" style="height:40px;color: white" href="main.html">BOOK4U</a>
-                </div>
+                <!-- Collapsed -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" style="height:40px;color: white" href="main.html">BOOK4U</a>
+            </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="nav navbar-nav">
-                        &nbsp;
-                    </ul>
-                    <!-- Right Side Of Navbar -->
-                    <ul class="nav navbar-nav navbar-right navigation">
-                        <!-- Authentication Links -->
-                        <!-- if user is not logged in -->
-                        <!-- <div class="loggedout-div">
-                            <li data-toggle="collapse"><a>Login</a></li>
-                            <li data-toggle="collapse"><a>Register</a></li>
-                        </div> -->
-                        <!-- else -->
-                        <li>
-                            <div class="loggedin-div"></div>
-                        </li>
-                        <!-- endif -->
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <div class="infobox">
-        <div class="col-lg-12 pic" style="padding-top: 70px">
-            <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
-            <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
-                <!--name-->
-                <div class="infoDiv">Name:
-                    <div class="user-name" id="user-name" style = "display:inline;">{{info.user}}</div>
-                    <button class="edit-name" style = "display:inline; background-color: transparent; border:none" onclick = "editName()"><img src="img/edit.png" style="height: 20px;"/></button>
-                    <button class="btn confirm-name" style = "display:none;color: gray" onclick="confirmName()">Confirm</button>
-                    <div class="cd-popup" id="pop1" role="alert" style="z-index: 99;">
-                        <!--use popup to collect update info -->
-                        <div class="cd-popup-container">
-                            <p>This Change requires your password</p>
-                            <input id="password" type="password" class="form-control" name="password" style="background: transparent" required>
-                            <div class="cd-buttons">
-                                <button class="btn confirmBtn" onclick="updateName()">Confirm</button>
-                                <button class="btn cancelBtn" onclick="closepop()">Cancel</button>
-                            </div>
-                        </div> <!-- cd-popup-container -->
-                    </div>
-                </div>
-                <!--gender-->
-                <div class="infoDiv">Gender:
-                    <div class="user-gender" id="user-gender" style = "display:inline;">{{info.gender}}</div>
-                    <button class="edit-gender" style = "display:inline; background-color: transparent; border:none" onclick = "editGender()"><img src="img/edit.png" style="height: 20px;"/></button>
-                    <button class="btn confirm-gender" style = "display:none;color: gray" onclick="confirmGender()">Confirm</button>
-                    <p id="ps" style="font-size: 12px">Please enter Male/Female/Unknown</p>
-                    <div class="cd-popup" id="pop2" role="alert" style="z-index: 99;">
-                        <div class="cd-popup-container">
-                            <p>This Change requires your password</p>
-                            <input id="password2" type="password" class="form-control" name="password2" style="background: transparent" required>
-                            <div class="cd-buttons">
-                                <button class="btn confirmBtn" onclick="updateGender()">Confirm</button>
-                                <button class="btn cancelBtn" onclick="closepop2()">Cancel</button>
-                            </div>
-                        </div> <!-- cd-popup-container -->
-                    </div>
-                </div>
-                <!--user type-->
-                <!--user type can not be changed by the user him/herself-->
-                <div class="infoDiv">User Type: <div class="info" id="info-usrtype">{{info.permission}}</div></div>
-                <!--email-->
-                <div class="infoDiv">Email:
-                    <div class="user-email" id="user-email" style = "display:inline;">{{info.e_mail}}</div>
-                    <button class="edit-email" style = "display:inline; background-color: transparent; border:none" onclick = "editEmail()"><img src="img/edit.png" style="height: 20px;"/></button>
-                    <button class="btn confirm-email" style = "display:none;color: gray" onclick="confirmEmail()">Confirm</button>
-                    <div class="cd-popup" id="pop3" role="alert" style="z-index: 99;">
-                        <div class="cd-popup-container">
-                            <p>This Change requires your password</p>
-                            <input id="password3" type="password" class="form-control" name="password3" style="background: transparent" required>
-                            <div class="cd-buttons">
-                                <button class="btn confirmBtn" onclick="updateEmail()">Confirm</button>
-                                <button class="btn cancelBtn" onclick="closepop3()">Cancel</button>
-                            </div>
-                        </div> <!-- cd-popup-container -->
-                    </div>
-                </div>
-                <!--pwd-->
-                <div class="infoDiv">Password
-                    <button class="edit-pwd" style = "display:inline; background-color: transparent; border:none" onclick = "editPwd()"><img src="img/edit.png" style="height: 20px;"/></button>
-                    <div class="cd-popup" id="pop4" role="alert" style="z-index: 99;">
-                        <div class="cd-popup-container">
-                            <div style="padding-top: 10%">
-                                <input id="password4" type="password" class="form-control" name="password4" placeholder="Old Password" style="background: transparent;" required>
-                                <input id="password5" type="password" class="form-control" name="password5" placeholder="New Password" style="background: transparent;" required>
-                                <input id="password6" type="password" class="form-control" name="password6" placeholder="Confirm New Password" style="background: transparent;" required>
-                            </div>
-
-                            <div class="cd-buttons">
-                                <button class="btn confirmBtn" onclick="updatePwd()">Confirm</button>
-                                <button class="btn cancelBtn" onclick="closepop4()">Cancel</button>
-                            </div>
-                        </div> <!-- cd-popup-container -->
-                    </div>
-                </div>
-            </div>
-            <div style="position: absolute; left: 700px;">
-            
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
-                <span class="edit">edit</span>
-                <span class="save">save</span>
-                <div class="info text" id="info-intro">{{info.personal_intro}}</div>
-            </div>
-            <div class="cd-popup" id="pop5" role="alert">
-                <div class="cd-popup-container">
-                    <p>This Change requires your password</p>
-                    <input id="password7" type="password" class="form-control" name="password7" style="background: transparent" required>
-                    <div class="cd-buttons">
-                        <button class="btn confirmBtn" onclick="updateIntro()">Confirm</button>
-                        <button class="btn cancelBtn" onclick="closepop5()">Cancel</button>
-                    </div>
-                </div> <!-- cd-popup-container -->
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right navigation">
+                    <!-- Authentication Links -->
+                    <!-- if user is not logged in -->
+                    <!-- <div class="loggedout-div">
+                        <li data-toggle="collapse"><a>Login</a></li>
+                        <li data-toggle="collapse"><a>Register</a></li>
+                    </div> -->
+                    <!-- else -->
+                    <li>
+                        <div class="loggedin-div"></div>
+                    </li>
+                    <!-- endif -->
+                </ul>
             </div>
         </div>
+    </nav>
+</div>
+<div class="infobox">
+    <div class="col-lg-12 pic" style="padding-top: 70px">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-6"><img class="profile_pic" src="img/anonymous.png"/></div>
+        <div class="col-lg-9 col-md-9 col-sm-6 col-xs-6 info-top">
+            <!--name-->
+            <div class="infoDiv">Name:
+                <div class="user-name" id="user-name" style="display:inline;">{{info.user}}</div>
+                <button class="edit-name" style="display:inline; background-color: transparent; border:none"
+                        onclick="editName()"><img src="img/edit.png" style="height: 20px;"/></button>
+                <button class="btn confirm-name" style="display:none;color: gray" onclick="confirmName()">Confirm
+                </button>
+                <div class="cd-popup" id="pop1" role="alert" style="z-index: 99;">
+                    <!--use popup to collect update info -->
+                    <div class="cd-popup-container">
+                        <p>This Change requires your password</p>
+                        <input id="password" type="password" class="form-control" name="password"
+                               style="background: transparent" required>
+                        <div class="cd-buttons">
+                            <button class="btn confirmBtn" onclick="updateName()">Confirm</button>
+                            <button class="btn cancelBtn" onclick="closepop()">Cancel</button>
+                        </div>
+                    </div> <!-- cd-popup-container -->
+                </div>
+            </div>
+            <!--gender-->
+            <div class="infoDiv">Gender:
+                <div class="user-gender" id="user-gender" style="display:inline;">{{info.gender}}</div>
+                <button class="edit-gender" style="display:inline; background-color: transparent; border:none"
+                        onclick="editGender()"><img src="img/edit.png" style="height: 20px;"/></button>
+                <button class="btn confirm-gender" style="display:none;color: gray" onclick="confirmGender()">Confirm
+                </button>
+                <p id="ps" style="font-size: 12px">Please enter Male/Female/Unknown</p>
+                <div class="cd-popup" id="pop2" role="alert" style="z-index: 99;">
+                    <div class="cd-popup-container">
+                        <p>This Change requires your password</p>
+                        <input id="password2" type="password" class="form-control" name="password2"
+                               style="background: transparent" required>
+                        <div class="cd-buttons">
+                            <button class="btn confirmBtn" onclick="updateGender()">Confirm</button>
+                            <button class="btn cancelBtn" onclick="closepop2()">Cancel</button>
+                        </div>
+                    </div> <!-- cd-popup-container -->
+                </div>
+            </div>
+            <!--user type-->
+            <!--user type can not be changed by the user him/herself-->
+            <div class="infoDiv">User Type:
+                <div class="info" id="info-usrtype">{{info.permission}}</div>
+            </div>
+            <!--email-->
+            <div class="infoDiv">Email:
+                <div class="user-email" id="user-email" style="display:inline;">{{info.e_mail}}</div>
+                <button class="edit-email" style="display:inline; background-color: transparent; border:none"
+                        onclick="editEmail()"><img src="img/edit.png" style="height: 20px;"/></button>
+                <button class="btn confirm-email" style="display:none;color: gray" onclick="confirmEmail()">Confirm
+                </button>
+                <div class="cd-popup" id="pop3" role="alert" style="z-index: 99;">
+                    <div class="cd-popup-container">
+                        <p>This Change requires your password</p>
+                        <input id="password3" type="password" class="form-control" name="password3"
+                               style="background: transparent" required>
+                        <div class="cd-buttons">
+                            <button class="btn confirmBtn" onclick="updateEmail()">Confirm</button>
+                            <button class="btn cancelBtn" onclick="closepop3()">Cancel</button>
+                        </div>
+                    </div> <!-- cd-popup-container -->
+                </div>
+            </div>
+            <!--pwd-->
+            <div class="infoDiv">Password
+                <button class="edit-pwd" style="display:inline; background-color: transparent; border:none"
+                        onclick="editPwd()"><img src="img/edit.png" style="height: 20px;"/></button>
+                <div class="cd-popup" id="pop4" role="alert" style="z-index: 99;">
+                    <div class="cd-popup-container">
+                        <div style="padding-top: 10%">
+                            <input id="password4" type="password" class="form-control" name="password4"
+                                   placeholder="Old Password" style="background: transparent;" required>
+                            <input id="password5" type="password" class="form-control" name="password5"
+                                   placeholder="New Password" style="background: transparent;" required>
+                            <input id="password6" type="password" class="form-control" name="password6"
+                                   placeholder="Confirm New Password" style="background: transparent;" required>
+                        </div>
+
+                        <div class="cd-buttons">
+                            <button class="btn confirmBtn" onclick="updatePwd()">Confirm</button>
+                            <button class="btn cancelBtn" onclick="closepop4()">Cancel</button>
+                        </div>
+                    </div> <!-- cd-popup-container -->
+                </div>
+            </div>
+        </div>
+        <div style="position: absolute; left: 700px;">
+
+        </div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 infoDiv">Personal Introduction:</div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 box" style="margin-top: 20px">
+            <span class="edit">edit</span>
+            <span class="save">save</span>
+            <div class="info text" id="info-intro">{{info.personal_intro}}</div>
+        </div>
+        <div class="cd-popup" id="pop5" role="alert">
+            <div class="cd-popup-container">
+                <p>This Change requires your password</p>
+                <input id="password7" type="password" class="form-control" name="password7"
+                       style="background: transparent" required>
+                <div class="cd-buttons">
+                    <button class="btn confirmBtn" onclick="updateIntro()">Confirm</button>
+                    <button class="btn cancelBtn" onclick="closepop5()">Cancel</button>
+                </div>
+            </div> <!-- cd-popup-container -->
+        </div>
     </div>
+</div>
 </body>
 <script>
-    $(function(){
+    $(function () {
         $(".loggedin-div").load("nav.html");
     });
     $(".loggedin-div").show();
-	function setCookie(cname, cvalue, sec) {
+
+    function setCookie(cname, cvalue, sec) {
         var d = new Date();
         d.setTime(d.getTime() + (sec * 1000));
         var expires = "expires=" + d.toUTCString();
@@ -188,77 +204,77 @@
         return "";
     }
 
-    $.post(serverIP+'/api/getProfile/',
-    {
-        'session_key': getCookie('session_key')
-    }).done(display_info).fail(function (a) {
-    alert("error occured");
-    window.location = 'index.html';
+    $.post(serverIP + '/api/getProfile/',
+        {
+            'session_key': getCookie('session_key')
+        }).done(display_info).fail(function (a) {
+        alert("error occured");
+        window.location = 'index.html';
     });
 
-    function di(information){
+    function di(information) {
         var vm = new Vue({
             el: ".infobox",
-            data:{
+            data: {
                 info: information
             }
         })
     }
 
-    function updateName(){
-    	var NewName = document.getElementById('user-name').innerText;
-    	var password = document.getElementById('password').innerText;
+    function updateName() {
+        var NewName = document.getElementById('user-name').innerText;
+        var password = document.getElementById('password').innerText;
         console.log(password);
         //validate the name input
-    	if(NewName.length === 0){
-    		alert("New Name Required");
-    	}else if($("input#password").val().length === 0){
-    	    //validate the password input
-    		alert("Password Required")
-    	} else {
-    		$.post(serverIP+'/api/setName/',
-       			 {
-       			 	'session_key': getCookie('session_key'),
+        if (NewName.length === 0) {
+            alert("New Name Required");
+        } else if ($("input#password").val().length === 0) {
+            //validate the password input
+            alert("Password Required")
+        } else {
+            $.post(serverIP + '/api/setName/',
+                {
+                    'session_key': getCookie('session_key'),
 
-       				 'NewName': NewName,
-       				 'Password': $("input#password").val()
-       			 }, updateCallBack);
-    	}
-
+                    'NewName': NewName,
+                    'Password': $("input#password").val()
+                }, updateCallBack);
+        }
 
 
     }
-    
-    function updateGender(){
-    	var NewGender = document.getElementById('user-gender').innerText;
-    	//input validation
-    	if(NewGender.length === 0){
-    		alert("Update Gender Required");
-    	}else if($("input#password2").val().length===0){
-    		alert("Password Required");
-    	} else {
-    		$.post(serverIP+'/api/setGender/',
-       			 { 
-       			 	'session_key': getCookie('session_key'), 
-       				 
-       				 'NewGender': NewGender, 
-       				 'Password': $("input#password2").val()
-       			 }, updateCallBack); 
 
-    	}
-    	
+    function updateGender() {
+        var NewGender = document.getElementById('user-gender').innerText;
+        //input validation
+        if (NewGender.length === 0) {
+            alert("Update Gender Required");
+        } else if ($("input#password2").val().length === 0) {
+            alert("Password Required");
+        } else {
+            $.post(serverIP + '/api/setGender/',
+                {
+                    'session_key': getCookie('session_key'),
+
+                    'NewGender': NewGender,
+                    'Password': $("input#password2").val()
+                }, updateCallBack);
+
+        }
+
     }
+
     function updateEmail() {
         var NewEmail = document.getElementById('user-email').innerText;
 
         //input validation
-        if(NewEmail.length === 0){
+        if (NewEmail.length === 0) {
             alert("New Email Address Required.");
         }
-        else if($("input#password3").val().length === 0){
+        else if ($("input#password3").val().length === 0) {
             alert("Password Required.");
         } else {
-            $.post(serverIP+'/api/setEmail/',
+            $.post(serverIP + '/api/setEmail/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewEmail': NewEmail,
@@ -277,29 +293,56 @@
         } else if ($("input#password4").length === 0) {
             alert("Password Required");
         } else {
-            $.post(serverIP+'/api/setPassword/',
+            $.post(serverIP + '/api/setPassword/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewPassword': $("input#password5").val(),
                     'NewPassword2': $("input#password6").val(),
                     'OldPassword': $("input#password4").val()
-                }, updateCallBack);
+                }, updateCallBackpwd);
         }
     }
 
-    function updateIntro(){
+    function updateCallBackpwd(data) {
+        console.log(data);
+        //if update is successful, stay on the page and display new info
+        if (data.status === "success") {
+            window.location = 'login.html';
+        } else {
+            //if not successful, display the error msg depends on each case
+            if (data.reason === "authentication failed" || data.reason === "authentication failure") {
+                alert("Password is incorrect.");
+            }
+            if (data.reason === "Saving failed") {
+                alert("Saving failed.");
+            }
+            if (data.reason === "existing_username") {
+                alert("This Username already exists in the system");
+            }
+            if (data.reason === "existing_email") {
+                alert("This email already exists in the System.");
+            }
+            if (data.reason === "passwords do not match") {
+                alert("Passwords do not match.");
+
+            }
+
+        }
+    }
+
+    function updateIntro() {
         console.log("setIntro");
         var newIntro = document.getElementById('info-intro').innerText;
         //input validation
-        if(newIntro.length === 0){
+        if (newIntro.length === 0) {
             //by definition, the user is required to have a non-empty intro
             alert("Introduction Required");
             location.reload();
-        } else if($("input#password7").val().length === 0){
+        } else if ($("input#password7").val().length === 0) {
             alert("Password Required");
             location.reload();
-        }else {
-            $.post(serverIP+'/api/setIntro/',
+        } else {
+            $.post(serverIP + '/api/setIntro/',
                 {
                     'session_key': getCookie('session_key'),
                     'NewIntro': newIntro,
@@ -308,7 +351,7 @@
 
         }
     }
-    
+
     function updateCallBack(data) {
         console.log(data);
         //if update is successful, stay on the page and display new info
@@ -317,23 +360,23 @@
             window.location = 'profile.html';
         } else {
             //if not successful, display the error msg depends on each case
-            if(data.reason === "authentication failed"||data.reason === "authentication failure"){
+            if (data.reason === "authentication failed" || data.reason === "authentication failure") {
                 alert("Password is incorrect.");
             }
-            if(data.reason === "Saving failed"){
+            if (data.reason === "Saving failed") {
                 alert("Saving failed.");
             }
-            if(data.reason === "existing_username"){
+            if (data.reason === "existing_username") {
                 alert("This Username already exists in the system");
             }
-            if(data.reason === "existing_email"){
+            if (data.reason === "existing_email") {
                 alert("This email already exists in the System.");
             }
-            if(data.reason === "passwords do not match"){
+            if (data.reason === "passwords do not match") {
                 alert("Passwords do not match.");
 
             }
-            
+
         }
     }
 
@@ -347,6 +390,7 @@
         $('.user-name').attr('contenteditable', 'true');
         $('.confirm-name').show();
     }
+
     function confirmName() {
         $('.user-name').removeClass('editable');
         $('.user-name').removeAttr('contenteditable');
@@ -354,11 +398,12 @@
         $('.confirm-name').hide();
         $('#pop1').addClass('is-visible');
     }
+
     function closepop() {
         $('#pop1').removeClass('is-visible');
         location.reload();
     }
-    
+
     //gender
     function editGender() {
         $('.edit-gender').hide();
@@ -367,6 +412,7 @@
         $('.confirm-gender').show();
         $('#ps').show();
     }
+
     function confirmGender() {
         $('.user-gender').removeClass('editable');
         $('.user-gender').removeAttr('contenteditable');
@@ -375,6 +421,7 @@
         $('#pop2').addClass('is-visible');
         $('#ps').hide();
     }
+
     function closepop2() {
         $('#pop2').removeClass('is-visible');
         location.reload();
@@ -387,6 +434,7 @@
         $('.user-email').attr('contenteditable', 'true');
         $('.confirm-email').show();
     }
+
     function confirmEmail() {
         $('.user-email').removeClass('editable');
         $('.user-email').removeAttr('contenteditable');
@@ -394,30 +442,35 @@
         $('.confirm-email').hide();
         $('#pop3').addClass('is-visible');
     }
+
     function closepop3() {
         $('#pop3').removeClass('is-visible');
         location.reload();
     }
+
     //pwd
     function editPwd() {
         $('#pop4').addClass('is-visible');
     }
+
     function closepop4() {
         $('#pop4').removeClass('is-visible');
         location.reload();
     }
+
     function closepop5() {
         $('#pop5').removeClass('is-visible');
         location.reload();
     }
+
     //display personal info while editing
-    function display_info(data){
+    function display_info(data) {
         console.log(data.personal_intro);
         if (data.status === "success") {
             $(".se-pre-con").fadeOut("slow");
             di(data);
             $(".loggedin-div").show();
-            $('.edit').click(function(){
+            $('.edit').click(function () {
                 console.log("edit");
                 $(this).hide();
                 $('.box').addClass('editable');
@@ -425,7 +478,7 @@
                 $('.save').show();
 
             });
-            $('.save').click(function(){
+            $('.save').click(function () {
                 console.log("save");
                 $('.save').hide();
                 $('.box').removeClass('editable');
